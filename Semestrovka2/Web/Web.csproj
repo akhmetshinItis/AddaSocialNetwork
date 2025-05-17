@@ -4,6 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>3ea9fc17-36d1-4d37-8910-290936f3b6c8</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -155,6 +156,16 @@
       <_ContentIncludedByDefault Remove="wwwroot\css\vendor\flaticon.css" />
       <_ContentIncludedByDefault Remove="wwwroot\css\vendor\vendor.css" />
       <_ContentIncludedByDefault Remove="wwwroot\css\vendor\vendor.min.css" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Core\Core.csproj" />
+      <ProjectReference Include="..\Persistence\Persistence.csproj" />
+      <PackageReference Include="MediatR" Version="12.5.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
     </ItemGroup>
 
 </Project>

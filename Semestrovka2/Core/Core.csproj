@@ -7,13 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Abstractions\" />
       <Folder Include="Constants\" />
-      <Folder Include="Entities\" />
       <Folder Include="Enums\" />
       <Folder Include="Exceptions\" />
       <Folder Include="Requests\" />
       <Folder Include="Services\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.0" />
     </ItemGroup>
 
 </Project>

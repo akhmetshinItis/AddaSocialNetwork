@@ -1,7 +1,19 @@
+using Core.Entities;
+using Microsoft.AspNetCore.Identity;
+using Persistence;
+using Persistence.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
     builder.Services.AddControllersWithViews();
+    builder.Services.AddPersistenceLayer(builder.Configuration);
+
+// Добавление Identity
+    builder.Services.AddIdentity<User, IdentityRole<Guid>>()
+        .AddEntityFrameworkStores<ApplicationDbContext>()
+        // для токена сброса пароля
+        .AddDefaultTokenProviders();
 
     var app = builder.Build();
 
