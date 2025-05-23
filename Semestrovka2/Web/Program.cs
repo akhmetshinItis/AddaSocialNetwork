@@ -1,3 +1,4 @@
+using Core;
 using Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Persistence;
@@ -5,19 +6,26 @@ using Persistence.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+    // Add services to the container.
     builder.Services.AddControllersWithViews();
     builder.Services.AddPersistenceLayer(builder.Configuration);
+    builder.Services.AddCore();
 
-// Добавление Identity
+    // Добавление Identity
     builder.Services.AddIdentity<User, IdentityRole<Guid>>()
         .AddEntityFrameworkStores<ApplicationDbContext>()
         // для токена сброса пароля
         .AddDefaultTokenProviders();
 
+    // Для редиректа неавторизованных пользователей
+    builder.Services.ConfigureApplicationCookie(options =>
+    {
+        options.LoginPath = "/signup";
+    });
+
     var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+    // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())
     {
         app.UseExceptionHandler("/Home/Error");
@@ -28,6 +36,7 @@ var builder = WebApplication.CreateBuilder(args);
     app.UseHttpsRedirection();
     app.UseRouting();
 
+    app.UseAuthentication();
     app.UseAuthorization();
 
     app.MapStaticAssets();
