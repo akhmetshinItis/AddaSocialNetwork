@@ -25,6 +25,8 @@ namespace Core
             services.AddScoped<IUserService, UserService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<EmailServiceOptions>();
+            
+            services.AddSignalR();
         }
     }
 }

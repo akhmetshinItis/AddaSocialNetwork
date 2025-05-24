@@ -5,5 +5,8 @@ namespace Core.Abstractions ;
 
     public interface IDbContext
     {
-        DbSet<User> Users { get; set; }
+        DbSet<User> Users { get; }
+        DbSet<Friend> Friends { get; }
+        
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }

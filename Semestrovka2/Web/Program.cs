@@ -1,8 +1,9 @@
 using Core;
-using Core.Entities;
+using Core.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Persistence;
 using Persistence.Extensions;
+using Web.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddControllersWithViews();
     builder.Services.AddPersistenceLayer(builder.Configuration);
     builder.Services.AddCore();
+    builder.Services.AddUserContext();
+    
+    builder.Services.AddSignalR();
 
     // Добавление Identity
-    builder.Services.AddIdentity<User, IdentityRole<Guid>>()
+    builder.Services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>()
         .AddEntityFrameworkStores<ApplicationDbContext>()
         // для токена сброса пароля
         .AddDefaultTokenProviders();
@@ -33,6 +37,8 @@ var builder = WebApplication.CreateBuilder(args);
         app.UseHsts();
     }
 
+// почистить
+    app.MapHub<ChatHub>("/chat");
     app.UseHttpsRedirection();
     app.UseRouting();
 
