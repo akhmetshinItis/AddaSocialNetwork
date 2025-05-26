@@ -19,5 +19,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser<Guid>, Identi
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new RoleConfiguration());
+        var c = new ApplicationDbContext(new DbContextOptions<ApplicationDbContext>());
     }
 }

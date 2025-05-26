@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <Folder Include="Extensions\" />
+      <Folder Include="Pages\Shared\Components\FriendsList\" />
     </ItemGroup>
 
     <ItemGroup>

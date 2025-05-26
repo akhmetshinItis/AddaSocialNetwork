@@ -27,6 +27,7 @@ namespace Core
             services.AddScoped<EmailServiceOptions>();
             
             services.AddSignalR();
+            services.AddScoped<IFriendsService, FriendsService>();
         }
     }
 }

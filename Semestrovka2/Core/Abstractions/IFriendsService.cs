@@ -8,6 +8,6 @@ namespace Core.Abstractions
         public Task AddFriendAsync(Guid friendId);
         public Task RemoveFriendAsync(Guid friendId);
         public Task<bool> IsFriendAsync(Guid friendId);
-        public Task<List<User>> GetFriendsAsync();
+        public IQueryable<User> GetFriends();
     }
 }

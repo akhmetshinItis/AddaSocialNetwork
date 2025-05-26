@@ -1,7 +1,7 @@
 using Contracts.Requests.UserRequests.RegisterUser;
 using MediatR;
 
-namespace ProFSB.Application.Features.Users.Commands.RegisterUser ;
+namespace Core.Requests.UserRequests.RegisterUser ;
 
     public class RegisterUserCommand : RegisterUserRequest, IRequest<RegisterUserResponse>
     {

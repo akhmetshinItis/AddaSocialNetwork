@@ -1,15 +1,10 @@
-using ProFSB.Domain.Common.Interfaces;
+using Core.Entities.Common;
 
 namespace Core.Entities
 {
-    public class Friend : IAuditableEntity
+    public class Friend : BaseAuditableEntity
     {
         public Guid User1 { get; set; } = new();
         public Guid User2 { get; set; } = new();
-        
-        public int? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public int? UpdatedBy { get; set; }
-        public DateTime? UpdatedDate { get; set; }
     }
 }

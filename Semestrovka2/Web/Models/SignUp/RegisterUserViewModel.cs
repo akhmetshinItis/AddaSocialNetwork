@@ -6,8 +6,8 @@ namespace Web.Models.SignUp
         public string? Password { get; set; } = default!;
         public string? LastName { get; set; } = default!;
         public string? FirstName { get; set; } = default!;
-        public string? Gender { get; set; } = default!;
-        public string? Age { get; set; } = default!;
-        public string? Country { get; set; } = default!;
+        public bool Gender { get; set; }
+        public int Age { get; set; } = default!;
+        public string Country { get; set; } = default!;
     }
 }

@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
+using System.Transactions;
 using Contracts.Requests.UserRequests.RegisterUser;
 using Core.Abstractions;
 using Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using ProFSB.Application.Features.Users.Commands.RegisterUser;
 using ProFSB.Domain.Constants;
 
 namespace Core.Requests.UserRequests.RegisterUser ;
@@ -43,35 +43,51 @@ namespace Core.Requests.UserRequests.RegisterUser ;
                 Email = request.Email,
             };
             
-            var result = await _userService.RegisterUserAsync(user, request.Password);
-            
-
-            var claims = new List<Claim>
+            var transaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken);
+            try
             {
-                new Claim(ClaimTypes.Role, RoleConstants.User),
-            };
+                var result = await _userService.RegisterUserAsync(user, request.Password);
 
-            if (result.Succeeded)
-            {
+                if (!result.Succeeded)
+                {
+                    // Не создаем доп. записи, если регистрация неуспешна
+                    return new RegisterUserResponse(result);
+                }
+
                 var biznesUserId = Guid.NewGuid();
-                
-                _dbContext.Users.Add(
-                    new User
-                    {
-                        Id = biznesUserId,
-                        IdentityUserId = user.Id
-                    });
-                claims.Add(new Claim(ClaimTypes.Authentication, biznesUserId.ToString()));
+
+                _dbContext.Users.Add(new User
+                {
+                    Id = biznesUserId,
+                    IdentityUserId = user.Id,
+                    LastName = request.LastName,
+                    FirstName = request.FirstName,
+                    Age = request.Age,
+                    Country = request.Country,
+                });
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Role, RoleConstants.User),
+                    new Claim(ClaimTypes.Authentication, biznesUserId.ToString())
+                };
+
                 await _userService.AddClaimsAsync(user, claims);
                 await _userService.LoginAsync(request.Email, request.Password);
-                
-               await _dbContext.SaveChangesAsync(cancellationToken);
+                await _dbContext.SaveChangesAsync(cancellationToken);
 
+                await transaction.CommitAsync(cancellationToken);
+
+                await _emailService.SendEmailAsync(request.Email, "Спасибо за регистрацию!",
+                    "Вы успешно зарегистрированы на сайте");
+
+                return new RegisterUserResponse(result);
             }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync(cancellationToken);
 
-           await _emailService.SendEmailAsync(request.Email, "Спасибо за регистрацию!",
-                "Вы успешно зарегистрированы на сайте");
-            
-            return new RegisterUserResponse(result);
+                throw new Exception("Ошибка при регистрации пользователя", ex);
+            }
         }
     }

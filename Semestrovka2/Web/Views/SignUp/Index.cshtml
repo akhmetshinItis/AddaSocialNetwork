@@ -117,19 +117,16 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <select class="nice-select" name="@nameof(Model.RegisterUserViewModel.Age)">
-                                                        <option value="trending">Age</option>
-                                                        <option value="sales">18+</option>
-                                                        <option value="sales">18-</option>
-                                                    </select>
+                                                    <input type="number" class="single-field" name="@nameof(Model.RegisterUserViewModel.Age)"
+                                                           placeholder="Введите возраст" min="0" required>
                                                 </div>
                                                 <div class="col-12">
                                                     <select class="nice-select" name="@nameof(Model.RegisterUserViewModel.Country)">
-                                                        <option value="trending">Country</option>
-                                                        <option value="sales">Bangladesh</option>
-                                                        <option value="sales">Noakhali</option>
-                                                        <option value="sales">Australia</option>
-                                                        <option value="sales">China</option>
+                                                        <option value="">Country</option>
+                                                        <option value="Bangladesh">Bangladesh</option>
+                                                        <option value="Noakhali">Noakhali</option>
+                                                        <option value="Australia">Australia</option>
+                                                        <option value="China">China</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-12">

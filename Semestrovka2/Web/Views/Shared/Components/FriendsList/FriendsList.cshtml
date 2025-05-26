@@ -1,0 +1,29 @@
+@model Contracts.Requests.FooterFriendsSectionRequests.GetFriendsList.GetFriendsListResponse
+
+@{
+    Layout = null;
+}
+
+<div class="card card-small mb-0 active-profile-wrapper">
+    <div class="active-profiles-wrapper">
+        <div class="active-profile-carousel slick-row-20 slick-arrow-style">
+           
+             @{
+                 foreach (var friend in Model.FriendsList)
+                 {
+                     <!-- profile picture end -->
+                     <div class="single-slide">
+                         <div class="profile-thumb active profile-active">
+                             <a href="profile/@friend.Id">
+                                 <figure class="profile-thumb-small">
+                                     <img src=@friend.ImageUrl alt="profile picture">
+                                 </figure>
+                             </a>
+                         </div>
+                     </div>
+                     <!-- profile picture end -->
+                 }
+             }
+        </div>
+    </div>
+</div>

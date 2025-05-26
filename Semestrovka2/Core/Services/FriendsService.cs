@@ -1,5 +1,6 @@
 using Core.Abstractions;
 using Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Core.Services
 {
@@ -19,7 +20,12 @@ namespace Core.Services
         public async Task AddFriendAsync(Guid friendId)
         {
             var currentUserEmail = _userContext.GetUserEmail() ?? throw new NullReferenceException("User email is null");
-            var currentUserId = _userService.FindUserByEmailAsync(currentUserEmail).Id;
+            var currentUserId = _userContext.GetUserId() ?? throw new NullReferenceException("User id is null");
+            
+            if(_dbContext.Friends.Any(x => x.User1 == friendId && x.User2 == currentUserId 
+            || x.User1 == currentUserId && x.User2 == friendId))
+                return;
+            
             var friendship = new Friend
             {
                 User1 = _userContext.GetUserId() ?? throw new NullReferenceException("User id is null"),
@@ -39,11 +45,13 @@ namespace Core.Services
 
         }
 
-        public Task<List<User>> GetFriendsAsync()
+        public IQueryable<User> GetFriends()
         {
             var userId = _userContext.GetUserId();
-            var friends = _dbContext.Friends.Where(x => x.User1 == userId || x.User2 == userId).ToList();
-            throw new NotImplementedException();
+            var friends =  _dbContext.Friends.Where(x => x.User1 == userId || x.User2 == userId);
+            return _dbContext.Users.Where(x => friends.Any(f => 
+                f.User1 == x.Id && f.User1 != userId
+                || f.User2 == x.Id && f.User2 != userId));
         }
     }
 }

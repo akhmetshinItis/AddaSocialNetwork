@@ -1,8 +1,8 @@
 using Core.Requests.UserRequests.LoginUser;
+using Core.Requests.UserRequests.RegisterUser;
 using MediatR;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
-using ProFSB.Application.Features.Users.Commands.RegisterUser;
 using Web.Models.SignUp;
 
 namespace Web.Controllers
@@ -21,6 +21,10 @@ namespace Web.Controllers
             {
                 Password = request.Password ?? throw new Exception("Invalid password"),
                 Email = request.Email ?? throw new Exception("Invalid email"),
+                FirstName = request.FirstName ?? throw new Exception("Invalid first name"),
+                LastName = request.LastName ?? throw new Exception("Invalid last name"),
+                Age = request.Age,
+                Country = request.Country,
             });
             
             if(result.Result.Succeeded)

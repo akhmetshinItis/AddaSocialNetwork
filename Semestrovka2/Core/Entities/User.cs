@@ -1,16 +1,15 @@
 using Core.Entities.Common;
-using Microsoft.AspNetCore.Identity;
 
 namespace Core.Entities
 {
     public class User : BaseAuditableEntity
     {
-        public string LastName { get; set; }
-        public string FirstName { get; set; }
-        public string Gender { get; set; }
-        public string Age { get; set; }
-        public string Country { get; set; }
-
-        public Guid IdentityUserId { get; set; }
+        public string LastName { get; set; } = default!;
+        public string FirstName { get; set; } = default!;
+        public bool Gender { get; set; } = default!;
+        public int Age { get; set; } = default!;
+        public string Country { get; set; } = default!;
+        public string? ImageUrl { get; set; } = "default";
+        public Guid IdentityUserId { get; set; } = default!;
     }
 }
