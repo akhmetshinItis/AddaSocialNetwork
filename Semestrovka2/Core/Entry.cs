@@ -12,7 +12,7 @@ namespace Core
         public static void AddCore(this IServiceCollection services)
         {
             services.AddMediator();
-            services.AddUServices();
+            services.AddServices();
         }
 
         private static void AddMediator(this IServiceCollection services)
@@ -20,14 +20,15 @@ namespace Core
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         }
 
-        private static void AddUServices(this IServiceCollection services)
+        private static void AddServices(this IServiceCollection services)
         {
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserServiceIdentity, UserServiceIdentity>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<EmailServiceOptions>();
             
             services.AddSignalR();
             services.AddScoped<IFriendsService, FriendsService>();
+            services.AddScoped<IBusinessUserService, BusinessUserService>();
         }
     }
 }

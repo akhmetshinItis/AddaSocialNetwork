@@ -22,6 +22,7 @@ namespace Core.Requests.FooterFriendsSectionRequests.GetFriendsList
                 {
                     Id = x.Id,
                     FirstName = x.FirstName,
+                    LastName = x.LastName,
                     ImageUrl = x.ImageUrl,
                 }).ToListAsync(cancellationToken: cancellationToken);
             return new GetFriendsListResponse(friends);

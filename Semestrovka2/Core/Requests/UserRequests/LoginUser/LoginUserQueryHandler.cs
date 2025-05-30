@@ -10,13 +10,13 @@ namespace Core.Requests.UserRequests.LoginUser ;
     public class LoginUserQueryHandler
         : IRequestHandler<LoginUserQuery, LoginUserResponse>
     {
-        private readonly IUserService _userService;
+        private readonly IUserServiceIdentity _userServiceIdentity;
         
-        public LoginUserQueryHandler(IUserService userService)
+        public LoginUserQueryHandler(IUserServiceIdentity userServiceIdentity)
         {
-            _userService = userService;
+            _userServiceIdentity = userServiceIdentity;
         }
         
         public async Task<LoginUserResponse> Handle(LoginUserQuery request, CancellationToken cancellationToken)
-         => new LoginUserResponse(await _userService.LoginAsync(request.Email, request.Password));
+         => new LoginUserResponse(await _userServiceIdentity.LoginAsync(request.Email, request.Password));
     }

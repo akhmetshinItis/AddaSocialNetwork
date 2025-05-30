@@ -65,17 +65,17 @@
                             <div class="col-lg-6">
                                 <div class="login-area">
                                     <form asp-controller="SignUp" asp-action="LoginUser" method="post">
-                                    <div class="row align-items-center">
-                                        <div class="col-12 col-sm">
-                                            <input type="email" name="@nameof(Model.LoginUserViewModel.Email)" placeholder="Email" class="single-field">
+                                        <div class="row align-items-center">
+                                            <div class="col-12 col-sm">
+                                                <input type="email" name="@nameof(Model.LoginUserViewModel.Email)" placeholder="Email" class="single-field">
+                                            </div>
+                                            <div class="col-12 col-sm">
+                                                <input type="password" name="@nameof(Model.LoginUserViewModel.Password)" placeholder="Password" class="single-field">
+                                            </div>
+                                            <div class="col-12 col-sm-auto">
+                                                <button type="submit" class="login-btn">Login</button>
+                                            </div>
                                         </div>
-                                        <div class="col-12 col-sm">
-                                            <input type="password" name="@nameof(Model.LoginUserViewModel.Password)" placeholder="Password" class="single-field">
-                                        </div>
-                                        <div class="col-12 col-sm-auto">
-                                            <button type="submit" class="login-btn">Login</button>
-                                        </div>
-                                    </div>
                                     </form>
                                 </div>
                             </div>

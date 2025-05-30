@@ -9,7 +9,6 @@
 
     <ItemGroup>
       <Folder Include="Extensions\" />
-      <Folder Include="Pages\Shared\Components\FriendsList\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -157,6 +156,7 @@
       <_ContentIncludedByDefault Remove="wwwroot\css\vendor\flaticon.css" />
       <_ContentIncludedByDefault Remove="wwwroot\css\vendor\vendor.css" />
       <_ContentIncludedByDefault Remove="wwwroot\css\vendor\vendor.min.css" />
+      <_ContentIncludedByDefault Remove="Views\Shared\Components\FriendsSearch\FriendsSearch.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

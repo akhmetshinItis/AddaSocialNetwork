@@ -17,20 +17,20 @@ namespace Core.Requests.UserRequests.RegisterUser ;
     public class RegisterUserCommandHandler
     : IRequestHandler<RegisterUserCommand, RegisterUserResponse>
     {
-        private readonly IUserService _userService;
+        private readonly IUserServiceIdentity _userServiceIdentity;
         private readonly IEmailService _emailService;
         private readonly IDbContext _dbContext;
         
-        public RegisterUserCommandHandler(IUserService userService, IEmailService emailService, IDbContext dbContext)
+        public RegisterUserCommandHandler(IUserServiceIdentity userServiceIdentity, IEmailService emailService, IDbContext dbContext)
         {
-            _userService = userService;
+            _userServiceIdentity = userServiceIdentity;
             _emailService = emailService;
             _dbContext = dbContext;
         }
         
         public async Task<RegisterUserResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var isUserExists = await _userService.FindUserByEmailAsync(request.Email);
+            var isUserExists = await _userServiceIdentity.FindUserByEmailAsync(request.Email);
 
             if (isUserExists != null)
             {
@@ -46,7 +46,7 @@ namespace Core.Requests.UserRequests.RegisterUser ;
             var transaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken);
             try
             {
-                var result = await _userService.RegisterUserAsync(user, request.Password);
+                var result = await _userServiceIdentity.RegisterUserAsync(user, request.Password);
 
                 if (!result.Succeeded)
                 {
@@ -72,8 +72,8 @@ namespace Core.Requests.UserRequests.RegisterUser ;
                     new Claim(ClaimTypes.Authentication, biznesUserId.ToString())
                 };
 
-                await _userService.AddClaimsAsync(user, claims);
-                await _userService.LoginAsync(request.Email, request.Password);
+                await _userServiceIdentity.AddClaimsAsync(user, claims);
+                await _userServiceIdentity.LoginAsync(request.Email, request.Password);
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
                 await transaction.CommitAsync(cancellationToken);

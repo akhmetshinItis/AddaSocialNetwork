@@ -8,23 +8,23 @@ namespace Core.Services
     {
         private readonly IDbContext _dbContext;
         private readonly IUserContext _userContext;
-        private readonly IUserService _userService;
+        private readonly IUserServiceIdentity _userServiceIdentity;
 
-        public FriendsService(IDbContext dbContext, IUserContext userContext, IUserService userService)
+        public FriendsService(IDbContext dbContext, IUserContext userContext, IUserServiceIdentity userServiceIdentity)
         {
             _dbContext = dbContext;
             _userContext = userContext;
-            _userService = userService;
+            _userServiceIdentity = userServiceIdentity;
         }
 
-        public async Task AddFriendAsync(Guid friendId)
+        public async Task<int> AddFriendAsync(Guid friendId)
         {
             var currentUserEmail = _userContext.GetUserEmail() ?? throw new NullReferenceException("User email is null");
             var currentUserId = _userContext.GetUserId() ?? throw new NullReferenceException("User id is null");
             
             if(_dbContext.Friends.Any(x => x.User1 == friendId && x.User2 == currentUserId 
             || x.User1 == currentUserId && x.User2 == friendId))
-                return;
+                return 0;
             
             var friendship = new Friend
             {
@@ -32,6 +32,7 @@ namespace Core.Services
                 User2 = friendId,
             };
             await _dbContext.Friends.AddAsync(friendship);
+            return await _dbContext.SaveChangesAsync();
         }
 
         public Task RemoveFriendAsync(Guid friendId)

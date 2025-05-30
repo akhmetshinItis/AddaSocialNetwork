@@ -8,7 +8,7 @@ namespace Core.Abstractions
     /// <summary>
     /// Сервис по работе с пользователем
     /// </summary>
-    public interface IUserService
+    public interface IUserServiceIdentity
     {
         /// <summary>
         /// Зарегистрировать пользователя

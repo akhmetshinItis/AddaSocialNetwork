@@ -8,17 +8,15 @@ using Microsoft.AspNetCore.Identity;
 namespace Core.Services
 {
      /// <inheritdoc />
-    public class UserService : IUserService
+    public class UserServiceIdentity : IUserServiceIdentity
     {
         private readonly UserManager<IdentityUser<Guid>> _userManager;
         private readonly SignInManager<IdentityUser<Guid>> _signInManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserService(UserManager<IdentityUser<Guid>> userManager, SignInManager<IdentityUser<Guid>> signInManager, IHttpContextAccessor httpContextAccessor)
+        public UserServiceIdentity(UserManager<IdentityUser<Guid>> userManager, SignInManager<IdentityUser<Guid>> signInManager, IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _httpContextAccessor = httpContextAccessor;
         }
         
         public Task<IdentityResult> RegisterUserAsync(IdentityUser<Guid> user, string password)

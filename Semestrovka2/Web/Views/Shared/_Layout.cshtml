@@ -475,153 +475,26 @@
                 <div class="col-12">
                     <div class="footer-wrapper">
                         <div class="footer-card position-relative">
-                            <div class="friends-search">
+                            <div class="friends-search" id="friend-search-form">
                                 <form class="search-box">
                                     <input type="text" placeholder="Search Your Friends" class="search-field">
                                     <button class="search-btn"><i class="flaticon-search"></i></button>
                                 </form>
                             </div>
+                            <!-- Ниже — блок, который будем обновлять -->
                             <div class="friend-search-list">
                                 <div class="frnd-search-title">
                                     <button class="frnd-search-icon"><i class="flaticon-settings"></i></button>
                                     <p>search friends</p>
                                     <button class="close-btn" data-close="friend-search-list"><i class="flaticon-cross-out"></i></button>
                                 </div>
-                                <div class="frnd-search-inner custom-scroll">
-                                    <ul>
-                                        <li class="d-flex align-items-center profile-active">
-                                            <!-- profile picture end -->
-                                            <div class="profile-thumb active">
-                                                <a href="#">
-                                                    <figure class="profile-thumb-small">
-                                                        <img src="assets/images/profile/profile-small-1.jpg" alt="profile picture">
-                                                    </figure>
-                                                </a>
-                                            </div>
-                                            <!-- profile picture end -->
-
-                                            <div class="posted-author">
-                                                <h6 class="author">Jon Wilime</h6>
-                                                <p>Many desktop publishing</p>
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center profile-active">
-                                            <!-- profile picture end -->
-                                            <div class="profile-thumb active">
-                                                <a href="#">
-                                                    <figure class="profile-thumb-small">
-                                                        <img src="assets/images/profile/profile-small-2.jpg" alt="profile picture">
-                                                    </figure>
-                                                </a>
-                                            </div>
-                                            <!-- profile picture end -->
-
-                                            <div class="posted-author">
-                                                <h6 class="author"><a href="profile.html">Jon Wileyam</a></h6>
-                                                <button class="add-frnd">add friend</button>
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center profile-active">
-                                            <!-- profile picture end -->
-                                            <div class="profile-thumb active">
-                                                <a href="#">
-                                                    <figure class="profile-thumb-small">
-                                                        <img src="assets/images/profile/profile-small-3.jpg" alt="profile picture">
-                                                    </figure>
-                                                </a>
-                                            </div>
-                                            <!-- profile picture end -->
-
-                                            <div class="posted-author">
-                                                <h6 class="author"><a href="profile.html">Mili Raoulin</a></h6>
-                                                <button class="add-frnd">add friend</button>
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center profile-active">
-                                            <!-- profile picture end -->
-                                            <div class="profile-thumb active">
-                                                <a href="#">
-                                                    <figure class="profile-thumb-small">
-                                                        <img src="assets/images/profile/profile-small-4.jpg" alt="profile picture">
-                                                    </figure>
-                                                </a>
-                                            </div>
-                                            <!-- profile picture end -->
-
-                                            <div class="posted-author">
-                                                <h6 class="author"><a href="profile.html">Jon Wilime</a></h6>
-                                                <button class="add-frnd">10 mutual friends</button>
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center profile-active">
-                                            <!-- profile picture end -->
-                                            <div class="profile-thumb active">
-                                                <a href="#">
-                                                    <figure class="profile-thumb-small">
-                                                        <img src="assets/images/profile/profile-small-5.jpg" alt="profile picture">
-                                                    </figure>
-                                                </a>
-                                            </div>
-                                            <!-- profile picture end -->
-
-                                            <div class="posted-author">
-                                                <h6 class="author"><a href="profile.html">Robart faul</a></h6>
-                                                <button class="add-frnd">12 mutual friends</button>
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center profile-active">
-                                            <!-- profile picture end -->
-                                            <div class="profile-thumb active">
-                                                <a href="#">
-                                                    <figure class="profile-thumb-small">
-                                                        <img src="assets/images/profile/profile-small-3.jpg" alt="profile picture">
-                                                    </figure>
-                                                </a>
-                                            </div>
-                                            <!-- profile picture end -->
-
-                                            <div class="posted-author">
-                                                <h6 class="author"><a href="profile.html">Mili Raoulin</a></h6>
-                                                <button class="add-frnd">add friend</button>
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center profile-active">
-                                            <!-- profile picture end -->
-                                            <div class="profile-thumb active">
-                                                <a href="#">
-                                                    <figure class="profile-thumb-small">
-                                                        <img src="assets/images/profile/profile-small-4.jpg" alt="profile picture">
-                                                    </figure>
-                                                </a>
-                                            </div>
-                                            <!-- profile picture end -->
-
-                                            <div class="posted-author">
-                                                <h6 class="author"><a href="profile.html">Jon Wilime</a></h6>
-                                                <button class="add-frnd">10 mutual friends</button>
-                                            </div>
-                                        </li>
-                                        <li class="d-flex align-items-center profile-active">
-                                            <!-- profile picture end -->
-                                            <div class="profile-thumb active">
-                                                <a href="#">
-                                                    <figure class="profile-thumb-small">
-                                                        <img src="assets/images/profile/profile-small-5.jpg" alt="profile picture">
-                                                    </figure>
-                                                </a>
-                                            </div>
-                                            <!-- profile picture end -->
-
-                                            <div class="posted-author">
-                                                <h6 class="author"><a href="profile.html">Robart faul</a></h6>
-                                                <button class="add-frnd">12 mutual friends</button>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                <div class="frnd-search-inner custom-scroll" id="search-results">
+                                    <!-- Сюда AJAX будет вставлять результат -->
                                 </div>
                             </div>
                         </div>
-                        @await Component.InvokeAsync("FriendsList")
+
+                            @await Component.InvokeAsync("FriendsList")
                         <div class="footer-card position-relative">
                             <div class="live-chat-inner">
                                 <div class="chat-text-field">

@@ -1,0 +1,20 @@
+@model Contracts.Requests.FooterFriendsSectionRequests.SearchFriends.SearchFriendsResponse
+
+<ul>
+    @foreach (var friend in Model.SearchedFriends)
+    {
+        <li class="d-flex align-items-center profile-active">
+            <div class="profile-thumb active">
+                <a href="#">
+                    <figure class="profile-thumb-small">
+                        <img src="@friend.ImageUrl" alt="profile picture">
+                    </figure>
+                </a>
+            </div>
+            <div class="posted-author">
+                <h6 class="author"><a href="#">@friend.FirstName @friend.LastName</a></h6>
+                <button class="add-frnd" data-id="@friend.Id" data-url="@friend.ImageUrl">Add Friend</button>
+            </div>
+        </li>
+    }
+</ul>
