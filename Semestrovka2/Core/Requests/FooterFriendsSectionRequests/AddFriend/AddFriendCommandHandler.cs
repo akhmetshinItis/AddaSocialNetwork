@@ -1,4 +1,4 @@
-using Contracts.Requests.FooterFriendsSectionRequests.AddFriend;
+using Contracts.Requests.FriendsRequests.AddFriend;
 using Core.Abstractions;
 using MediatR;
 

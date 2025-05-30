@@ -1,6 +1,4 @@
-using System.Security.AccessControl;
-
-namespace Contracts.Requests.FooterFriendsSectionRequests.GetFriendsList
+namespace Contracts.Requests.FriendsRequests.GetFriendsList
 {
     public class GetFriendsListUserResponseItem
     {

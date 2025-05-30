@@ -1,6 +1,6 @@
-using Contracts.Requests.FooterFriendsSectionRequests.GetFriendsList;
+using Contracts.Requests.FriendsRequests.GetFriendsList;
 
-namespace Contracts.Requests.FooterFriendsSectionRequests.SearchFriends
+namespace Contracts.Requests.FriendsRequests.SearchFriends
 {
     public class SearchFriendsResponse
     {

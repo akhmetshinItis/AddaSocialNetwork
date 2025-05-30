@@ -10,9 +10,10 @@ namespace Web.Controllers
 {
     public class FriendsController(IMediator mediator) : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var friends = await mediator.Send(new GetFriendsListQuery());
+            return View(friends);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,5 +1,5 @@
-using Contracts.Requests.FooterFriendsSectionRequests.GetFriendsList;
-using Contracts.Requests.FooterFriendsSectionRequests.SearchFriends;
+using Contracts.Requests.FriendsRequests.GetFriendsList;
+using Contracts.Requests.FriendsRequests.SearchFriends;
 using Core.Abstractions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

@@ -78,8 +78,9 @@ namespace Core.Requests.UserRequests.RegisterUser ;
 
                 await transaction.CommitAsync(cancellationToken);
 
-                await _emailService.SendEmailAsync(request.Email, "Спасибо за регистрацию!",
-                    "Вы успешно зарегистрированы на сайте");
+                // НА ВРЕМЯ ТЕСТОВ
+                // await _emailService.SendEmailAsync(request.Email, "Спасибо за регистрацию!",
+                //     "Вы успешно зарегистрированы на сайте");
 
                 return new RegisterUserResponse(result);
             }

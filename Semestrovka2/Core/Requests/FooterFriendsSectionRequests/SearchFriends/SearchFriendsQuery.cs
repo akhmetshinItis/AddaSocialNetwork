@@ -1,4 +1,4 @@
-using Contracts.Requests.FooterFriendsSectionRequests.SearchFriends;
+using Contracts.Requests.FriendsRequests.SearchFriends;
 using MediatR;
 
 namespace Core.Requests.FooterFriendsSectionRequests.SearchFriends
