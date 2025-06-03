@@ -10,6 +10,10 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser<Guid>, Identi
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Friend> Friends { get; set; }
+    public DbSet<FriendCategoryLink> FriendCategoryLinks { get; set; }
+    public DbSet<FriendCategory> FriendCategories { get; set; }
+    public DbSet<Chat> Chats { get; set; }
+    public DbSet<Message> Messages { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
@@ -19,6 +23,8 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser<Guid>, Identi
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new RoleConfiguration());
-        var c = new ApplicationDbContext(new DbContextOptions<ApplicationDbContext>());
+        modelBuilder.ApplyConfiguration(new FriendCategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new ChatConfiguration());
+        modelBuilder.ApplyConfiguration(new MessageConfiguration());
     }
 }

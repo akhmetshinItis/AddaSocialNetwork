@@ -22,6 +22,39 @@ namespace Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Core.Entities.Chat", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("User1Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("User2Id")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("User1Id");
+
+                    b.HasIndex("User2Id");
+
+                    b.ToTable("Chats", (string)null);
+                });
+
             modelBuilder.Entity("Core.Entities.Friend", b =>
                 {
                     b.Property<Guid>("Id")
@@ -48,7 +81,132 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Friends");
+                    b.ToTable("Friends", (string)null);
+                });
+
+            modelBuilder.Entity("Core.Entities.FriendCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FriendCategories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("64ac57a0-1fcc-4e20-9ee4-2035bc6d787c"),
+                            CategoryName = "Default"
+                        },
+                        new
+                        {
+                            Id = new Guid("eca5a630-fb54-4c1c-9b88-c4979ffa04c7"),
+                            CategoryName = "Близкие друзя"
+                        },
+                        new
+                        {
+                            Id = new Guid("5b357d96-741f-4957-bd3a-fb70adf0a5fa"),
+                            CategoryName = "Родственники"
+                        },
+                        new
+                        {
+                            Id = new Guid("b625b3a1-589e-4cff-916f-4a4dde52809c"),
+                            CategoryName = "Школьные друзя"
+                        });
+                });
+
+            modelBuilder.Entity("Core.Entities.FriendCategoryLink", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("FriendCategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("FriendId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FriendCategoryId");
+
+                    b.ToTable("FriendCategoryLinks", (string)null);
+                });
+
+            modelBuilder.Entity("Core.Entities.Message", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ChatId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ChatId1")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatId");
+
+                    b.HasIndex("ChatId1")
+                        .IsUnique();
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.User", b =>
@@ -95,7 +253,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -114,7 +272,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IdentityRole");
+                    b.ToTable("IdentityRole", (string)null);
 
                     b.HasData(
                         new
@@ -326,6 +484,59 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Core.Entities.Chat", b =>
+                {
+                    b.HasOne("Core.Entities.User", "User1")
+                        .WithMany()
+                        .HasForeignKey("User1Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.User", "User2")
+                        .WithMany()
+                        .HasForeignKey("User2Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User1");
+
+                    b.Navigation("User2");
+                });
+
+            modelBuilder.Entity("Core.Entities.FriendCategoryLink", b =>
+                {
+                    b.HasOne("Core.Entities.FriendCategory", "FriendCategory")
+                        .WithMany()
+                        .HasForeignKey("FriendCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FriendCategory");
+                });
+
+            modelBuilder.Entity("Core.Entities.Message", b =>
+                {
+                    b.HasOne("Core.Entities.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Chat", null)
+                        .WithOne("LastMessage")
+                        .HasForeignKey("Core.Entities.Message", "ChatId1");
+
+                    b.HasOne("Core.Entities.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+
+                    b.Navigation("Sender");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -375,6 +586,14 @@ namespace Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Entities.Chat", b =>
+                {
+                    b.Navigation("LastMessage")
+                        .IsRequired();
+
+                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }

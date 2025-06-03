@@ -224,20 +224,20 @@ $(function () {
 });
 
 
-	$(document).on('click', '.add-frnd', function () {
+$(document).on('click', '.add-frnd', function () {
 	const button = $(this);
 	const friendId = button.data('id');
 	const fUrl = button.data('url');
 
-		$.ajax({
-	url: '/api/addFriend',
-	type: 'POST',
-	data: {friendId: friendId},
-	success: function (response) {
-		console.log(response);
-	if (response && response > 0) {
-		button.text('Friend Added').prop('disabled', true);
-		const newSlide = `
+	$.ajax({
+		url: '/api/addFriend',
+		type: 'POST',
+		data: {friendId: friendId},
+		success: function (response) {
+			console.log(response);
+			if (response && response > 0) {
+				button.text('Friend Added').prop('disabled', true);
+				const newSlide = `
 					<div class="single-slide">
 						<div class="profile-thumb active profile-active">
 							<a href="javascript:void(0)">
@@ -249,16 +249,65 @@ $(function () {
 					</div>
 				`;
 
-		// Добавление в Slick-карусель
-		$('.active-profile-carousel').slick('slickAdd', newSlide);
-	
-} else {
-	button.text('Try Later');
-}
-},
-	error: function () {
-	button.text('Try Later');
-}
-});
+				// Добавление в Slick-карусель
+				$('.active-profile-carousel').slick('slickAdd', newSlide);
+
+			} else {
+				button.text('Try Later');
+			}
+		},
+		error: function () {
+			button.text('Try Later');
+		}
+	});
 });
 
+	$(document).ready(function () {
+	$('.friend-photo').on('click', function () {
+		const friendId = $(this).data('friend-id');
+
+		if (!friendId) return;
+
+		$.ajax({
+			url: '/api/chats/getByFriendId/' + friendId,
+			type: 'GET',
+			success: function (response) {
+				const messagesList = $('.message-list');
+				messagesList.empty();
+
+				response.messages.forEach(function (message) {
+					const isFriendMessage = message.senderId === friendId;
+					const messageClass = isFriendMessage ? 'text-friends' : 'text-author';
+
+					const messageHtml = `
+                        <li class="${messageClass}">
+                            <p>${escapeHtml(message.content)}</p>
+                            <div class="message-time">${formatTime(message.timestamp)}</div>
+                        </li>
+                    `;
+
+					messagesList.append(messageHtml);
+				});
+
+				$('.message-list-inner').scrollTop($('.message-list-inner')[0].scrollHeight);
+			},
+			error: function (xhr, status, error) {
+				console.error('Ошибка загрузки сообщений:', error);
+			}
+		});
+	});
+
+	// Форматирование времени (в минутах назад, пример)
+	function formatTime(timestamp) {
+	const time = new Date(timestamp);
+	const now = new Date();
+	const diffMs = now - time;
+	const diffMin = Math.floor(diffMs / 60000);
+	return `${diffMin} минут назад`;
+}
+
+	// Безопасный вывод текста
+	function escapeHtml(text) {
+	return $('<div>').text(text).html();
+}
+});

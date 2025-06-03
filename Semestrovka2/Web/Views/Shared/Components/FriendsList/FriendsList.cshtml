@@ -11,17 +11,15 @@
              @{
                  foreach (var friend in Model.FriendsList)
                  {
-                     <!-- profile picture end -->
                      <div class="single-slide">
                          <div class="profile-thumb active profile-active">
-                             <a href="javascript:void(0)">
+                             <a href="javascript:void(0)" class="friend-photo" data-friend-id="@friend.Id">
                                  <figure class="profile-thumb-small">
-                                     <img src=@friend.ImageUrl alt="profile picture">
+                                     <img src="@friend.ImageUrl" alt="profile picture">
                                  </figure>
                              </a>
                          </div>
                      </div>
-                     <!-- profile picture end -->
                  }
              }
         </div>

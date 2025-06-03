@@ -8,7 +8,11 @@ namespace Core.Abstractions ;
     {
         DbSet<User> Users { get; }
         DbSet<Friend> Friends { get; }
-        
+        DbSet<Message> Messages { get; }
+        DbSet<Chat> Chats { get; }
+        DbSet<FriendCategory> FriendCategories { get; }
+        DbSet<FriendCategoryLink> FriendCategoryLinks { get; }
+
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         
         public DatabaseFacade Database { get; }

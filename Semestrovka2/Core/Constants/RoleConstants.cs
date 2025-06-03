@@ -3,7 +3,7 @@ namespace ProFSB.Domain.Constants ;
     /// <summary>
     /// Роли
     /// </summary>
-    public class RoleConstants
+    public static class RoleConstants
     {
         
         /// <summary>

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Persistence;
 using Persistence.Extensions;
 using Web.Authentication;
+using Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,8 @@ var builder = WebApplication.CreateBuilder(args);
     });
 
     var app = builder.Build();
+
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
 
     // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())
