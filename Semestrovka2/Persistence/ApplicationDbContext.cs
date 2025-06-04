@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations;
 
 namespace Persistence;
-public class ApplicationDbContext : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>, IDbContext
+public sealed class ApplicationDbContext : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>, IDbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Friend> Friends { get; set; }

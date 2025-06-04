@@ -31,6 +31,15 @@ namespace Core.Services
                 User1 = _userContext.GetUserId() ?? throw new NullReferenceException("User id is null"),
                 User2 = friendId,
             };
+
+            var chat = new Chat
+            {
+                Id = Guid.NewGuid(),
+                User1Id = friendship.User1,
+                User2Id = friendship.User2,
+            };
+
+            await _dbContext.Chats.AddAsync(chat);
             await _dbContext.Friends.AddAsync(friendship);
             return await _dbContext.SaveChangesAsync();
         }

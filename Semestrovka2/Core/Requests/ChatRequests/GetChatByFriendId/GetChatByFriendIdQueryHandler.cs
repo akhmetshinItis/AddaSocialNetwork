@@ -23,14 +23,20 @@ namespace Core.Requests.ChatRequests.GetChatByFriendId
         {
             var chat = await _context.Chats
                 .Include(x => x.Messages)
-                .FirstOrDefaultAsync(x => x.User1Id == _userContext.GetUserId() && x.User2Id == request.FriendId,
+                .FirstOrDefaultAsync(x => x.User1Id == _userContext.GetUserId() && x.User2Id == request.FriendId
+                    || x.User2Id == _userContext.GetUserId() && x.User1Id == request.FriendId,
                     cancellationToken: cancellationToken)
                        ?? throw new EntityNotFoundException<Chat>("Chat not found");
+            var friend = _context.Users.FirstOrDefaultAsync(x => x.Id == request.FriendId, cancellationToken: cancellationToken).Result;
 
             return new GetChatByFriendIdResponse
             {
+                FriendId = request.FriendId,
+                FriendName = friend!.FirstName + " " + friend.LastName,
+                PhotoUrl = friend.ImageUrl!,
                 Chat = new GetAllChatsResponseItem
                 {
+                    Id = chat.Id,
                     LastMessage = new GetAllChatsMessageResponseItem
                     {
                         ChatId = chat.Id,

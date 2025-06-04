@@ -12,8 +12,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250531113050_AddChatAndMessage")]
-    partial class AddChatAndMessage
+    [Migration("20250604121722_swag")]
+    partial class swag
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,7 +169,7 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ChatId")
+                    b.Property<Guid?>("ChatId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("ChatId1")
@@ -188,7 +188,7 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsRead")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("SenderId")
+                    b.Property<Guid?>("SenderId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("Timestamp")
@@ -522,8 +522,7 @@ namespace Persistence.Migrations
                     b.HasOne("Core.Entities.Chat", "Chat")
                         .WithMany("Messages")
                         .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Core.Entities.Chat", null)
                         .WithOne("LastMessage")
@@ -532,8 +531,7 @@ namespace Persistence.Migrations
                     b.HasOne("Core.Entities.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Chat");
 
@@ -593,8 +591,7 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Core.Entities.Chat", b =>
                 {
-                    b.Navigation("LastMessage")
-                        .IsRequired();
+                    b.Navigation("LastMessage");
 
                     b.Navigation("Messages");
                 });

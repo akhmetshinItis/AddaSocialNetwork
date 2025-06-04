@@ -13,6 +13,7 @@ namespace Core
         {
             services.AddMediator();
             services.AddServices();
+            services.AddSignalR();
         }
 
         private static void AddMediator(this IServiceCollection services)
@@ -26,7 +27,6 @@ namespace Core
             services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<EmailServiceOptions>();
             
-            services.AddSignalR();
             services.AddScoped<IFriendsService, FriendsService>();
             services.AddScoped<IBusinessUserService, BusinessUserService>();
         }

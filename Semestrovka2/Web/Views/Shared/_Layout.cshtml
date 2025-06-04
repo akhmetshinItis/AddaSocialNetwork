@@ -357,23 +357,7 @@
                         </button>
                         <div class="mobile-chat-box">
                             <div class="live-chat-title">
-                                <!-- profile picture end -->
-                                <div class="profile-thumb">
-                                    <a href="profile.html">
-                                        <figure class="profile-thumb-small profile-active">
-                                            <img src="assets/images/profile/profile-small-15.jpg" alt="profile picture">
-                                        </figure>
-                                    </a>
-                                </div>
-                                <!-- profile picture end -->
-                                <div class="posted-author">
-                                    <h6 class="author"><a href="profile.html">Robart Marloyan</a></h6>
-                                    <span class="active-pro">active now</span>
-                                </div>
-                                <div class="live-chat-settings ml-auto">
-                                    <button class="chat-settings"><img src="assets/images/icons/settings.png" alt=""></button>
-                                    <button class="close-btn"><img src="assets/images/icons/close.png" alt=""></button>
-                                </div>
+                                @* заполняется скриптом *@
                             </div>
                             <div class="message-list-inner">
                                 <ul class="message-list custom-scroll">
@@ -498,7 +482,7 @@
                         <div class="footer-card position-relative">
                             <div class="live-chat-inner">
                                 <div class="chat-text-field">
-                                    <textarea class="live-chat-field custom-scroll" placeholder="Text Message"></textarea>
+                                    <input id="chatik" class="live-chat-field custom-scroll" placeholder="Text Message"/>
                                     <button class="chat-message-send" type="submit" value="submit">
                                         <img src="assets/images/icons/plane.png" alt="">
                                     </button>
@@ -677,6 +661,12 @@
 <script src="assets/js/plugins/isotope.pkgd.min.js"></script>
 <!-- Main JS -->
 <script src="assets/js/main.js"></script>
+<!-- 2. SignalR -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+<!-- 3. Твой скрипт -->
+<script src="assets/js/chat.js"></script>
+
+
 @await RenderSectionAsync("Scripts", required: false)
 
 </body>

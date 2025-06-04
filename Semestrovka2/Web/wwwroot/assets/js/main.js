@@ -262,9 +262,30 @@ $(document).on('click', '.add-frnd', function () {
 	});
 });
 
-	$(document).ready(function () {
-	$('.friend-photo').on('click', function () {
+let chatId = null;
+let gfriendId = null;
+$(document).ready(function () {
+	// --- Единожды назначаем обработчик отправки ---
+	$('.chat-message-send').on('click', function (e) {
+		e.preventDefault();
+
+		const messageInput = $('#chatik');
+		let message = messageInput.val().trim();
+
+		if (!message || !chatId) {
+			console.warn("Сообщение пустое или chatId не задан");
+			return;
+		}
+
+		SendMessage(chatId, message);
+		messageInput.val('');
+	});
+
+	// --- Обработчик клика по другу ---
+	$('.friend-photo').on('click', function (e) {
+		e.preventDefault();
 		const friendId = $(this).data('friend-id');
+		gfriendId = friendId;
 
 		if (!friendId) return;
 
@@ -272,6 +293,12 @@ $(document).on('click', '.add-frnd', function () {
 			url: '/api/chats/getByFriendId/' + friendId,
 			type: 'GET',
 			success: function (response) {
+				const currentChatId = response.chat.id;
+				chatId = currentChatId;
+				start(chatId);
+				
+				SetChatTitle(response);
+
 				const messagesList = $('.message-list');
 				messagesList.empty();
 

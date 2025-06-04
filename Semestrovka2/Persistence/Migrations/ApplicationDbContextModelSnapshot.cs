@@ -52,7 +52,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("User2Id");
 
-                    b.ToTable("Chats", (string)null);
+                    b.ToTable("Chats");
                 });
 
             modelBuilder.Entity("Core.Entities.Friend", b =>
@@ -81,7 +81,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Friends", (string)null);
+                    b.ToTable("Friends");
                 });
 
             modelBuilder.Entity("Core.Entities.FriendCategory", b =>
@@ -96,7 +96,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FriendCategories", (string)null);
+                    b.ToTable("FriendCategories");
 
                     b.HasData(
                         new
@@ -157,7 +157,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("FriendCategoryId");
 
-                    b.ToTable("FriendCategoryLinks", (string)null);
+                    b.ToTable("FriendCategoryLinks");
                 });
 
             modelBuilder.Entity("Core.Entities.Message", b =>
@@ -166,7 +166,7 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ChatId")
+                    b.Property<Guid?>("ChatId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("ChatId1")
@@ -185,7 +185,7 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsRead")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("SenderId")
+                    b.Property<Guid?>("SenderId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("Timestamp")
@@ -206,7 +206,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Core.Entities.User", b =>
@@ -253,7 +253,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -272,7 +272,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IdentityRole", (string)null);
+                    b.ToTable("IdentityRole");
 
                     b.HasData(
                         new
@@ -519,8 +519,7 @@ namespace Persistence.Migrations
                     b.HasOne("Core.Entities.Chat", "Chat")
                         .WithMany("Messages")
                         .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Core.Entities.Chat", null)
                         .WithOne("LastMessage")
@@ -529,8 +528,7 @@ namespace Persistence.Migrations
                     b.HasOne("Core.Entities.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Chat");
 
@@ -590,8 +588,7 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Core.Entities.Chat", b =>
                 {
-                    b.Navigation("LastMessage")
-                        .IsRequired();
+                    b.Navigation("LastMessage");
 
                     b.Navigation("Messages");
                 });
