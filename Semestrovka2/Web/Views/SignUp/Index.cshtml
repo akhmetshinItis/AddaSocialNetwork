@@ -1,3 +1,4 @@
+@model Web.Models.SignUp.SignUpViewModel
 @{
     ViewData["Title"] = "SignUp";
     Layout = null;
@@ -63,17 +64,19 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="login-area">
-                                    <div class="row align-items-center">
-                                        <div class="col-12 col-sm">
-                                            <input type="text" placeholder="Email or Userame" class="single-field">
+                                    <form asp-controller="SignUp" asp-action="LoginUser" method="post">
+                                        <div class="row align-items-center">
+                                            <div class="col-12 col-sm">
+                                                <input type="email" name="@nameof(Model.LoginUserViewModel.Email)" placeholder="Email" class="single-field">
+                                            </div>
+                                            <div class="col-12 col-sm">
+                                                <input type="password" name="@nameof(Model.LoginUserViewModel.Password)" placeholder="Password" class="single-field">
+                                            </div>
+                                            <div class="col-12 col-sm-auto">
+                                                <button type="submit" class="login-btn">Login</button>
+                                            </div>
                                         </div>
-                                        <div class="col-12 col-sm">
-                                            <input type="password" placeholder="Password" class="single-field">
-                                        </div>
-                                        <div class="col-12 col-sm-auto">
-                                            <button class="login-btn">Login</button>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -92,45 +95,42 @@
                                     <h1 class="create-acc text-center">Create An Account</h1>
                                     <div class="signup-inner text-center">
                                         <h3 class="title">Wellcome to Adda</h3>
-                                        <form class="signup-inner--form">
+                                        <form asp-controller="SignUp" asp-action="RegisterUser" method="post" class="signup-inner--form">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <input type="email" class="single-field" placeholder="Email">
+                                                    <input type="email" name="@nameof(Model.RegisterUserViewModel.Email)" class="single-field" placeholder="Email">
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="single-field" placeholder="First Name">
+                                                    <input type="text" name="@nameof(Model.RegisterUserViewModel.FirstName)" class="single-field" placeholder="First Name">
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="single-field" placeholder="Last Name">
+                                                    <input type="text" name="@nameof(Model.RegisterUserViewModel.LastName)" class="single-field" placeholder="Last Name">
                                                 </div>
                                                 <div class="col-12">
-                                                    <input type="password" class="single-field" placeholder="Password">
+                                                    <input type="password" name="@nameof(Model.RegisterUserViewModel.Password)" class="single-field" placeholder="Password">
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <select class="nice-select" name="sortby">
+                                                    <select class="nice-select" name="@nameof(Model.RegisterUserViewModel.Gender)">
                                                         <option value="trending">Gender</option>
                                                         <option value="sales">Male</option>
                                                         <option value="sales">Female</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <select class="nice-select" name="sortby">
-                                                        <option value="trending">Age</option>
-                                                        <option value="sales">18+</option>
-                                                        <option value="sales">18-</option>
+                                                    <input type="number" class="single-field" name="@nameof(Model.RegisterUserViewModel.Age)"
+                                                           placeholder="Введите возраст" min="0" required>
+                                                </div>
+                                                <div class="col-12">
+                                                    <select class="nice-select" name="@nameof(Model.RegisterUserViewModel.Country)">
+                                                        <option value="">Country</option>
+                                                        <option value="Bangladesh">Bangladesh</option>
+                                                        <option value="Noakhali">Noakhali</option>
+                                                        <option value="Australia">Australia</option>
+                                                        <option value="China">China</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-12">
-                                                    <select class="nice-select" name="sortby">
-                                                        <option value="trending">Country</option>
-                                                        <option value="sales">Bangladesh</option>
-                                                        <option value="sales">Noakhali</option>
-                                                        <option value="sales">Australia</option>
-                                                        <option value="sales">China</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-12">
-                                                    <button class="submit-btn">Create Account</button>
+                                                    <button type="submit" class="submit-btn">Create Account</button>
                                                 </div>
                                             </div>
                                             <h6 class="terms-condition">I have read & accepted the <a href="#">terms of use</a></h6>

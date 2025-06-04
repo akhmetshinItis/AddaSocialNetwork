@@ -170,7 +170,8 @@ textarea:focus {
 /*Custom Scroll (Perfect Scroll)*/
 .custom-scroll {
   position: relative;
-  overflow: hidden;
+  overflow: auto;
+  height: 100%;
 }
 
 .custom-scroll.ps .ps__rail-y,

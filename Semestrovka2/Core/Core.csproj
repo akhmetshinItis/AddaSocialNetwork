@@ -7,13 +7,32 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Abstractions\" />
-      <Folder Include="Constants\" />
-      <Folder Include="Entities\" />
       <Folder Include="Enums\" />
-      <Folder Include="Exceptions\" />
-      <Folder Include="Requests\" />
-      <Folder Include="Services\" />
+      <Folder Include="Requests\UserRequests\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MailKit" Version="4.12.1" />
+      <PackageReference Include="MediatR" Version="12.5.0" />
+      <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.5" />
+      <PackageReference Include="Microsoft.AspNetCore.SignalR.Client.Core" Version="9.0.5" />
+      <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="9.0.5" />
+      <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.Json" Version="9.0.5" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.2" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.0" />
+      <PackageReference Include="MimeKit" Version="4.12.0" />
+      <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Contracts\Contracts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Identity">
+        <HintPath>..\..\..\..\..\..\..\..\..\..\..\usr\local\share\dotnet\shared\Microsoft.AspNetCore.App\9.0.1\Microsoft.AspNetCore.Identity.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

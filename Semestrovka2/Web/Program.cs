@@ -1,11 +1,38 @@
+using Core;
+using Core.Hubs;
+using Microsoft.AspNetCore.Identity;
+using Persistence;
+using Persistence.Extensions;
+using Web.Authentication;
+using Web.Middlewares;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+    // Add services to the container.
     builder.Services.AddControllersWithViews();
+    builder.Services.AddPersistenceLayer(builder.Configuration);
+    builder.Services.AddCore();
+    builder.Services.AddUserContext();
+    
+    builder.Services.AddSignalR();
+
+    // Добавление Identity
+    builder.Services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>()
+        .AddEntityFrameworkStores<ApplicationDbContext>()
+        // для токена сброса пароля
+        .AddDefaultTokenProviders();
+
+    // Для редиректа неавторизованных пользователей
+    builder.Services.ConfigureApplicationCookie(options =>
+    {
+        options.LoginPath = "/signup";
+    });
 
     var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+    // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())
     {
         app.UseExceptionHandler("/Home/Error");
@@ -13,9 +40,12 @@ var builder = WebApplication.CreateBuilder(args);
         app.UseHsts();
     }
 
+// почистить
+    app.MapHub<ChatHub>("/chat");
     app.UseHttpsRedirection();
     app.UseRouting();
 
+    app.UseAuthentication();
     app.UseAuthorization();
 
     app.MapStaticAssets();
