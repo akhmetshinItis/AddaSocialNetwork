@@ -1,19 +1,21 @@
+using Core.Requests.ProfileRequests;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
 {
-    public class ProfileController : Controller
+    public class ProfileController(IMediator mediator) : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public ProfileController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
+        [HttpGet]
+        public async Task<IActionResult> Index()
+            =>View(await mediator.Send(new GetProfileCommand()));
+        
+        [HttpGet("Index/{id:guid}")]
+        public async Task<IActionResult> Index([FromRoute] Guid id)
+            =>View(await mediator.Send(new GetProfileCommand
+            {
+                IsCurrentUserProfile = false,
+                UserId = id
+            }));
     }
 }

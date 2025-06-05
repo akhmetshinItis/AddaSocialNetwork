@@ -12,6 +12,7 @@ namespace Core.Abstractions ;
         DbSet<Chat> Chats { get; }
         DbSet<FriendCategory> FriendCategories { get; }
         DbSet<FriendCategoryLink> FriendCategoryLinks { get; }
+        DbSet<ProfileData> ProfileDatas { get; }
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         

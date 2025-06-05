@@ -157,6 +157,7 @@
       <_ContentIncludedByDefault Remove="wwwroot\css\vendor\vendor.css" />
       <_ContentIncludedByDefault Remove="wwwroot\css\vendor\vendor.min.css" />
       <_ContentIncludedByDefault Remove="Views\Shared\Components\FriendsSearch\FriendsSearch.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Profile\Index.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -168,6 +169,7 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <ProjectReference Include="..\S3\S3.csproj" />
     </ItemGroup>
 
 </Project>

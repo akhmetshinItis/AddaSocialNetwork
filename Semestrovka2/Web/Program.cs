@@ -2,18 +2,20 @@ using Core;
 using Core.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Persistence;
-using Persistence.Extensions;
+using S3;
 using Web.Authentication;
 using Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+    var configuration = builder.Configuration;
     // Add services to the container.
     builder.Services.AddControllersWithViews();
     builder.Services.AddPersistenceLayer(builder.Configuration);
     builder.Services.AddCore();
     builder.Services.AddUserContext();
-    
+    builder.Services.AddS3Storage(configuration.GetSection("Application:S3").Get<S3Options>()); // исправить
     builder.Services.AddSignalR();
 
     // Добавление Identity

@@ -11,6 +11,7 @@ public sealed class ApplicationDbContext : IdentityDbContext<IdentityUser<Guid>,
     public DbSet<User> Users { get; set; }
     public DbSet<Friend> Friends { get; set; }
     public DbSet<FriendCategoryLink> FriendCategoryLinks { get; set; }
+    public DbSet<ProfileData> ProfileDatas { get; set; }
     public DbSet<FriendCategory> FriendCategories { get; set; }
     public DbSet<Chat> Chats { get; set; }
     public DbSet<Message> Messages { get; set; }
@@ -26,5 +27,7 @@ public sealed class ApplicationDbContext : IdentityDbContext<IdentityUser<Guid>,
         modelBuilder.ApplyConfiguration(new FriendCategoryConfiguration());
         modelBuilder.ApplyConfiguration(new ChatConfiguration());
         modelBuilder.ApplyConfiguration(new MessageConfiguration());
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new ProfileDataConfiguration());
     }
 }
