@@ -4,9 +4,9 @@ using Core.Entities;
 using Core.Exceptions;
 using MediatR;
 
-namespace Core.Requests.ProfileRequests
+namespace Core.Requests.ProfileRequests.GetProfile
 {
-    public class GetProfileCommandHandler : IRequestHandler<GetProfileCommand, GetProfileResponse>
+    public class GetProfileCommandHandler : IRequestHandler<GetProfileQuery, GetProfileResponse>
     {
         private readonly IUserContext _userContext;
         private readonly IDbContext _dbContext;
@@ -17,7 +17,7 @@ namespace Core.Requests.ProfileRequests
             _dbContext = dbContext;
         }
 
-        public Task<GetProfileResponse> Handle(GetProfileCommand request, CancellationToken cancellationToken)
+        public Task<GetProfileResponse> Handle(GetProfileQuery request, CancellationToken cancellationToken)
         {
             Guid userId = _userContext.GetUserId() ?? throw new UnauthorizedAccessException();
             if (!request.IsCurrentUserProfile && request.UserId.HasValue)

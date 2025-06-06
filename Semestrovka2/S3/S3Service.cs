@@ -1,5 +1,6 @@
 using Core.Abstractions;
 using Core.Models;
+using Microsoft.Extensions.Options;
 using Minio;
 using Minio.DataModel.Args;
 
@@ -13,10 +14,10 @@ namespace S3
         private const string DefaultContentType = "application/octet-stream";
         
         private readonly IMinioClient _client;
-        private readonly S3Options _s3Options;
+        private readonly IOptions<S3Options> _s3Options;
         
 
-        public S3Service(IMinioClient client, S3Options s3Options)
+        public S3Service(IMinioClient client, IOptions<S3Options> s3Options)
         {
             _client = client;
             _s3Options = s3Options;
@@ -32,7 +33,7 @@ namespace S3
             var contentType = string.IsNullOrWhiteSpace(file.ContentType) ? DefaultContentType : file.ContentType;
 
             var put = new PutObjectArgs()
-                .WithBucket(_s3Options.BucketName)
+                .WithBucket(_s3Options.Value.BucketName)
                 .WithStreamData(file.Content)
                 .WithContentType(contentType)
                 .WithFileName(file.FileName);

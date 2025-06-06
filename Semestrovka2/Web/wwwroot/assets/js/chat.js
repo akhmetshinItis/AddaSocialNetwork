@@ -140,11 +140,15 @@ function SetChatTitle(response){
             <h6 class="author"><a href="profile/${response.friendId}">${escapeHtml(friend)}</a></h6>
         </div>
         <div class="live-chat-settings ml-auto">
-            <button class="close-btn">
-                <img src="assets/images/icons/close.png" alt="">
-            </button>
+            <button class="close-btn" data-close="chat-output-box"><i class="flaticon-cross-out"></i></button>
         </div>
     `;
 
     $('.live-chat-title').html(liveChatTitleHtml);
 }
+
+$(document).on('click', '.close-btn', function () {
+    const targetClass = $(this).data('close');
+    $('.' + targetClass).removeClass('show');
+});
+

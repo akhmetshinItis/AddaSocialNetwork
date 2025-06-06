@@ -1,3 +1,5 @@
+using System.Security.AccessControl;
+
 namespace Contracts.Requests.FriendsRequests.GetFriendsList
 {
     public class GetFriendsListUserResponseItem
@@ -7,7 +9,5 @@ namespace Contracts.Requests.FriendsRequests.GetFriendsList
         public string FirstName { get; set; } = default!;
 
         public string LastName { get; set; } = default!;
-        // На будущее
-        // public Dictionary<string, string> MessageHsitory { get; set; } = new();
     }
 }

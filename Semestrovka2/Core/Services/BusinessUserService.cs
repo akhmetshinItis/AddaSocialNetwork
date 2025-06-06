@@ -17,9 +17,13 @@ namespace Core.Services
             _friendsService = friendsService;
         }
 
-        public IQueryable<User> SearchUsers(string searchString)
+        public IQueryable<User> SearchUsers(string? searchString)
         {
             var excludeIds = _friendsService.GetFriends();
+            if (searchString == null || searchString.Trim().Length == 0)
+                return _dbContext.Users.Where(x => x.Id != _userContext.GetUserId()
+                                                   && !excludeIds.Contains(x));
+            
             return _dbContext.Users.Where(x => x.Id != _userContext.GetUserId() 
                 && !excludeIds.Contains(x)
                 && (x.FirstName.ToLower() + x.LastName.ToLower()).Contains(searchString.ToLower()));
