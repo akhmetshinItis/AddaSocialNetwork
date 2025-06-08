@@ -29,9 +29,8 @@ namespace Core.Requests.GetHomePageRequests
             var friendIds = _friendsService.GetFriends().Select(x => x.Id);
             var posts = _dbContext.Posts
                 .Include(x => x.User)
-                .Where(x => friendIds.Contains(x.UserId));
-            var test = posts.ToList();
-            var test2 = friendIds.ToList();
+                .Where(x => friendIds.Contains(x.UserId) || x.UserId == user.Id)
+                .OrderByDescending(x => x.CreatedDate);
 
             var response = new GetHomePageResponse
             {

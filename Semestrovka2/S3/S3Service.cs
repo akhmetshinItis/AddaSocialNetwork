@@ -1,5 +1,6 @@
 using Core.Abstractions;
 using Core.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Minio;
 using Minio.DataModel.Args;
@@ -23,22 +24,34 @@ namespace S3
             _s3Options = s3Options;
         }
 
-        public async Task UploadAsync(FileContent file, CancellationToken cancellationToken = default)
+        public async Task<string> UploadAsync(IFormFile file, CancellationToken cancellationToken = default)
         {
-            if (file?.Content == null)
-                throw new ArgumentNullException(nameof(file));
-            if (file?.FileName == null)
-                throw new ArgumentException(nameof(file.FileName));
+            if (file == null || file.Length == 0)
+                throw new ArgumentException("Файл не предоставлен или пустой.", nameof(file));
 
-            var contentType = string.IsNullOrWhiteSpace(file.ContentType) ? DefaultContentType : file.ContentType;
+            var bucketName = _s3Options.Value.BucketName;
 
-            var put = new PutObjectArgs()
-                .WithBucket(_s3Options.Value.BucketName)
-                .WithStreamData(file.Content)
-                .WithContentType(contentType)
-                .WithFileName(file.FileName);
+            // Уникальное имя файла
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var contentType = string.IsNullOrWhiteSpace(file.ContentType) ? "application/octet-stream" : file.ContentType;
 
-            await _client.PutObjectAsync(put, cancellationToken);
+            // Загружаем файл
+            using var stream = file.OpenReadStream();
+
+            var putObjectArgs = new PutObjectArgs()
+                .WithBucket(bucketName)
+                .WithObject(fileName)
+                .WithStreamData(stream)
+                .WithObjectSize(stream.Length)
+                .WithContentType(contentType);
+
+            await _client.PutObjectAsync(putObjectArgs, cancellationToken);
+
+            // Формируем публичную ссылку (если хранилище публичное)
+            var endpoint = _s3Options.Value.ServiceUrl.TrimEnd('/');
+            var url = $"http://{endpoint}/{bucketName}/{fileName}";
+
+            return url;
         }
     }
 }

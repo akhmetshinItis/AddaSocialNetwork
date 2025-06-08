@@ -115,17 +115,17 @@ async function SendMessage(chatId, message) {
     }
 }
 
-    
-    // --- Отправка по Enter ---
-    $('.live-chat-field').on('keydown', function (e) {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            $('.chat-message-send').trigger('click');
-        }
-    });
+
+// --- Отправка по Enter ---
+$('.live-chat-field').on('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        $('.chat-message-send').trigger('click');
+    }
+});
 
 
-function SetChatTitle(response){
+function SetChatTitle(response) {
     console.log(response);
     const friend = response.friendName;
     const liveChatTitleHtml = `
@@ -152,3 +152,8 @@ $(document).on('click', '.close-btn', function () {
     $('.' + targetClass).removeClass('show');
 });
 
+
+    document.getElementById('photo-upload').addEventListener('change', function () {
+    const fileName = this.files[0]?.name || '';
+    document.getElementById('file-name-display').textContent = fileName;
+});

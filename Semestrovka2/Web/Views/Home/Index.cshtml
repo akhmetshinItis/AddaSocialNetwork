@@ -61,15 +61,25 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body custom-scroll">
-                                        <textarea name="share" class="share-field-big custom-scroll" placeholder="Say Something"></textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="post-share-btn" data-dismiss="modal">cancel</button>
-                                        <button type="button" class="post-share-btn">post</button>
+                                    <form asp-controller="Home" asp-action="CreatePost" method="post" enctype="multipart/form-data">
+                                        <div class="modal-body custom-scroll">
+                                            <textarea name="content" class="share-field-big custom-scroll" placeholder="Say Something"></textarea>
+
+                                            <div class="upload-photo-box mt-3">
+                                                <label for="photo-upload" class="custom-upload-btn">
+                                                    📷 Загрузить фото
+                                                </label>
+                                                <input type="file" name="file" id="photo-upload" accept="image/*" style="display: none;" />
+                                                <span id="file-name-display" style="margin-left: 10px; font-style: italic;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="post-share-btn" data-dismiss="modal">cancel</button>
+                                            <button type="submit" class="post-share-btn">post</button>
+                                        </div>
+                                    </form>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                         <!-- Modal end -->
                     </div>
@@ -144,31 +154,31 @@
                         <h4 class="widget-title">Advertizement</h4>
                         <div class="widget-body">
                             <div class="add-thumb">
-                                <a href="#">
-                                    <div class="game-frame hidden-xs">
-
-                                        <!-- Игровой iframe -->
-                                        <div id="desktop_game_container" class="desktop_game hidden-xs">
-                                            <iframe id="op4u_game"
-                                                    onload="gameLoaded()"
-                                                    src="https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?lang=en&amp;cur=EUR&amp;gameSymbol=vs20doghouse"
-                                                    width="100%" height="100%" title=""></iframe>
-                                        </div>
-
-                                    </div>
-                                    
-                                    <!-- Bootstrap CSS -->
-                                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
-
-                                    <!-- rateYo! CSS -->
-                                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
-
-                                    <!-- jQuery -->
-                                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-                                    <!-- rateYo! JS -->
-                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
-                                </a>
+                                @* <a href="#"> *@
+                                @*     <div class="game-frame hidden-xs"> *@
+                                @* *@
+                                @*         <!-- Игровой iframe --> *@
+                                @*         <div id="desktop_game_container" class="desktop_game hidden-xs"> *@
+                                @*             <iframe id="op4u_game" *@
+                                @*                     onload="gameLoaded()" *@
+                                @*                     src="https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?lang=en&amp;cur=EUR&amp;gameSymbol=vs20doghouse" *@
+                                @*                     width="100%" height="100%" title=""></iframe> *@
+                                @*         </div> *@
+                                @* *@
+                                @*     </div> *@
+                                @*      *@
+                                @*     <!-- Bootstrap CSS --> *@
+                                @*     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"> *@
+                                @* *@
+                                @*     <!-- rateYo! CSS --> *@
+                                @*     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css"> *@
+                                @* *@
+                                @*     <!-- jQuery --> *@
+                                @*     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+                                @* *@
+                                @*     <!-- rateYo! JS --> *@
+                                @*     <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script> *@
+                                @* </a> *@
                             </div>
                         </div>
                     </div>

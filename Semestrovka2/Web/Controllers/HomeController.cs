@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Core.Requests.GetHomePageRequests;
+using Core.Requests.PostRequests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,15 @@ namespace Web.Controllers ;
         [Authorize]
         public async Task<IActionResult> Index()
             => View(await mediator.Send(new GetHomePageQuery()));
-        
-        public IActionResult Privacy()
+
+        [HttpPost]
+        public async Task CreatePost(string? content, IFormFile? file)
         {
-            return View();
+            await mediator.Send(new CreatePostCommand
+            {
+                Content = content,
+                File = file,
+            });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,4 +1,4 @@
-using Core.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Core.Abstractions
 {
@@ -10,8 +10,8 @@ namespace Core.Abstractions
         /// <param name="file">Файл для сохранения в S3</param>
         /// <param name="cancellationToken">Токен отмены</param>
         /// <returns>ИД файла в хранилище</returns>
-        Task UploadAsync(
-            FileContent file,
+        Task<String> UploadAsync(
+            IFormFile file,
             CancellationToken cancellationToken = default);
     }
 }

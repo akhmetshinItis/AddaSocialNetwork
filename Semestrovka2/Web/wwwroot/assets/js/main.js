@@ -388,3 +388,32 @@ if (userId) {
 			document.querySelector('.profile-picture img').src = data.profileImage;
 		});
 }
+
+document.querySelector('#textbox form').addEventListener('submit', function(event) {
+	event.preventDefault(); // Отменяем стандартную отправку формы
+
+	const form = event.target;
+	const formData = new FormData(form);
+
+	fetch(form.action, {
+		method: form.method,
+		body: formData
+	})
+		.then(response => {
+			if (response.ok) {
+				// Ответ 200-299
+				$('#textbox').modal('hide'); // Скрыть модальное окно через jQuery+Bootstrap
+			} else {
+				// Ответ с ошибкой, например 400
+				$('#textbox').modal('hide'); // Тоже скрываем, если надо
+				// Можно добавить уведомление об ошибке, если нужно
+				alert('Ошибка при отправке данных');
+			}
+		})
+		.catch(error => {
+			// Сеть или другая ошибка
+			$('#textbox').modal('hide');
+			alert('Ошибка сети');
+		});
+});
+
