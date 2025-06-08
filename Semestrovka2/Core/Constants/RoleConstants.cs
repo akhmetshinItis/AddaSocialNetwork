@@ -1,4 +1,4 @@
-namespace ProFSB.Domain.Constants ;
+namespace Core.Constants ;
 
     /// <summary>
     /// Роли

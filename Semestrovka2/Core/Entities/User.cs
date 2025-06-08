@@ -9,7 +9,7 @@ namespace Core.Entities
         public bool Gender { get; set; } = default!;
         public int Age { get; set; } = default!;
         public string Country { get; set; } = default!;
-        public string? ImageUrl { get; set; } = "default";
+        public string? ImageUrl { get; set; } = "assets/images/profile/profile-1.jpg";
         public Guid IdentityUserId { get; set; } = default!;
     }
 }

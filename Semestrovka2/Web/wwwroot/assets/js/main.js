@@ -205,23 +205,37 @@
 })(jQuery);
 
 $(function () {
+	// Загрузка всех пользователей при старте
+	$.ajax({
+		url: '/api/searchFriends',
+		type: 'GET',
+		success: function (result) {
+			$('#search-results').html(result);
+		},
+		error: function () {
+			$('#search-results').html('<p>Люди не найдены</p>');
+		}
+	});
+
+	// Поиск по запросу
 	$('#friend-search-form').on('submit', function (e) {
 		e.preventDefault();
 		let query = $(this).find('.search-field').val();
 
 		$.ajax({
-			url: '/api/searchFriends', // Убедись, что путь правильный
+			url: '/api/searchFriends',
 			type: 'GET',
-			data: {query: query},
+			data: { query: query },
 			success: function (result) {
 				$('#search-results').html(result);
 			},
 			error: function () {
-				$('#search-results').html('<p>Error loading friends</p>');
+				$('#search-results').html('<p>Люди не найдены</p>');
 			}
 		});
 	});
 });
+
 
 
 $(document).on('click', '.add-frnd', function () {
@@ -338,3 +352,68 @@ $(document).ready(function () {
 	return $('<div>').text(text).html();
 }
 });
+
+
+// Получаем путь из URL
+const pathParts = window.location.pathname.split('/').filter(part => part !== '');
+
+let page = null;
+let userId = null;
+
+if (pathParts.length === 2) {
+	// Пример: /profile/123
+	page = pathParts[0];     // "profile"
+	userId = pathParts[1];   // "123"
+} else if (pathParts.length === 1) {
+	// Пример: /profile
+	page = pathParts[0];     // "profile"
+	// userId остается null
+}
+
+// Теперь можно использовать это условие:
+if (userId) {
+	// Есть id в URL — запрашиваем данные чужого профиля
+	fetch(`/profilePhotos/${userId}`)
+		.then(response => response.json())
+		.then(data => {
+			document.querySelector('.profile-banner-large').style.backgroundImage = `url(${data.backgroundImage})`;
+			document.querySelector('.profile-picture img').src = data.profileImage;
+		});
+} else if (page) {
+	// Нет id — значит, профиль текущего пользователя
+	fetch(`/profilePhotos/`)
+		.then(response => response.json())
+		.then(data => {
+			document.querySelector('.profile-banner-large').style.backgroundImage = `url(${data.backgroundImage})`;
+			document.querySelector('.profile-picture img').src = data.profileImage;
+		});
+}
+
+document.querySelector('#textbox form').addEventListener('submit', function(event) {
+	event.preventDefault(); // Отменяем стандартную отправку формы
+
+	const form = event.target;
+	const formData = new FormData(form);
+
+	fetch(form.action, {
+		method: form.method,
+		body: formData
+	})
+		.then(response => {
+			if (response.ok) {
+				// Ответ 200-299
+				$('#textbox').modal('hide'); // Скрыть модальное окно через jQuery+Bootstrap
+			} else {
+				// Ответ с ошибкой, например 400
+				$('#textbox').modal('hide'); // Тоже скрываем, если надо
+				// Можно добавить уведомление об ошибке, если нужно
+				alert('Ошибка при отправке данных');
+			}
+		})
+		.catch(error => {
+			// Сеть или другая ошибка
+			$('#textbox').modal('hide');
+			alert('Ошибка сети');
+		});
+});
+

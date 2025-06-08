@@ -23,7 +23,7 @@ namespace Web.Controllers
         }
         
         [HttpGet("api/searchFriends")]
-        public async Task<IActionResult> SearchFriends(string query)
+        public async Task<IActionResult> SearchFriends(string? query)
         {
             var friendsList = await mediator.Send(new SearchFriendsQuery(query));
             return PartialView("_FriendSearchResults", friendsList);

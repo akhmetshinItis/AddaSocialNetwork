@@ -1,0 +1,15 @@
+namespace Contracts.Requests.HomePageRequests
+{
+    public class PostResponseItem
+    {
+        public Guid UserId { get; set; }
+        public string UserPhoto { get; set; }
+        public string? Content { get; set; }
+        public string? Photo { get; set; }
+        public int Likes { get; set; } = new();
+        public List<CommentResponseItem> Comments { get; set; } = new();
+
+        public string UserName { get; set; } = string.Empty;
+        public string Time { get; set; }
+    }
+}

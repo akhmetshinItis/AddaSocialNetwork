@@ -1,28 +1,27 @@
 using System.Diagnostics;
+using Core.Requests.GetHomePageRequests;
+using Core.Requests.PostRequests;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models;
 
 namespace Web.Controllers ;
 
-    public class HomeController : Controller
+    public class HomeController(IMediator mediator) : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-        
         [Authorize]
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public async Task<IActionResult> Index()
+            => View(await mediator.Send(new GetHomePageQuery()));
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public async Task CreatePost(string? content, IFormFile? file)
         {
-            return View();
+            await mediator.Send(new CreatePostCommand
+            {
+                Content = content,
+                File = file,
+            });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
