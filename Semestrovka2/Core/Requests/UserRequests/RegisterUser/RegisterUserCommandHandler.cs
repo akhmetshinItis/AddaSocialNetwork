@@ -3,11 +3,11 @@ using System.Security.Claims;
 using System.Transactions;
 using Contracts.Requests.UserRequests.RegisterUser;
 using Core.Abstractions;
+using Core.Constants;
 using Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using ProFSB.Domain.Constants;
 
 namespace Core.Requests.UserRequests.RegisterUser ;
 

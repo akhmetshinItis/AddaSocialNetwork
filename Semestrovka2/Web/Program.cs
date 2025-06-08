@@ -57,5 +57,9 @@ var builder = WebApplication.CreateBuilder(args);
         pattern: "{controller=Home}/{action=Index}/{id?}")
         .WithStaticAssets();
 
+    app.MapControllerRoute(
+        name: "areaRoute",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}")
+        .WithStaticAssets();
 
     app.Run();

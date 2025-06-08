@@ -13,6 +13,9 @@ namespace Core.Abstractions ;
         DbSet<FriendCategory> FriendCategories { get; }
         DbSet<FriendCategoryLink> FriendCategoryLinks { get; }
         DbSet<ProfileData> ProfileDatas { get; }
+        DbSet<Post> Posts { get; }
+        DbSet<Comment> Comments { get; }
+        DbSet<Like> Likes { get; }
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         

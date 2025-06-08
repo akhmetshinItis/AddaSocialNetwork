@@ -1,5 +1,6 @@
 using Core.Abstractions;
 using Core.Entities;
+using Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Services
@@ -28,5 +29,8 @@ namespace Core.Services
                 && !excludeIds.Contains(x)
                 && (x.FirstName.ToLower() + x.LastName.ToLower()).Contains(searchString.ToLower()));
         }
+
+        public User GetCurrentUser()
+        => _dbContext.Users.FirstOrDefault(x => x.Id == _userContext.GetUserId()) ?? throw new EntityNotFoundException<User>("Не найден");
     }
 }

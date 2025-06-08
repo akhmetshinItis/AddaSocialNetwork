@@ -8,12 +8,13 @@ namespace Web.Controllers
     public class ProfileController(IMediator mediator) : Controller
     {
         [HttpGet]
+        [ActionName("Index")]
         public async Task<IActionResult> Index()
             =>View(await mediator.Send(new GetProfileQuery()));
         
         [HttpGet("profile/{id:guid}")]
-        public async Task<IActionResult> Index([FromRoute] Guid id)
-            =>View(await mediator.Send(new GetProfileQuery
+        public async Task<IActionResult> IndexById([FromRoute] Guid id)
+            =>View("Index", await mediator.Send(new GetProfileQuery
             {
                 IsCurrentUserProfile = false,
                 UserId = id
