@@ -21,21 +21,5 @@ namespace S3
         /// Название бакета
         /// </summary>
         public string BucketName { get; set; } = default!;
-        
-        public PublicReadPolicy PublicReadPolicy { get; set; } = null!;
-    }
-    
-    public class PublicReadPolicy
-    {
-        public string Version { get; set; } = null!;
-        public List<Statement> Statement { get; set; } = new();
-    }
-
-    public class Statement
-    {
-        public string Effect { get; set; } = null!;
-        public Dictionary<string, string> Principal { get; set; } = new();
-        public List<string> Action { get; set; } = new();
-        public List<string> Resource { get; set; } = new();
     }
 }

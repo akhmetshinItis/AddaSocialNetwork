@@ -11,6 +11,7 @@ namespace Core.Requests.GetHomePageRequests
         private readonly IDbContext _dbContext;
         private readonly IBusinessUserService _businessUserService;
         private readonly IFriendsService _friendsService;
+        private readonly IUserContext _userContext;
 
         public GetHomePageQueryHandler(IDbContext dbContext,
             IBusinessUserService businessUserService,
@@ -26,7 +27,7 @@ namespace Core.Requests.GetHomePageRequests
             // говнокод еще тот, но фиксить уже нет желания, перегорел
             var user = _businessUserService.GetCurrentUser();
             var profile = _dbContext.ProfileDatas.FirstOrDefault(x => x.UserId == user.Id);
-            var friendIds = _friendsService.GetFriends().Select(x => x.Id);
+            var friendIds = _friendsService.GetFriends(user.Id).Select(x => x.Id);
             var posts = _dbContext.Posts
                 .Include(x => x.User)
                 .Where(x => friendIds.Contains(x.UserId) || x.UserId == user.Id)
@@ -57,7 +58,7 @@ namespace Core.Requests.GetHomePageRequests
                     Description = profile.AboutMe,
                     Username = user.FirstName + " " + user.LastName,
                 },
-                FriendsList = await _friendsService.GetFriends().Select(x
+                FriendsList = await _friendsService.GetFriends(user.Id).Select(x
                     => new GetFriendsListUserResponseItem
                     {
                         Id = x.Id,

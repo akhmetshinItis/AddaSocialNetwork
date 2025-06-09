@@ -20,7 +20,7 @@ namespace Core.Services
 
         public IQueryable<User> SearchUsers(string? searchString)
         {
-            var excludeIds = _friendsService.GetFriends();
+            var excludeIds = _friendsService.GetFriends(_userContext.GetUserId() ?? throw new UnauthorizedAccessException());
             if (searchString == null || searchString.Trim().Length == 0)
                 return _dbContext.Users.Where(x => x.Id != _userContext.GetUserId()
                                                    && !excludeIds.Contains(x));

@@ -55,9 +55,8 @@ namespace Core.Services
 
         }
 
-        public IQueryable<User> GetFriends()
+        public IQueryable<User> GetFriends(Guid userId)
         {
-            var userId = _userContext.GetUserId();
             var friends =  _dbContext.Friends.Where(x => x.User1 == userId || x.User2 == userId);
             return _dbContext.Users.Where(x => friends.Any(f => 
                 f.User1 == x.Id && f.User1 != userId

@@ -8,15 +8,18 @@ namespace Core.Requests.FooterFriendsSectionRequests.GetFriendsList
     public class GetFrinendsListQueryHandler : IRequestHandler<GetFriendsListQuery, GetFriendsListResponse>
     {
         private readonly IFriendsService _friendsService;
+        private readonly IUserContext _userContext;
 
-        public GetFrinendsListQueryHandler(IFriendsService friendsService)
+        public GetFrinendsListQueryHandler(IFriendsService friendsService, IUserContext userContext)
         {
             _friendsService = friendsService;
+            _userContext = userContext;
         }
         
         public async Task<GetFriendsListResponse> Handle(GetFriendsListQuery request, CancellationToken cancellationToken)
         {
-            var friends = await _friendsService.GetFriends().Select(x 
+            var userId = request.UserId ?? _userContext.GetUserId() ?? throw new UnauthorizedAccessException();
+            var friends = await _friendsService.GetFriends(userId).Select(x 
                 => new GetFriendsListUserResponseItem
                 {
                     Id = x.Id,
@@ -24,7 +27,7 @@ namespace Core.Requests.FooterFriendsSectionRequests.GetFriendsList
                     LastName = x.LastName,
                     ImageUrl = x.ImageUrl,
                 }).ToListAsync(cancellationToken: cancellationToken);
-            return new GetFriendsListResponse(friends);
+            return new GetFriendsListResponse(friends, userId);
         }
     }
 }

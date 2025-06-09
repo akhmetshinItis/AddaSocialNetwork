@@ -28,10 +28,9 @@
                                 <div class="main-menu-inner header-top-navigation">
                                     <nav>
                                         <ul class="main-menu">
-                                            <li class="active"><a href="#">timeline</a></li>
-                                            <li><a href="profile">profile</a></li>
-                                            <li><a href="photos">photos</a></li>
-                                            <li><a href="friends">friends</a></li>
+                                            <li><a href="/profile/@Model.UserId">profile</a></li>
+                                            <li><a href="/photos/@Model.UserId">photos</a></li>
+                                            <li><a href="/friends/@Model.UserId">friends</a></li>
                                             <!-- <li class="d-inline-block d-md-none"><a href="profile.html">edit profile</a></li> -->
                                         </ul>
                                     </nav>
@@ -97,7 +96,7 @@
                                                 <div class="friend-list-view">
                                                     <!-- profile picture end -->
                                                     <div class="profile-thumb">
-                                                        <a href="profile/@friend.Id">
+                                                        <a href="/profile/@friend.Id">
                                                             <figure class="profile-thumb-middle">
                                                                 <img src=@friend.ImageUrl alt="profile picture">
                                                             </figure>
@@ -106,7 +105,7 @@
                                                     <!-- profile picture end -->
                                             
                                                     <div class="posted-author">
-                                                        <h6 class="author"><a href="profile/@friend.Id">@friend.FirstName @friend.LastName</a></h6>
+                                                        <h6 class="author"><a href="/profile/@friend.Id">@friend.FirstName @friend.LastName</a></h6>
                                                     </div>
                                                 </div>
                                             </div>

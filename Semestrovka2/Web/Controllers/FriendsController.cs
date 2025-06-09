@@ -15,6 +15,17 @@ namespace Web.Controllers
             var friends = await mediator.Send(new GetFriendsListQuery());
             return View(friends);
         }
+        
+        [HttpGet("friends/{userId:guid}")]
+        public async Task<IActionResult> ByUser([FromRoute] Guid userId)
+        {
+            var result = await mediator.Send(new GetFriendsListQuery
+            {
+                UserId = userId
+            });
+
+            return View("Index", result);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

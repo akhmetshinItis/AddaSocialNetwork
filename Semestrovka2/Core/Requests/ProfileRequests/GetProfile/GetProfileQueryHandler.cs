@@ -6,12 +6,12 @@ using MediatR;
 
 namespace Core.Requests.ProfileRequests.GetProfile
 {
-    public class GetProfileCommandHandler : IRequestHandler<GetProfileQuery, GetProfileResponse>
+    public class GetProfileQueryHandler : IRequestHandler<GetProfileQuery, GetProfileResponse>
     {
         private readonly IUserContext _userContext;
         private readonly IDbContext _dbContext;
 
-        public GetProfileCommandHandler(IUserContext userContext, IDbContext dbContext)
+        public GetProfileQueryHandler(IUserContext userContext, IDbContext dbContext)
         {
             _userContext = userContext;
             _dbContext = dbContext;
@@ -42,6 +42,7 @@ namespace Core.Requests.ProfileRequests.GetProfile
                 GoogleLink = profile.GoogleLink,
                 PinterestLink = profile.PinterestLink,
                 IsCurrentUserProfile = request.IsCurrentUserProfile,
+                UserId = userId,
             };
             
             return Task.FromResult(response);

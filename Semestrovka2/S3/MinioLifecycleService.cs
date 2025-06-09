@@ -35,15 +35,6 @@ namespace S3
             {
                 Console.WriteLine($"Bucket '{bucketName}' already exists.");
             }
-            
-            // Преобразуем объект политики в строку JSON
-            string policyJson = JsonSerializer.Serialize(_s3Options.PublicReadPolicy);
-
-            await _minioClient.SetPolicyAsync(new SetPolicyArgs()
-                .WithBucket(bucketName)
-                .WithPolicy(policyJson), cancellationToken);
-
-            Console.WriteLine($"Public read policy applied to bucket '{bucketName}'.");
         }
 
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;

@@ -16,5 +16,7 @@ namespace Contracts.Requests.ProfileRequests
         public string GoogleLink { get; set; } = String.Empty;
         public string PinterestLink { get; set; } = String.Empty;
         public bool IsCurrentUserProfile { get; set; }
+
+        public Guid UserId { get; set; }
     }
 }
