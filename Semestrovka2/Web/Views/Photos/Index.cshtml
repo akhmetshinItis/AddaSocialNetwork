@@ -87,62 +87,7 @@
                         <div class="col-12">
                             <div class="content-box">
                                 <div class="content-body">
-                                    <div class="row mt--30 photo-filter">
-                                        <div class="col-sm-6 col-md-4 timeline upload folder">
-                                            <div class="photo-group active">
-                                                <div class="gallery-toggle">
-                                                    <div class="gallery-overlay">
-                                                        <img src="/assets/images/photos/photo-blank.jpg" alt="Photo Gallery">
-                                                        <div class="view-icon"></div>
-                                                    </div>
-                                                    <div class="photo-gallery-caption">
-                                                        <h3 class="photos-caption">create folder</h3>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @{
-                                            if (Model.Albums != null)
-                                            {
-                                                foreach (var album in Model.Albums)
-                                                {
-                                                    <div class="col-sm-6 col-md-4 folder">
-                                                        <div class="photo-group">
-                                                            <div class="gallery-toggle">
-                                                                <div class="d-none product-thumb-large-view">
-                                                                    @{
-                                                                        if (album.Photos != null && album.Photos.Any())
-                                                                        {
-                                                                            foreach (var photo in album.Photos)
-                                                                            {
-                                                                                <img src="@photo.Path" alt="Photo Gallery" />
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                </div>
-                                                                <div class="gallery-overlay">
-                                                                    @if (album.Photos != null && album.Photos.Any())
-                                                                    {
-                                                                        <img src="@album.Photos[0].Path" alt="Photo Gallery" />
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <img src="/images/placeholder.jpg" alt="No Photo" />
-                                                                    }
-                                                                    <div class="view-icon"></div>
-                                                                </div>
-                                                                <div class="photo-gallery-caption">
-                                                                    <h3 class="photos-caption">
-                                                                        @album.Name (@(album.Photos?.Count ?? 0))
-                                                                    </h3>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }
-                                            }
-                                        }
-                                    </div>
+                                    @await Component.InvokeAsync("PhotoGallery", Model.UserId)
                                 </div>
                             </div>
                         </div>

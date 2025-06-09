@@ -22,14 +22,10 @@ namespace Web.Controllers
             return View("Index", result);
         }
 
-        [HttpGet("allAlbums")]
-        public async Task<IActionResult> GetAllAlbumsAsync([FromRoute] bool? sortByDate,
-            [FromRoute] bool? sortByAmount,
-            [FromRoute] Guid? userId)
+        [HttpGet("allAlbums/{userId:guid}")]
+        public async Task<IActionResult> GetAllAlbumsAsync([FromRoute] Guid? userId)
             => Ok(await mediator.Send(new GetAlbumsQuery
             {
-                SortByDate = sortByDate,
-                SortByAmount = sortByAmount,
                 UserId = userId,
             }));
     }

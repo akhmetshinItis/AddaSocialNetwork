@@ -1,4 +1,3 @@
-using Core.Requests.ProfileRequests;
 using Core.Requests.ProfileRequests.GetProfile;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
