@@ -18,5 +18,6 @@ namespace Contracts.Requests.ProfileRequests
         public bool IsCurrentUserProfile { get; set; }
 
         public Guid UserId { get; set; }
+        public List<HobbyResponse>? Hobbies { get; set; } = new();
     }
 }

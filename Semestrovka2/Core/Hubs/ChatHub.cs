@@ -30,8 +30,7 @@ namespace Core.Hubs
         public async Task SendMessage(Guid chatId, string message)
         {
             var cancellationToken = CancellationToken.None;
-            var senderId = _userContext.GetUserId()
-                ?? throw new UnauthorizedAccessException();
+            var senderId = _userContext.GetUserId();
 
             var transaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken);
             try

@@ -18,7 +18,7 @@ namespace Core.Requests.FooterFriendsSectionRequests.GetFriendsList
         
         public async Task<GetFriendsListResponse> Handle(GetFriendsListQuery request, CancellationToken cancellationToken)
         {
-            var userId = request.UserId ?? _userContext.GetUserId() ?? throw new UnauthorizedAccessException();
+            var userId = request.UserId ?? _userContext.GetUserId();
             var friends = await _friendsService.GetFriends(userId).Select(x 
                 => new GetFriendsListUserResponseItem
                 {

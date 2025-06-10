@@ -18,7 +18,9 @@ namespace Core.Abstractions ;
         DbSet<Like> Likes { get; }
         DbSet<Photo> Photos { get; }
         DbSet<Album> Albums { get; }
-        
+        DbSet<Hobby> Hobbies { get; }
+        DbSet<HobbyPhoto> HobbyPhotos { get; }
+
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         
         public DatabaseFacade Database { get; }

@@ -17,6 +17,8 @@ public sealed class ApplicationDbContext : IdentityDbContext<IdentityUser<Guid>,
     public DbSet<Like> Likes { get; set; }
     public DbSet<Photo> Photos { get; set; }
     public DbSet<Album> Albums { get; set; }
+    public DbSet<Hobby> Hobbies { get; set;  }
+    public DbSet<HobbyPhoto> HobbyPhotos { get; set; }
     public DbSet<FriendCategory> FriendCategories { get; set; }
     public DbSet<Chat> Chats { get; set; }
     public DbSet<Message> Messages { get; set; }

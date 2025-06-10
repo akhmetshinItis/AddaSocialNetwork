@@ -12,8 +12,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250609201125_AddHobbyCategory")]
-    partial class AddHobbyCategory
+    [Migration("20250610085907_AddHobbyAndPhoto")]
+    partial class AddHobbyAndPhoto
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -230,6 +230,70 @@ namespace Persistence.Migrations
                     b.HasIndex("FriendCategoryId");
 
                     b.ToTable("FriendCategoryLinks");
+                });
+
+            modelBuilder.Entity("Core.Entities.Hobby", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Hobbies");
+                });
+
+            modelBuilder.Entity("Core.Entities.HobbyPhoto", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("HobbyId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HobbyId");
+
+                    b.ToTable("HobbyPhotos");
                 });
 
             modelBuilder.Entity("Core.Entities.Like", b =>
@@ -777,6 +841,28 @@ namespace Persistence.Migrations
                     b.Navigation("FriendCategory");
                 });
 
+            modelBuilder.Entity("Core.Entities.Hobby", b =>
+                {
+                    b.HasOne("Core.Entities.User", "User")
+                        .WithMany("Hobbies")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Core.Entities.HobbyPhoto", b =>
+                {
+                    b.HasOne("Core.Entities.Hobby", "Hobby")
+                        .WithMany("Photos")
+                        .HasForeignKey("HobbyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Hobby");
+                });
+
             modelBuilder.Entity("Core.Entities.Like", b =>
                 {
                     b.HasOne("Core.Entities.Post", null)
@@ -895,11 +981,21 @@ namespace Persistence.Migrations
                     b.Navigation("Messages");
                 });
 
+            modelBuilder.Entity("Core.Entities.Hobby", b =>
+                {
+                    b.Navigation("Photos");
+                });
+
             modelBuilder.Entity("Core.Entities.Post", b =>
                 {
                     b.Navigation("Comments");
 
                     b.Navigation("Likes");
+                });
+
+            modelBuilder.Entity("Core.Entities.User", b =>
+                {
+                    b.Navigation("Hobbies");
                 });
 #pragma warning restore 612, 618
         }

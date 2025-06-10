@@ -4,5 +4,5 @@ namespace Core.Abstractions ;
     {
         public string? GetUserEmail();
         
-        public Guid? GetUserId();
+        public Guid GetUserId();
     }

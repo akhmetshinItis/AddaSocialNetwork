@@ -20,7 +20,7 @@ namespace Core.Requests.ProfileRequests.GetProfilePhotos
 
         public async Task<GetProfilePhotosResponse> Handle(GetProfilePhotosQuery request, CancellationToken cancellationToken)
         {
-            Guid userId = _userContext.GetUserId() ?? throw new UnauthorizedAccessException();
+            Guid userId = _userContext.GetUserId();
             if(request.UserId.HasValue)
                 userId = request.UserId.Value;
             

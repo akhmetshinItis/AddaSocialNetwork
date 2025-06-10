@@ -11,5 +11,6 @@ namespace Core.Entities
         public string Country { get; set; } = default!;
         public string? ImageUrl { get; set; } = "assets/images/profile/profile-1.jpg";
         public Guid IdentityUserId { get; set; } = default!;
+        public ICollection<Hobby> Hobbies { get; set; } = new List<Hobby>();
     }
 }

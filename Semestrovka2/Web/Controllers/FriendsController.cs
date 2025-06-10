@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Core.Abstractions;
 using Core.Requests.FooterFriendsSectionRequests.AddFriend;
 using Core.Requests.FooterFriendsSectionRequests.GetFriendsList;
 using Core.Requests.FooterFriendsSectionRequests.SearchFriends;
@@ -8,23 +9,17 @@ using Web.Models;
 
 namespace Web.Controllers
 {
-    public class FriendsController(IMediator mediator) : Controller
+    public class FriendsController(IMediator mediator, IUserContext userContext) : Controller
     {
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var friends = await mediator.Send(new GetFriendsListQuery());
-            return View(friends);
+            return View(userContext.GetUserId());
         }
         
         [HttpGet("friends/{userId:guid}")]
-        public async Task<IActionResult> ByUser([FromRoute] Guid userId)
+        public IActionResult ByUser([FromRoute] Guid userId)
         {
-            var result = await mediator.Send(new GetFriendsListQuery
-            {
-                UserId = userId
-            });
-
-            return View("Index", result);
+            return View("Index", userId);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

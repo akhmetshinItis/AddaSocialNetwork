@@ -20,7 +20,7 @@ namespace Core.Services
         public async Task<int> AddFriendAsync(Guid friendId)
         {
             var currentUserEmail = _userContext.GetUserEmail() ?? throw new NullReferenceException("User email is null");
-            var currentUserId = _userContext.GetUserId() ?? throw new NullReferenceException("User id is null");
+            var currentUserId = _userContext.GetUserId();
             
             if(_dbContext.Friends.Any(x => x.User1 == friendId && x.User2 == currentUserId 
             || x.User1 == currentUserId && x.User2 == friendId))
@@ -28,7 +28,7 @@ namespace Core.Services
             
             var friendship = new Friend
             {
-                User1 = _userContext.GetUserId() ?? throw new NullReferenceException("User id is null"),
+                User1 = _userContext.GetUserId(),
                 User2 = friendId,
             };
 

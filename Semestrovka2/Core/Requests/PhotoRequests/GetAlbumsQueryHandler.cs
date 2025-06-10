@@ -22,7 +22,7 @@ namespace Core.Requests.PhotoRequests
             if (request.UserId.HasValue)
                 userId = request.UserId.Value;
             else
-                userId = _userContext.GetUserId() ?? throw new UnauthorizedAccessException();
+                userId = _userContext.GetUserId();
 
             var albums = _dbContext.Albums.Where(x => x.UserId == userId);
             

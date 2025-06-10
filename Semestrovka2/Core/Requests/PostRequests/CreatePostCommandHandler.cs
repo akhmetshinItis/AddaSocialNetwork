@@ -44,7 +44,7 @@ namespace Core.Requests.PostRequests
 
             var post = new Post
             {
-                UserId = _userContext.GetUserId() ?? throw new UnauthorizedAccessException(),
+                UserId = _userContext.GetUserId(),
                 Content = request.Content,
                 Photo = fileUrl,
                 Likes = new List<Like>(),

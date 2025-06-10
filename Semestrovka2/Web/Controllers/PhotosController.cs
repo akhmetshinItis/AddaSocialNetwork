@@ -1,25 +1,21 @@
+using Core.Abstractions;
 using Core.Requests.PhotoRequests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
 {
-    public class PhotosController(IMediator mediator) : Controller
+    public class PhotosController(IMediator mediator, IUserContext userContext) : Controller
     {
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await mediator.Send(new GetAlbumsQuery()));
+            return View(userContext.GetUserId());
         }
         
         [HttpGet("photos/{userId:guid}")]
-        public async Task<IActionResult> ByUser([FromRoute] Guid userId)
+        public IActionResult ByUser([FromRoute] Guid userId)
         {
-            var result = await mediator.Send(new GetAlbumsQuery
-            {
-                UserId = userId
-            });
-
-            return View("Index", result);
+            return View("Index", userId);
         }
 
         [HttpGet("allAlbums/{userId:guid}")]

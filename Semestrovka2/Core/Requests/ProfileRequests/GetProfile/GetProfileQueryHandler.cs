@@ -1,3 +1,4 @@
+using Contracts.Requests.PhotoRequests;
 using Contracts.Requests.ProfileRequests;
 using Core.Abstractions;
 using Core.Entities;
@@ -19,7 +20,7 @@ namespace Core.Requests.ProfileRequests.GetProfile
 
         public Task<GetProfileResponse> Handle(GetProfileQuery request, CancellationToken cancellationToken)
         {
-            Guid userId = _userContext.GetUserId() ?? throw new UnauthorizedAccessException();
+            Guid userId = _userContext.GetUserId();
             if (!request.IsCurrentUserProfile && request.UserId.HasValue)
             {
                 userId = request.UserId.Value;
@@ -43,6 +44,15 @@ namespace Core.Requests.ProfileRequests.GetProfile
                 PinterestLink = profile.PinterestLink,
                 IsCurrentUserProfile = request.IsCurrentUserProfile,
                 UserId = userId,
+                Hobbies = _dbContext.Hobbies.Where(h => h.UserId == userId)
+                    .Select(x => new HobbyResponse
+                    {
+                        Name = x.Name,
+                        Photos = x.Photos.Select(x => new PhotoResponseItem
+                        {
+                            Path = x.Path,
+                        }).ToList(),
+                    }).ToList(),
             };
             
             return Task.FromResult(response);

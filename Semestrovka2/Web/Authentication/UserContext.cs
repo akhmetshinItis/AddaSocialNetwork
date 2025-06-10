@@ -20,7 +20,7 @@ namespace Web.Authentication ;
                 .FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
         }
 
-        public Guid? GetUserId()
+        public Guid GetUserId()
         {
             var id = _httpContextAccessor.HttpContext?
                 .User?

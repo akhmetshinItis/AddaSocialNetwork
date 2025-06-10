@@ -1,4 +1,4 @@
-@model Contracts.Requests.PhotoRequests.GetAlbumsResponse
+@model Guid
 @{
     ViewData["Title"] = "Profile";
 }
@@ -27,9 +27,9 @@
                                 <div class="main-menu-inner header-top-navigation">
                                     <nav>
                                         <ul class="main-menu">
-                                            <li><a href="/profile/@Model.UserId">profile</a></li>
-                                            <li><a href="/photos/@Model.UserId">photos</a></li>
-                                            <li><a href="/friends/@Model.UserId">friends</a></li>
+                                            <li><a href="/profile/@Model">profile</a></li>
+                                            <li><a href="/photos/@Model">photos</a></li>
+                                            <li><a href="/friends/@Model">friends</a></li>
                                             <!-- <li class="d-inline-block d-md-none"><a href="profile.html">edit profile</a></li> -->
                                         </ul>
                                     </nav>
@@ -87,7 +87,7 @@
                         <div class="col-12">
                             <div class="content-box">
                                 <div class="content-body">
-                                    @await Component.InvokeAsync("PhotoGallery", Model.UserId)
+                                    @await Component.InvokeAsync("PhotoGallery", Model)
                                 </div>
                             </div>
                         </div>
