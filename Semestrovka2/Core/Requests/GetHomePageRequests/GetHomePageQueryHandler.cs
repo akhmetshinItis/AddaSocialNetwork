@@ -48,12 +48,7 @@ namespace Core.Requests.GetHomePageRequests
                     IsLiked = x.Likes.Any(l => l.UserId == user.Id),
                     UserName = x.User.FirstName + " " + x.User.LastName,
                     Time = FormatPostTimeAgo(x.CreatedDate),
-                    Comments = x.Comments.Select(x => new CommentResponseItem
-                    {
-                        UserId = x.UserId,
-                        Content = x.Content,
-                        UserPhoto = x.User!.ImageUrl!,
-                    }).ToList(),
+                    CommentsCount = x.Comments.Count,
                 }).ToListAsync(cancellationToken: cancellationToken),
                 HomeProfileResponseItem = new HomeProfileResponseItem
                 {

@@ -34,6 +34,22 @@ namespace Web.Controllers ;
             return Ok();
         }
 
+        [HttpPost("comment")]
+        [Authorize]
+        public async Task<IActionResult> CreateComment([FromBody] CreateCommentRequest request)
+        {
+            await mediator.Send(request);
+            return Ok();
+        }
+
+        [HttpGet("comments/{postId:guid}")]
+        [Authorize]
+        public async Task<IActionResult> GetComments([FromRoute] Guid postId)
+        {
+            var response = await mediator.Send(new GetPostCommentsRequest { PostId = postId });
+            return Ok(response);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

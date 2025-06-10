@@ -140,9 +140,9 @@
                             </button>
                             <ul class="comment-share-meta">
                                 <li>
-                                    <button class="post-comment">
+                                    <button class="post-comment" onclick="showComments('@post.Id')">
                                         <i class="bi bi-chat-bubble"></i>
-                                        <span>@post.Comments.Count</span>
+                                        <span>@post.CommentsCount</span>
                                     </button>
                                 </li>
                             </ul>
@@ -152,6 +152,29 @@
                 <!-- post status end -->
                     }
                 }
+            </div>
+
+            <!-- Comments Modal -->
+            <div class="modal fade" id="commentsModal" tabindex="-1" role="dialog" aria-labelledby="commentsModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="commentsModalLabel">Comments</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="commentsList" class="comments-list">
+                                <!-- Comments will be loaded here -->
+                            </div>
+                            <div class="comment-form">
+                                <textarea id="commentContent" placeholder="Write a comment..."></textarea>
+                                <button onclick="submitComment()">Post Comment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-lg-3 order-3">
@@ -234,6 +257,62 @@
 
 @section Scripts {
     <script>
+        let currentPostId = null;
+
+        // Добавляем стили для модального окна комментариев
+        const style = document.createElement('style');
+        style.textContent = `
+            .comment-form {
+                margin-top: 20px;
+            }
+            .comment-form textarea {
+                width: 100%;
+                min-height: 80px;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                margin-bottom: 10px;
+                resize: vertical;
+            }
+            .comment-form button {
+                background-color: #dc4734;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: 500;
+            }
+            .comment-form button:hover {
+                background-color: #c13e2d;
+            }
+            .comments-list {
+                max-height: 400px;
+                overflow-y: auto;
+            }
+            .comment-item {
+                padding: 10px;
+                border-bottom: 1px solid #eee;
+            }
+            .comment-item:last-child {
+                border-bottom: none;
+            }
+            .comment-item img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                margin-right: 10px;
+            }
+            .comment-item .user-name {
+                font-weight: 600;
+                margin-bottom: 4px;
+            }
+            .comment-item .comment-content {
+                color: #333;
+            }
+        `;
+        document.head.appendChild(style);
+
         async function handleLike(postId, button) {
             try {
                 const response = await fetch('/like', {
@@ -260,6 +339,73 @@
                         strong.textContent = currentLikes + 1;
                         span.textContent = `You and ${currentLikes + 1} people like this`;
                     }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function showComments(postId) {
+            currentPostId = postId;
+            
+            try {
+                const response = await fetch(`/comments/${postId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    const commentsList = document.getElementById('commentsList');
+                    commentsList.innerHTML = '';
+                    
+                    data.comments.forEach(comment => {
+                        const commentHtml = `
+                            <div class="comment-item">
+                                <div class="d-flex">
+                                    <img src="${comment.userPhoto}" alt="user photo">
+                                    <div>
+                                        <div class="user-name">${comment.userName}</div>
+                                        <div class="comment-content">${comment.content}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        commentsList.innerHTML += commentHtml;
+                    });
+                    
+                    $('#commentsModal').modal('show');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function submitComment() {
+            if (!currentPostId) return;
+            
+            const content = document.getElementById('commentContent').value;
+            if (!content.trim()) return;
+
+            try {
+                const response = await fetch('/comment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        postId: currentPostId,
+                        content: content
+                    })
+                });
+
+                if (response.ok) {
+                    // Очищаем поле ввода
+                    document.getElementById('commentContent').value = '';
+                    
+                    // Обновляем счетчик комментариев
+                    const commentButton = document.querySelector(`button[onclick="showComments('${currentPostId}')"] span`);
+                    const currentCount = parseInt(commentButton.textContent);
+                    commentButton.textContent = currentCount + 1;
+                    
+                    // Перезагружаем комментарии
+                    await showComments(currentPostId);
                 }
             } catch (error) {
                 console.error('Error:', error);

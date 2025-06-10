@@ -9,8 +9,7 @@ namespace Contracts.Requests.HomePageRequests
         public string? Photo { get; set; }
         public int Likes { get; set; } = new();
         public bool IsLiked { get; set; }
-        public List<CommentResponseItem> Comments { get; set; } = new();
-
+        public int CommentsCount { get; set; }
         public string UserName { get; set; } = string.Empty;
         public string Time { get; set; }
     }
