@@ -6,14 +6,14 @@ namespace Core.Entities
     {
         public Guid? UserId { get; set; }
         public User? User { get; set; }
-        public string BackgroundImage { get; set; } = default!;
-        public string AboutMe { get; set; } = String.Empty;
-        public string WorkingZone { get; set; } = String.Empty;
-        public string Education { get; set; } = String.Empty;
-        public string Contacts { get; set; } = String.Empty;
-        public string FacebookLink { get; set; } = String.Empty;
-        public string TwitterLink { get; set; } = String.Empty;
-        public string GoogleLink { get; set; } = String.Empty;
-        public string PinterestLink { get; set; } = String.Empty;
+        public string BackgroundImage { get; set; } = string.Empty;
+        public string? AboutMe { get; set; } = String.Empty;
+        public string? WorkingZone { get; set; } = String.Empty;
+        public string? Education { get; set; } = String.Empty;
+        public string? Contacts { get; set; } = String.Empty;
+        public string? FacebookLink { get; set; } = String.Empty;
+        public string? TwitterLink { get; set; } = String.Empty;
+        public string? GoogleLink { get; set; } = String.Empty;
+        public string? PinterestLink { get; set; } = String.Empty;
     }
 }

@@ -1,5 +1,7 @@
 using System.Diagnostics;
+using Contracts.Requests.HomePageRequests;
 using Core.Requests.GetHomePageRequests;
+using Core.Requests.HomePageRequests;
 using Core.Requests.PostRequests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -22,6 +24,14 @@ namespace Web.Controllers ;
                 Content = content,
                 File = file,
             });
+        }
+
+        [HttpPost("like")]
+        [Authorize]
+        public async Task<IActionResult> LikePost([FromBody] LikePostRequest request)
+        {
+            await mediator.Send(request);
+            return Ok();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

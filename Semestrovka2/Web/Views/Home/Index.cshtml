@@ -126,9 +126,16 @@
                             }
                         }
                         <div class="post-meta">
-                            <button class="post-meta-like">
+                            <button class="post-meta-like @(post.IsLiked ? "active" : "")" onclick="handleLike('@post.Id', this)">
                                 <i class="bi bi-heart-beat"></i>
-                                <span> @post.Likes people like this</span>
+                                @if (post.IsLiked)
+                                {
+                                    <span> You and @post.Likes people like this</span>
+                                }
+                                else
+                                {
+                                    <span> @post.Likes people like this</span>
+                                }
                                 <strong>@post.Likes</strong>
                             </button>
                             <ul class="comment-share-meta">
@@ -224,3 +231,39 @@
     <i class="bi bi-finger-index"></i>
 </div>
 <!-- Scroll to Top End -->
+
+@section Scripts {
+    <script>
+        async function handleLike(postId, button) {
+            try {
+                const response = await fetch('/like', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ postId: postId })
+                });
+
+                if (response.ok) {
+                    const span = button.querySelector('span');
+                    const strong = button.querySelector('strong');
+                    const currentLikes = parseInt(strong.textContent);
+                    
+                    if (button.classList.contains('active')) {
+                        // Unlike
+                        button.classList.remove('active');
+                        strong.textContent = currentLikes - 1;
+                        span.textContent = ` ${currentLikes - 1} people like this`;
+                    } else {
+                        // Like
+                        button.classList.add('active');
+                        strong.textContent = currentLikes + 1;
+                        span.textContent = `You and ${currentLikes + 1} people like this`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+}

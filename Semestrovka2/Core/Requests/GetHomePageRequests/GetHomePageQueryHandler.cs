@@ -15,21 +15,23 @@ namespace Core.Requests.GetHomePageRequests
 
         public GetHomePageQueryHandler(IDbContext dbContext,
             IBusinessUserService businessUserService,
-            IFriendsService friendsService)
+            IFriendsService friendsService,
+            IUserContext userContext)
         {
             _dbContext = dbContext;
             _businessUserService = businessUserService;
             _friendsService = friendsService;
+            _userContext = userContext;
         }
 
         public async Task<GetHomePageResponse> Handle(GetHomePageQuery request, CancellationToken cancellationToken)
         {
-            // говнокод еще тот, но фиксить уже нет желания, перегорел
             var user = _businessUserService.GetCurrentUser();
             var profile = _dbContext.ProfileDatas.FirstOrDefault(x => x.UserId == user.Id);
             var friendIds = _friendsService.GetFriends(user.Id).Select(x => x.Id);
             var posts = _dbContext.Posts
                 .Include(x => x.User)
+                .Include(x => x.Likes)
                 .Where(x => friendIds.Contains(x.UserId) || x.UserId == user.Id)
                 .OrderByDescending(x => x.CreatedDate);
 
@@ -37,11 +39,13 @@ namespace Core.Requests.GetHomePageRequests
             {
                 Posts = await posts.Select(x => new PostResponseItem
                 {
+                    Id = x.Id,
                     UserId = x.UserId,
                     UserPhoto = x.User!.ImageUrl!,
                     Content = x.Content,
                     Photo = x.Photo,
                     Likes = x.Likes.Count,
+                    IsLiked = x.Likes.Any(l => l.UserId == user.Id),
                     UserName = x.User.FirstName + " " + x.User.LastName,
                     Time = FormatPostTimeAgo(x.CreatedDate),
                     Comments = x.Comments.Select(x => new CommentResponseItem
@@ -89,6 +93,5 @@ namespace Core.Requests.GetHomePageRequests
             else
                 return createdDate.Value.ToString("dd.MM.yyyy HH:mm");
         }
-
     }
 }
