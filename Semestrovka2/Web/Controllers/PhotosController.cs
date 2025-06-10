@@ -24,5 +24,13 @@ namespace Web.Controllers
             {
                 UserId = userId,
             }));
+
+        [HttpPost("createAlbum")]
+        public async Task<IActionResult> CreateAlbum([FromForm] CreateAlbumCommand command)
+        {
+            command.UserId = userContext.GetUserId();
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
     }
 }

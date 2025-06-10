@@ -2,12 +2,15 @@
 
 @{
     Layout = null;
+    var isCurrentUserProfile = ViewBag.IsCurrentUserProfile as bool? ?? false;
 }
 
 <div class="row mt--30 photo-filter">
+@if (isCurrentUserProfile)
+{
     <div class="col-sm-6 col-md-4 timeline upload folder">
         <div class="photo-group active">
-            <div class="gallery-toggle">
+            <div class="gallery-toggle" style="cursor:pointer;">
                 <div class="gallery-overlay">
                     <img src="/assets/images/photos/photo-blank.jpg" alt="Photo Gallery">
                     <div class="view-icon"></div>
@@ -18,6 +21,109 @@
             </div>
         </div>
     </div>
+<!-- Модальное окно для создания альбома -->
+<style>
+    /* Кастомные стили для модалки */
+    .modal.fade .modal-dialog {
+        transform: translateY(-50px);
+        transition: transform 0.3s ease-out;
+    }
+    .modal.show .modal-dialog {
+        transform: translateY(0);
+    }
+    #createAlbumModal .modal-content {
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        border: none;
+    }
+    #createAlbumModal .modal-header {
+        border-bottom: none;
+        background: #f8f9fa;
+        border-radius: 16px 16px 0 0;
+    }
+    #createAlbumModal .modal-title {
+        font-weight: 600;
+        color: #333;
+    }
+    #createAlbumModal .form-group label {
+        font-weight: 500;
+    }
+    #createAlbumModal .btn-success {
+        width: 100%;
+        border-radius: 8px;
+    }
+</style>
+
+<div class="modal fade" id="createAlbumModal" tabindex="-1" role="dialog" aria-labelledby="createAlbumModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createAlbumModalLabel">Создать новый альбом</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="createAlbumForm" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="albumName">Название альбома</label>
+            <input type="text" class="form-control" id="albumName" name="Name" required />
+          </div>
+          <div class="form-group">
+            <label for="albumPhotos">Фото</label>
+            <input type="file" class="form-control-file" id="albumPhotos" name="Photos" multiple accept="image/*" />
+          </div>
+          <button type="submit" class="btn btn-success">Создать</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    // Открытие модалки по клику на create folder
+    document.addEventListener('DOMContentLoaded', function() {
+        var createFolderBlock = document.querySelector('.photo-group.active .gallery-toggle');
+        if (createFolderBlock) {
+            createFolderBlock.addEventListener('click', function(e) {
+                // Открыть модалку через Bootstrap
+                if (window.jQuery) {
+                    $("#createAlbumModal").modal('show');
+                } else {
+                    document.getElementById('createAlbumModal').style.display = 'block';
+                }
+            });
+        }
+
+        // JS-обработчик формы создания альбома
+        var form = document.getElementById('createAlbumForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var formData = new FormData(form);
+                fetch('/createAlbum', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.ok ? response.json() : Promise.reject(response))
+                .then(data => {
+                    if (window.jQuery) {
+                        $("#createAlbumModal").modal('hide');
+                    } else {
+                        document.getElementById('createAlbumModal').style.display = 'none';
+                    }
+                    form.reset();
+                    location.reload();
+                })
+                .catch(err => {
+                    alert('Ошибка при создании альбома');
+                });
+            });
+        }
+    });
+</script>
+}
+@* create folder блок теперь только в if выше *@
     @{
         if (Model.Albums != null)
         {

@@ -194,6 +194,9 @@
                     <div class="content-box">
                         <h5 class="content-title">photos</h5>
                         <div class="content-body">
+                            @{{
+                                ViewBag.IsCurrentUserProfile = Model.IsCurrentUserProfile;
+                            }}
                             @await Component.InvokeAsync("PhotoGallery", Model.UserId)
                         </div>
                     </div>
@@ -253,4 +256,4 @@
             <!-- favorite book section end -->
         }
     }
-</div>v
+</div>
