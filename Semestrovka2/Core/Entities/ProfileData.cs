@@ -6,7 +6,7 @@ namespace Core.Entities
     {
         public Guid? UserId { get; set; }
         public User? User { get; set; }
-        public string BackgroundImage { get; set; } = string.Empty;
+        public string BackgroundImage { get; set; } = "/assets/images/banner/profile-banner.jpg";
         public string? AboutMe { get; set; } = String.Empty;
         public string? WorkingZone { get; set; } = String.Empty;
         public string? Education { get; set; } = String.Empty;

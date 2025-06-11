@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class FixCategories : Migration
+    public partial class DeleFriendCategoryLink : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,12 +16,11 @@ namespace Persistence.Migrations
                 table: "Comments");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_FriendCategoryLinks_FriendCategories_FriendCategoryId",
-                table: "FriendCategoryLinks");
-
-            migrationBuilder.DropForeignKey(
                 name: "FK_Likes_Posts_PostId",
                 table: "Likes");
+
+            migrationBuilder.DropTable(
+                name: "FriendCategoryLinks");
 
             migrationBuilder.AlterColumn<string>(
                 name: "WorkingZone",
@@ -98,38 +97,6 @@ namespace Persistence.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<Guid>(
-                name: "UserId",
-                table: "FriendCategoryLinks",
-                type: "uuid",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "text");
-
-            migrationBuilder.AlterColumn<Guid>(
-                name: "FriendId",
-                table: "FriendCategoryLinks",
-                type: "uuid",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "text");
-
-            migrationBuilder.AlterColumn<Guid>(
-                name: "FriendCategoryId",
-                table: "FriendCategoryLinks",
-                type: "uuid",
-                nullable: true,
-                oldClrType: typeof(Guid),
-                oldType: "uuid");
-
-            migrationBuilder.AlterColumn<Guid>(
-                name: "CategoryId",
-                table: "FriendCategoryLinks",
-                type: "uuid",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "integer");
-
-            migrationBuilder.AlterColumn<Guid>(
                 name: "PostId",
                 table: "Comments",
                 type: "uuid",
@@ -139,44 +106,11 @@ namespace Persistence.Migrations
                 oldType: "uuid",
                 oldNullable: true);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_FriendCategoryLinks_FriendId",
-                table: "FriendCategoryLinks",
-                column: "FriendId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FriendCategoryLinks_UserId",
-                table: "FriendCategoryLinks",
-                column: "UserId");
-
             migrationBuilder.AddForeignKey(
                 name: "FK_Comments_Posts_PostId",
                 table: "Comments",
                 column: "PostId",
                 principalTable: "Posts",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_FriendCategoryLinks_FriendCategories_FriendCategoryId",
-                table: "FriendCategoryLinks",
-                column: "FriendCategoryId",
-                principalTable: "FriendCategories",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_FriendCategoryLinks_Users_FriendId",
-                table: "FriendCategoryLinks",
-                column: "FriendId",
-                principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_FriendCategoryLinks_Users_UserId",
-                table: "FriendCategoryLinks",
-                column: "UserId",
-                principalTable: "Users",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
@@ -197,28 +131,8 @@ namespace Persistence.Migrations
                 table: "Comments");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_FriendCategoryLinks_FriendCategories_FriendCategoryId",
-                table: "FriendCategoryLinks");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_FriendCategoryLinks_Users_FriendId",
-                table: "FriendCategoryLinks");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_FriendCategoryLinks_Users_UserId",
-                table: "FriendCategoryLinks");
-
-            migrationBuilder.DropForeignKey(
                 name: "FK_Likes_Posts_PostId",
                 table: "Likes");
-
-            migrationBuilder.DropIndex(
-                name: "IX_FriendCategoryLinks_FriendId",
-                table: "FriendCategoryLinks");
-
-            migrationBuilder.DropIndex(
-                name: "IX_FriendCategoryLinks_UserId",
-                table: "FriendCategoryLinks");
 
             migrationBuilder.AlterColumn<string>(
                 name: "WorkingZone",
@@ -308,40 +222,6 @@ namespace Persistence.Migrations
                 oldClrType: typeof(Guid),
                 oldType: "uuid");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "UserId",
-                table: "FriendCategoryLinks",
-                type: "text",
-                nullable: false,
-                oldClrType: typeof(Guid),
-                oldType: "uuid");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "FriendId",
-                table: "FriendCategoryLinks",
-                type: "text",
-                nullable: false,
-                oldClrType: typeof(Guid),
-                oldType: "uuid");
-
-            migrationBuilder.AlterColumn<Guid>(
-                name: "FriendCategoryId",
-                table: "FriendCategoryLinks",
-                type: "uuid",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"),
-                oldClrType: typeof(Guid),
-                oldType: "uuid",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<int>(
-                name: "CategoryId",
-                table: "FriendCategoryLinks",
-                type: "integer",
-                nullable: false,
-                oldClrType: typeof(Guid),
-                oldType: "uuid");
-
             migrationBuilder.AlterColumn<Guid>(
                 name: "PostId",
                 table: "Comments",
@@ -350,20 +230,42 @@ namespace Persistence.Migrations
                 oldClrType: typeof(Guid),
                 oldType: "uuid");
 
+            migrationBuilder.CreateTable(
+                name: "FriendCategoryLinks",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    FriendCategoryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CategoryId = table.Column<int>(type: "integer", nullable: false),
+                    CreatedBy = table.Column<int>(type: "integer", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    FriendId = table.Column<string>(type: "text", nullable: false),
+                    UpdatedBy = table.Column<int>(type: "integer", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UserId = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FriendCategoryLinks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FriendCategoryLinks_FriendCategories_FriendCategoryId",
+                        column: x => x.FriendCategoryId,
+                        principalTable: "FriendCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FriendCategoryLinks_FriendCategoryId",
+                table: "FriendCategoryLinks",
+                column: "FriendCategoryId");
+
             migrationBuilder.AddForeignKey(
                 name: "FK_Comments_Posts_PostId",
                 table: "Comments",
                 column: "PostId",
                 principalTable: "Posts",
                 principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_FriendCategoryLinks_FriendCategories_FriendCategoryId",
-                table: "FriendCategoryLinks",
-                column: "FriendCategoryId",
-                principalTable: "FriendCategories",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Likes_Posts_PostId",

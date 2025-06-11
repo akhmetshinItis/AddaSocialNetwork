@@ -7,7 +7,7 @@ namespace Contracts.Requests.FriendsRequests.GetFriendsList
         public Guid Id { get; set; }
         public string? ImageUrl { get; set; } = default!;
         public string FirstName { get; set; } = default!;
-
         public string LastName { get; set; } = default!;
+        public string? CategoryName { get; set; }
     }
 }

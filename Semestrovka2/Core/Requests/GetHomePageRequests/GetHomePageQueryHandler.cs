@@ -1,6 +1,7 @@
 using Contracts.Requests.FriendsRequests.GetFriendsList;
 using Contracts.Requests.HomePageRequests;
 using Core.Abstractions;
+using Core.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +29,17 @@ namespace Core.Requests.GetHomePageRequests
         {
             var user = _businessUserService.GetCurrentUser();
             var profile = _dbContext.ProfileDatas.FirstOrDefault(x => x.UserId == user.Id);
+
+            if (profile == null)
+            {
+                profile = new ProfileData
+                {
+                    UserId = user.Id,
+                };
+                _dbContext.ProfileDatas.Add(profile);
+                await _dbContext.SaveChangesAsync(cancellationToken);
+            }
+            
             var friendIds = _friendsService.GetFriends(user.Id).Select(x => x.Id);
             var posts = _dbContext.Posts
                 .Include(x => x.User)

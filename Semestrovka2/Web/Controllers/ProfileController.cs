@@ -23,13 +23,13 @@ namespace Web.Controllers
         
         [HttpGet("profilePhotos")]
         public async Task<IActionResult> ProfilePhotos()
-            =>Ok(await mediator.Send(new GetProfileQuery()));
+            =>Ok(await mediator.Send(new GetProfileQuery{IsCurrentUserProfile = true}));
         
         [HttpGet("profilePhotos/{id:guid}")]
         public async Task<IActionResult> ProfilePhotos([FromRoute] Guid id)
             => Ok(await mediator.Send(new GetProfileQuery
             {
-                IsCurrentUserProfile = false,
+                IsCurrentUserProfile = userContext.GetUserId() == id,
                 UserId = id
             }));
     }

@@ -5,7 +5,7 @@
 }
 
 <style>
-    .add-category {
+    .category-button {
         background-color: #dc4734;
         color: white;
         border: none;
@@ -14,9 +14,11 @@
         cursor: pointer;
         font-size: 12px;
         margin-top: 5px;
+        width: 100%;
+        text-align: center;
     }
 
-    .add-category:hover {
+    .category-button:hover {
         background-color: #b33a2a;
     }
 
@@ -72,7 +74,9 @@
                                             
                     <div class="posted-author">
                         <h6 class="author"><a href="/profile/@friend.Id">@friend.FirstName @friend.LastName</a></h6>
-                        <button class="add-category" data-friend-id="@friend.Id">Add Category</button>
+                        <button class="category-button" data-friend-id="@friend.Id">
+                            @(friend.CategoryName == "Default" ? "Add Category" : friend.CategoryName)
+                        </button>
                     </div>
                 </div>
             </div>
@@ -85,7 +89,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addCategoryModalLabel">Add Category</h5>
+                <h5 class="modal-title" id="addCategoryModalLabel">Change Category</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -120,15 +124,18 @@
 <script>
     $(document).ready(function() {
         // Используем делегирование событий для кнопок
-        $(document).on('click', '.add-category', function() {
+        $(document).on('click', '.category-button', function() {
             var friendId = $(this).data('friend-id');
+            var currentCategory = $(this).text();
             $('#friendId').val(friendId);
+            $('#category').val(currentCategory === 'Add Category' ? 'Default' : currentCategory);
             $('#addCategoryModal').modal('show');
         });
 
         $('#saveCategory').click(function() {
             var friendId = $('#friendId').val();
             var category = $('#category').val();
+            var $button = $('.category-button[data-friend-id="' + friendId + '"]');
 
             $.ajax({
                 url: '/api/addFriendCategory',
@@ -140,10 +147,11 @@
                 }),
                 success: function() {
                     $('#addCategoryModal').modal('hide');
-                    alert('Category added successfully!');
+                    $button.text(category === 'Default' ? 'Add Category' : category);
+                    alert('Category updated successfully!');
                 },
                 error: function() {
-                    alert('Error adding category. Please try again.');
+                    alert('Error updating category. Please try again.');
                 }
             });
         });

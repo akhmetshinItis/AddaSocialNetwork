@@ -12,8 +12,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250610214933_FixCategories")]
-    partial class FixCategories
+    [Migration("20250611092507_AddNewFriendCategoryLink")]
+    partial class AddNewFriendCategoryLink
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

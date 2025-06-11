@@ -38,22 +38,28 @@ namespace Core.Requests.FriendsRequests
             // Проверяем существование связи
             var existingLink = await _dbContext.FriendCategoryLinks
                 .FirstOrDefaultAsync(l => 
-                    l.CategoryId == category.Id && 
                     l.UserId == userId && 
                     l.FriendId == request.FriendId, 
                     cancellationToken);
 
-            if (existingLink == null)
+            if (existingLink != null)
             {
+                // Обновляем существующую связь
+                existingLink.FriendCategoryId = category.Id;
+            }
+            else
+            {
+                // Создаем новую связь
                 var link = new FriendCategoryLink
                 {
-                    CategoryId = category.Id,
+                    FriendCategoryId = category.Id,
                     UserId = userId,
                     FriendId = request.FriendId
                 };
                 _dbContext.FriendCategoryLinks.Add(link);
-                await _dbContext.SaveChangesAsync(cancellationToken);
             }
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
-} 
+}
