@@ -1,5 +1,7 @@
 using Core.Abstractions;
 using Core.Requests.ProfileRequests.GetProfile;
+using Core.Requests.ProfileRequests.UpdateProfile;
+using Core.Requests.ProfileRequests.UpdateProfileImage;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,5 +34,19 @@ namespace Web.Controllers
                 IsCurrentUserProfile = userContext.GetUserId() == id,
                 UserId = id
             }));
+
+        [HttpPost("api/updateProfile")]
+        public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
+        {
+            await mediator.Send(request);
+            return Ok();
+        }
+
+        [HttpPost("api/updateProfileImage")]
+        public async Task<IActionResult> UpdateProfileImage([FromForm] UpdateProfileImageRequest request)
+        {
+            await mediator.Send(request);
+            return Ok();
+        }
     }
 }
