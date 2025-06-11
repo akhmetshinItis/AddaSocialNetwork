@@ -4,6 +4,56 @@
     Layout = null;
 }
 
+<style>
+    .add-category {
+        background-color: #dc4734;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .add-category:hover {
+        background-color: #b33a2a;
+    }
+
+    .modal-content {
+        border-radius: 8px;
+    }
+
+    .modal-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .modal-footer {
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+
+    .btn-primary {
+        background-color: #dc4734;
+        border-color: #dc4734;
+    }
+
+    .btn-primary:hover {
+        background-color: #b33a2a;
+        border-color: #b33a2a;
+    }
+
+    .form-control:focus {
+        border-color: #dc4734;
+        box-shadow: 0 0 0 0.2rem rgba(220, 71, 52, 0.25);
+    }
+</style>
+
 <div class="row mt--20 friends-list">
     @{
         foreach (var friend in Model.FriendsList)
@@ -22,9 +72,85 @@
                                             
                     <div class="posted-author">
                         <h6 class="author"><a href="/profile/@friend.Id">@friend.FirstName @friend.LastName</a></h6>
+                        <button class="add-category" data-friend-id="@friend.Id">Add Category</button>
                     </div>
                 </div>
             </div>
         }
     }
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCategoryModalLabel">Add Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addCategoryForm">
+                    <input type="hidden" id="friendId" name="friendId" />
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select class="form-control" id="category" name="category">
+                            <option value="Default">Default</option>
+                            <option value="Близкие друзя">Близкие друзя</option>
+                            <option value="Родственники">Родственники</option>
+                            <option value="Школьные друзя">Школьные друзя</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveCategory">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Подключаем необходимые скрипты -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Используем делегирование событий для кнопок
+        $(document).on('click', '.add-category', function() {
+            var friendId = $(this).data('friend-id');
+            $('#friendId').val(friendId);
+            $('#addCategoryModal').modal('show');
+        });
+
+        $('#saveCategory').click(function() {
+            var friendId = $('#friendId').val();
+            var category = $('#category').val();
+
+            $.ajax({
+                url: '/api/addFriendCategory',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    friendId: friendId,
+                    category: category
+                }),
+                success: function() {
+                    $('#addCategoryModal').modal('hide');
+                    alert('Category added successfully!');
+                },
+                error: function() {
+                    alert('Error adding category. Please try again.');
+                }
+            });
+        });
+
+        // Обработчик закрытия модального окна
+        $('.close, .btn-secondary').click(function() {
+            $('#addCategoryModal').modal('hide');
+        });
+    });
+</script>

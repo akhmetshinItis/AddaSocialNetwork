@@ -1,8 +1,9 @@
 using System.Diagnostics;
+using Contracts.Requests.FriendsRequests;
 using Core.Abstractions;
 using Core.Requests.FooterFriendsSectionRequests.AddFriend;
-using Core.Requests.FooterFriendsSectionRequests.GetFriendsList;
 using Core.Requests.FooterFriendsSectionRequests.SearchFriends;
+using Core.Requests.FriendsRequests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models;
@@ -45,6 +46,13 @@ namespace Web.Controllers
                 return Ok(response.RowsAffected);
             }
             return BadRequest();
+        }
+
+        [HttpPost("api/addFriendCategory")]
+        public async Task<IActionResult> AddFriendCategory([FromBody] AddFriendCategoryRequest request)
+        {
+            await mediator.Send(request);
+            return Ok();
         }
     }
 }

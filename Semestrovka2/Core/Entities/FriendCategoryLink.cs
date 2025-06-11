@@ -4,10 +4,12 @@ namespace Core.Entities
 {
     public class FriendCategoryLink : BaseAuditableEntity
     {
-        public string UserId { get; set; }
-        public string FriendId { get; set; }
-        public int CategoryId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid FriendId { get; set; }
+        public Guid CategoryId { get; set; }
 
-        public FriendCategory FriendCategory { get; set; }
+        public FriendCategory? FriendCategory { get; set; }
+        public User? User { get; set; }
+        public User? Friend { get; set; }
     }
 }
