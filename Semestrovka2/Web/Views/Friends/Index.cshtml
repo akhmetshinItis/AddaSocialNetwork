@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Friends";
+    var currentCategory = Context.Request.Query["category"].ToString();
 }
 
 <div class="main-wrapper">
@@ -54,14 +55,13 @@
                         <div class="col-lg-12">
                             <div class="secondary-menu-wrapper secondary-menu-2 bg-white">
                                 <div class="page-title-inner">
-                                    <h4 class="page-title">friends (1250)</h4>
+                                    <h4 class="page-title">friends</h4>
                                 </div>
                                 <div class="filter-menu">
-                                    <button class="active" data-filter="*">all</button>
-                                    <button data-filter=".recently">recently</button>
-                                    <button data-filter=".relative">relative</button>
-                                    <button data-filter=".collage">collage</button>
-                                    <button data-filter=".request">request</button>
+                                    <a href="/friends/@Model" class="filter-button @(string.IsNullOrEmpty(currentCategory) ? "active" : "")" data-filter="*">Все</a>
+                                    <a href="/friends/@Model?category=Близкие%20друзя" class="filter-button @(currentCategory == "Близкие друзя" ? "active" : "")" data-filter=".closes">Близкие друзя</a>
+                                    <a href="/friends/@Model?category=Родственники" class="filter-button @(currentCategory == "Родственники" ? "active" : "")" data-filter=".relatives">Родственники</a>
+                                    <a href="/friends/@Model?category=Школьные%20друзя" class="filter-button @(currentCategory == "Школьные друзя" ? "active" : "")" data-filter=".schools">Школьные друзя</a>
                                 </div>
                                 <div class="post-settings-bar">
                                     <span></span>
@@ -88,7 +88,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="content-box friends-zone">
-                                @await Component.InvokeAsync("FriendTable", Model)
+                                @await Component.InvokeAsync("FriendTable", new { userId = Model, category = currentCategory })
                             </div>
                         </div>
                     </div>
@@ -96,3 +96,28 @@
             </div>
             <!-- photo section end -->
         </div>
+
+<style>
+    .filter-button {
+        display: inline-block;
+        padding: 8px 16px;
+        margin: 0 4px;
+        border: none;
+        background: none;
+        color: #666;
+        cursor: pointer;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .filter-button:hover {
+        background-color: #f0f0f0;
+        color: #333;
+    }
+
+    .filter-button.active {
+        background-color: #007bff;
+        color: white;
+    }
+</style>

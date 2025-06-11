@@ -36,5 +36,6 @@ public sealed class ApplicationDbContext : IdentityDbContext<IdentityUser<Guid>,
         modelBuilder.ApplyConfiguration(new MessageConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new ProfileDataConfiguration());
+        modelBuilder.ApplyConfiguration(new FriendCategoryLinkConfiguration());
     }
 }
