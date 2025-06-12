@@ -1,7 +1,5 @@
-using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using Core.Abstractions;
-using Core.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 

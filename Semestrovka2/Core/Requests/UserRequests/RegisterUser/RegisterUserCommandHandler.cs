@@ -67,9 +67,12 @@ namespace Core.Requests.UserRequests.RegisterUser ;
                     CreatedDate = DateTime.UtcNow,
                 });
 
+                // Add role first
+                await _userServiceIdentity.AddRoleAsync(user, RoleConstants.User);
+
+                // Then add claims
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Role, RoleConstants.User),
                     new Claim(ClaimTypes.Authentication, biznesUserId.ToString())
                 };
 

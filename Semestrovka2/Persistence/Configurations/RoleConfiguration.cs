@@ -5,20 +5,20 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Configurations;
 
-public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
+public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole<Guid>>
 {
-    public void Configure(EntityTypeBuilder<IdentityRole> builder)
+    public void Configure(EntityTypeBuilder<IdentityRole<Guid>> builder)
     {
         builder.HasData(
-            new IdentityRole
+            new IdentityRole<Guid>
             {
-                Id = "1",
+                Id = Guid.NewGuid(),
                 Name = RoleConstants.User,
                 NormalizedName = RoleConstants.User.ToUpper()
             },
-            new IdentityRole
+            new IdentityRole<Guid>
             {
-                Id = "2",
+                Id = Guid.NewGuid(),
                 Name = RoleConstants.Admin,
                 NormalizedName = RoleConstants.Admin.ToUpper()
             });
