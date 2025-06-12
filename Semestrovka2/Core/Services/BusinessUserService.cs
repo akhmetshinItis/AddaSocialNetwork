@@ -31,6 +31,8 @@ namespace Core.Services
         }
 
         public User GetCurrentUser()
-        => _dbContext.Users.FirstOrDefault(x => x.Id == _userContext.GetUserId()) ?? throw new EntityNotFoundException<User>("Не найден");
+        {
+            return _dbContext.Users.FirstOrDefault(x => x.Id == _userContext.GetUserId()) ?? throw new EntityNotFoundException<User>("Не найден");
+        }
     }
 }

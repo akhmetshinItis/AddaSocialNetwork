@@ -3,6 +3,7 @@ namespace Contracts.Requests.AdminRequests.UserRequests
     public class GetAllUsersResponseUserItem
     {
         public Guid Id { get; set; }
+        public string? Email { get; set; } = String.Empty;
         public string LastName { get; set; } = default!;
         public string FirstName { get; set; } = default!;
         public string Gender { get; set; } = default!;

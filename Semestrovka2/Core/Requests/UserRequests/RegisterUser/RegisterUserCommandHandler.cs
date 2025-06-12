@@ -63,6 +63,7 @@ namespace Core.Requests.UserRequests.RegisterUser ;
                     Age = request.Age,
                     Country = request.Country,
                     CreatedDate = DateTime.UtcNow,
+                    Email = request.Email,
                 });
 
                 // Add role first

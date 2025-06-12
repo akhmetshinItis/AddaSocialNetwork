@@ -57,5 +57,11 @@ namespace Core.Services
                  return SignInResult.Failed;
             return await _signInManager.PasswordSignInAsync(user, password, false, false);
          }
+
+         public async Task<IdentityResult> DeleteUserAsync(Guid userId)
+         {
+             var user = await _userManager.FindByIdAsync(userId.ToString());
+             return await _userManager.DeleteAsync(user);
+         }
     }
 }

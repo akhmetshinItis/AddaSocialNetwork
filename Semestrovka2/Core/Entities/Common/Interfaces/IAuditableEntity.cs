@@ -6,4 +6,7 @@ public interface IAuditableEntity
     DateTime? CreatedDate { get; set; }
     int? UpdatedBy { get; set; }
     DateTime? UpdatedDate { get; set; }
+
+    bool IsDeleted { get; set; }
+
 }

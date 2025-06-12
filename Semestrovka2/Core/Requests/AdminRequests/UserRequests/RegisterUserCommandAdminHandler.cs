@@ -59,6 +59,7 @@ namespace Core.Requests.AdminRequests.UserRequests
                     Age = request.Age,
                     Country = request.Country,
                     CreatedDate = DateTime.UtcNow,
+                    Email = request.Email,
                 });
 
                 // Add role first

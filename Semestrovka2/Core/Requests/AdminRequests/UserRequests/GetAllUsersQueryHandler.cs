@@ -20,6 +20,7 @@ namespace Core.Requests.AdminRequests.UserRequests
                 Users = await _context.Users.Select(x => new GetAllUsersResponseUserItem
                 {
                     Id = x.Id,
+                    Email = x.Email,
                     Age = x.Age,
                     Country = x.Country,
                     FirstName = x.FirstName,

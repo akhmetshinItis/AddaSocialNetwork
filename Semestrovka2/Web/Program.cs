@@ -71,14 +71,14 @@ app.UseMiddleware<RequestLoggingMiddleware>();
 
 app.MapStaticAssets();
 
+    app.MapControllerRoute(
+        "Admin",
+        "{area:exists}/{controller=Home}/{action=Index}/{id?}")
+        .WithStaticAssets();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
-
-app.MapControllerRoute(
-    name: "areaRoute",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 app.Run();

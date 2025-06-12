@@ -1,5 +1,7 @@
-﻿using Core.Abstractions;
+﻿using System.Linq.Expressions;
+using Core.Abstractions;
 using Core.Entities;
+using Core.Entities.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +39,24 @@ public sealed class ApplicationDbContext : IdentityDbContext<IdentityUser<Guid>,
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new ProfileDataConfiguration());
         modelBuilder.ApplyConfiguration(new FriendCategoryLinkConfiguration());
+        
+        
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            if (typeof(BaseAuditableEntity).IsAssignableFrom(entityType.ClrType))
+            {
+                var parameter = Expression.Parameter(entityType.ClrType);
+                var body = Expression.Equal(
+                    Expression.Property(parameter, nameof(BaseAuditableEntity.IsDeleted)),
+                    Expression.Constant(false)
+                    );
+
+                var lambda = Expression.Lambda(body, parameter);
+
+                modelBuilder.Entity(entityType.ClrType)
+                    .HasQueryFilter(lambda);
+            }
+        }
     }
 
     public new DbSet<TEntity> Set<TEntity>() where TEntity : class

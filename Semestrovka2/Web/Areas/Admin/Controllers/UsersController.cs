@@ -1,6 +1,5 @@
 using Contracts.Requests.UserRequests.RegisterUser;
 using Core.Requests.AdminRequests.UserRequests;
-using Core.Requests.UserRequests.RegisterUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -53,6 +52,22 @@ public class UsersController : Controller
         }
 
         TempData["SuccessMessage"] = "Пользователь успешно создан!";
-        return RedirectToAction("Index");
+        return RedirectToAction("Index", "Users", new { area = "Admin" });
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var command = new DeleteUserCommand { UserId = id };
+        var result = await _mediator.Send(command);
+
+        if (!result.Succeeded)
+        {
+            TempData["ErrorMessage"] = "Failed to delete user.";
+            return RedirectToAction("Index");
+        }
+
+        TempData["SuccessMessage"] = "User successfully deleted!";
+        return RedirectToAction("Index", "Users", new { area = "Admin" });
     }
 } 

@@ -7,6 +7,9 @@ namespace Core.Entities
     {
         public string LastName { get; set; } = default!;
         public string FirstName { get; set; } = default!;
+        
+        public string Email { get; set; } = string.Empty;
+        
         public bool Gender { get; set; } = default!;
         public int Age { get; set; } = default!;
         public string Country { get; set; } = default!;

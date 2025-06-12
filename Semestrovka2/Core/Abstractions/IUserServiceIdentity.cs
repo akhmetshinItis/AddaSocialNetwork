@@ -93,5 +93,7 @@ namespace Core.Abstractions
         /// <param name="password">Пароль</param>
         /// <returns></returns>
         public Task<SignInResult> LoginAsync(string login, string password);
+        
+        public Task<IdentityResult> DeleteUserAsync(Guid userId);
     }
 }
