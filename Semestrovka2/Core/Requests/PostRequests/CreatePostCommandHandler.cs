@@ -8,13 +8,11 @@ namespace Core.Requests.PostRequests
     {
         private readonly IDbContext _dbContext;
         private readonly IS3Service _s3Service;
-        private readonly IUserContext _userContext;
 
-        public CreatePostCommandHandler(IDbContext dbContext, IS3Service s3Service, IUserContext userContext)
+        public CreatePostCommandHandler(IDbContext dbContext, IS3Service s3Service)
         {
             _dbContext = dbContext;
             _s3Service = s3Service;
-            _userContext = userContext;
         }
 
         public async Task Handle(CreatePostCommand request, CancellationToken cancellationToken)
@@ -39,12 +37,10 @@ namespace Core.Requests.PostRequests
                 
                 fileUrl = await _s3Service.UploadAsync(file, cancellationToken);
             }
-            
-            
 
             var post = new Post
             {
-                UserId = _userContext.GetUserId(),
+                UserId = request.UserId,
                 Content = request.Content,
                 Photo = fileUrl,
                 Likes = new List<Like>(),

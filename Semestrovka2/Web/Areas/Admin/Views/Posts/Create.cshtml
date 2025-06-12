@@ -1,0 +1,60 @@
+@model Core.Requests.PostRequests.CreatePostRequest
+@{
+    ViewData["Title"] = ViewBag.PostId != null ? "Редактировать пост" : "Создать пост";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">@ViewData["Title"]</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/admin">Панель управления</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index">Посты</a></li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-edit me-1"></i>
+            @(ViewBag.PostId != null ? "Редактирование поста" : "Создание поста")
+        </div>
+        <div class="card-body">
+            <form asp-action="@(ViewBag.PostId != null ? "Edit" : "Create")"
+                  asp-route-id="@ViewBag.PostId"
+                  method="post"
+                  enctype="multipart/form-data"
+                  class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="UserId" class="form-label">ID пользователя</label>
+                        <input asp-for="UserId" class="form-control" />
+                        <span asp-validation-for="UserId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="Content" class="form-label">Содержание</label>
+                        <textarea asp-for="Content" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="Photo" class="form-label">Фото</label>
+                        <input asp-for="Photo" type="file" class="form-control" accept="image/*" />
+                        <span asp-validation-for="Photo" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save me-1"></i>
+                            @(ViewBag.PostId != null ? "Сохранить" : "Создать")
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-1"></i>
+                            Назад
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
