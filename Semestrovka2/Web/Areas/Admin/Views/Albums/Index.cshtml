@@ -1,3 +1,4 @@
+@model Contracts.Requests.AdminRequests.AlbumRequests.GetAllAlbumsResponse
 @{
     ViewData["Title"] = "Альбомы";
 }
@@ -18,27 +19,32 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>ID Пользователя</th>
                         <th>Пользователь</th>
                         <th>Название</th>
                         <th>Описание</th>
-                        <th>Дата создания</th>
                         <th>Количество фото</th>
-                        <th>Действия</th>
+                        <th>Дата создания</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>ID</th>
-                        <th>Пользователь</th>
+                        <th>ID Пользователя</th>
                         <th>Название</th>
-                        <th>Описание</th>
-                        <th>Дата создания</th>
                         <th>Количество фото</th>
-                        <th>Действия</th>
+                        <th>Дата создания</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    <!-- Данные будут загружены через JavaScript -->
+                @foreach (var album in @Model.Albums)
+                {
+                    <tr>
+                        <td>@album.Id</td>
+                        <td>@album.UserId</td>
+                        <td>@album.Name</td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>

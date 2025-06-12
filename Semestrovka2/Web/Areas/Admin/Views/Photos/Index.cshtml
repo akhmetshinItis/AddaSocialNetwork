@@ -1,3 +1,4 @@
+@model Contracts.Requests.AdminRequests.PhotoRequests.GetAllPhotosResponse
 @{
     ViewData["Title"] = "Фотографии";
 }
@@ -16,29 +17,37 @@
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Пользователь</th>
-                        <th>Альбом</th>
-                        <th>URL</th>
-                        <th>Описание</th>
-                        <th>Дата загрузки</th>
-                        <th>Действия</th>
+                    <<tr>
+                        <th>Id</th>
+                        <th>User Id</th>
+                        <th>Album Id</th>
+                        <th>Album Name</th>
+                        <th>Path</th>
+                        <th>Created Date</th>
                     </tr>
                 </thead>
                 <tfoot>
-                    <tr>
-                        <th>ID</th>
-                        <th>Пользователь</th>
-                        <th>Альбом</th>
-                        <th>URL</th>
-                        <th>Описание</th>
-                        <th>Дата загрузки</th>
-                        <th>Действия</th>
-                    </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>User Id</th>
+                    <th>Album Id</th>
+                    <th>Album Name</th>
+                    <th>Path</th>
+                    <th>Created Date</th>
+                </tr>
                 </tfoot>
                 <tbody>
-                    <!-- Данные будут загружены через JavaScript -->
+                @foreach (var photo in @Model.Photos)
+                {
+                    <tr>
+                        <td>@photo.Id</td>
+                        <td>@photo.UserId</td>
+                        <td>@photo.AlbumId</td>
+                        <td>@photo.AlbumName</td>
+                        <td>@photo.Path</td>
+                        <td>@photo.CreatedDate</td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>

@@ -1,3 +1,4 @@
+@model Contracts.Requests.AdminRequests.MessageRequests.GetAllMessagesResponse
 @{
     ViewData["Title"] = "Сообщения";
 }
@@ -16,29 +17,43 @@
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Отправитель</th>
-                        <th>Получатель</th>
-                        <th>Текст</th>
-                        <th>Дата отправки</th>
-                        <th>Статус</th>
-                        <th>Действия</th>
-                    </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Chat Id</th>
+                    <th>Sender Id</th>
+                    <th>Sender Name</th>
+                    <th>Content</th>
+                    <th>Timestamp</th>
+                    <th>Is Read</th>
+                    <th>Created Date</th>
+                </tr>
                 </thead>
                 <tfoot>
-                    <tr>
-                        <th>ID</th>
-                        <th>Отправитель</th>
-                        <th>Получатель</th>
-                        <th>Текст</th>
-                        <th>Дата отправки</th>
-                        <th>Статус</th>
-                        <th>Действия</th>
-                    </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Chat Id</th>
+                    <th>Sender Id</th>
+                    <th>Sender Name</th>
+                    <th>Content</th>
+                    <th>Timestamp</th>
+                    <th>Is Read</th>
+                    <th>Created Date</th>
+                </tr>
                 </tfoot>
                 <tbody>
-                    <!-- Данные будут загружены через JavaScript -->
+                @foreach (var message in @Model.Messages)
+                {
+                    <tr>
+                        <td>@message.Id</td>
+                        <td>@message.ChatId</td>
+                        <td>@message.SenderId</td>
+                        <td>@message.SenderName</td>
+                        <td>@message.Content</td>
+                        <td>@message.Timestamp</td>
+                        <td>@message.IsRead</td>
+                        <td>@message.CreatedDate</td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>

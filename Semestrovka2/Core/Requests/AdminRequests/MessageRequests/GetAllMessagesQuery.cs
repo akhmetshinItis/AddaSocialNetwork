@@ -1,4 +1,4 @@
-using Contracts.Requests.AdminRequests.MessagesRequest;
+using Contracts.Requests.AdminRequests.MessageRequests;
 using MediatR;
 
 namespace Core.Requests.AdminRequests.MessageRequests

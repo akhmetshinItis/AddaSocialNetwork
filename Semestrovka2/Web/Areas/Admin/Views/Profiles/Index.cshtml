@@ -1,3 +1,4 @@
+@model Contracts.Requests.AdminRequests.ProfileRequests.GetAllProfilesResponse
 @{
     ViewData["Title"] = "Профили";
 }
@@ -16,31 +17,55 @@
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Пользователь</th>
-                        <th>Имя</th>
-                        <th>Фамилия</th>
-                        <th>Дата рождения</th>
-                        <th>Пол</th>
-                        <th>Город</th>
-                        <th>Действия</th>
-                    </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>User Id</th>
+                    <th>Background Image</th>
+                    <th>About Me</th>
+                    <th>Working Zone</th>
+                    <th>Education</th>
+                    <th>Contacts</th>
+                    <th>Facebook Link</th>
+                    <th>Twitter Link</th>
+                    <th>Google Link</th>
+                    <th>Pinterest Link</th>
+                    <th>Created Date</th>
+                </tr>
                 </thead>
                 <tfoot>
-                    <tr>
-                        <th>ID</th>
-                        <th>Пользователь</th>
-                        <th>Имя</th>
-                        <th>Фамилия</th>
-                        <th>Дата рождения</th>
-                        <th>Пол</th>
-                        <th>Город</th>
-                        <th>Действия</th>
-                    </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>User Id</th>
+                    <th>Background Image</th>
+                    <th>About Me</th>
+                    <th>Working Zone</th>
+                    <th>Education</th>
+                    <th>Contacts</th>
+                    <th>Facebook Link</th>
+                    <th>Twitter Link</th>
+                    <th>Google Link</th>
+                    <th>Pinterest Link</th>
+                    <th>Created Date</th>
+                </tr>
                 </tfoot>
                 <tbody>
-                    <!-- Данные будут загружены через JavaScript -->
+                @foreach (var profile in @Model.Profiles)
+                {
+                    <tr>
+                        <td>@profile.Id</td>
+                        <td>@profile.UserId</td>
+                        <td>@profile.BackgroundImage</td>
+                        <td>@profile.AboutMe</td>
+                        <td>@profile.WorkingZone</td>
+                        <td>@profile.Education</td>
+                        <td>@profile.Contacts</td>
+                        <td>@profile.FacebookLink</td>
+                        <td>@profile.TwitterLink</td>
+                        <td>@profile.GoogleLink</td>
+                        <td>@profile.PinterestLink</td>
+                        <td>@profile.CreatedDate</td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>

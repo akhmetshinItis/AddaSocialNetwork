@@ -1,3 +1,4 @@
+@model Contracts.Requests.AdminRequests.FriendRequests.GetAllFriendsResponse
 @{
     ViewData["Title"] = "Друзья";
 }
@@ -18,25 +19,38 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>ID Пользователя</th>
                         <th>Пользователь</th>
+                        <th>ID Друга</th>
                         <th>Друг</th>
-                        <th>Статус</th>
-                        <th>Дата добавления</th>
-                        <th>Действия</th>
+                        <th>Категория</th>
+                        <th>Дата создания</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>ID</th>
+                        <th>ID Пользователя</th>
                         <th>Пользователь</th>
+                        <th>ID Друга</th>
                         <th>Друг</th>
-                        <th>Статус</th>
-                        <th>Дата добавления</th>
-                        <th>Действия</th>
+                        <th>Категория</th>
+                        <th>Дата создания</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    <!-- Данные будут загружены через JavaScript -->
+                @foreach (var friend in @Model.Friends)
+                {
+                    <tr>
+                        <td>@friend.Id</td>
+                        <td>@friend.UserId</td>
+                        <td>@friend.UserName</td>
+                        <td>@friend.FriendId</td>
+                        <td>@friend.FriendName</td>
+                        <td>@friend.CategoryName</td>
+                        <td>@friend.CreatedDate</td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>

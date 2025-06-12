@@ -1,4 +1,4 @@
-using Contracts.Requests.AdminRequests.MessagesRequest;
+using Contracts.Requests.AdminRequests.MessageRequests;
 using Core.Abstractions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -8,19 +8,28 @@ namespace Core.Requests.AdminRequests.MessageRequests
     public class GetAllMessagesQueryHandler : IRequestHandler<GetAllMessagesQuery, GetAllMessagesResponse>
     {
         private readonly IDbContext _context;
-        public async Task<GetAllMessagesResponse> Handle(GetAllMessagesQuery request, CancellationToken cancellationToken)
+
+        public GetAllMessagesQueryHandler(IDbContext context)
         {
-            return new GetAllMessagesResponse
-            {
-                Messages = await _context.Messages.Select(x => new GetAllMessagesResponseItem
-                {
-                    ChatId = x.ChatId,
-                    Content = x.Content,
-                    IsRead = x.IsRead,
-                    SenderId = x.SenderId,
-                    Timestamp = x.Timestamp
-                }).ToListAsync(cancellationToken: cancellationToken)
-            };
+            _context = context;
         }
+
+        public async Task<GetAllMessagesResponse> Handle(GetAllMessagesQuery request, CancellationToken cancellationToken)
+            => new GetAllMessagesResponse
+            {
+                Messages = await _context.Messages
+                    .Select(x => new GetAllMessagesResponseMessageItem
+                    {
+                        Id = x.Id,
+                        ChatId = x.ChatId ?? Guid.Empty,
+                        SenderId = x.SenderId,
+                        SenderName = x.Sender != null ? x.Sender.FirstName + " " + x.Sender.LastName : "Unknown",
+                        Content = x.Content,
+                        Timestamp = x.Timestamp,
+                        IsRead = x.IsRead,
+                        CreatedDate = x.CreatedDate
+                    })
+                    .ToListAsync(cancellationToken)
+            };
     }
 }
