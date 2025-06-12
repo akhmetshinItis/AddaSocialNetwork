@@ -1,3 +1,4 @@
+using Core.Requests.AdminRequests.UserRequests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,8 +13,8 @@ public class UsersController : AdminBaseController
         _mediator = mediator;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        return View(await _mediator.Send(new GetAllUsersQuery()));
     }
 } 

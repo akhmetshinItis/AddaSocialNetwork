@@ -64,6 +64,7 @@ namespace Core.Requests.UserRequests.RegisterUser ;
                     FirstName = request.FirstName,
                     Age = request.Age,
                     Country = request.Country,
+                    CreatedDate = DateTime.UtcNow,
                 });
 
                 var claims = new List<Claim>
