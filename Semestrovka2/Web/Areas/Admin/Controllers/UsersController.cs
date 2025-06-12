@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Areas.Admin.Controllers;
 
-public class UsersController : AdminBaseController
+public class UsersController : Controller
 {
     private readonly IMediator _mediator;
     
-    public UsersController(IMediator mediator) : base(mediator)
+    public UsersController(IMediator mediator)
     {
         _mediator = mediator;
     }

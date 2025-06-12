@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Areas.Admin.Controllers;
 
-public class AlbumsController : AdminBaseController
+public class AlbumsController : Controller
 {
-    public AlbumsController(IMediator mediator) : base(mediator)
+    public AlbumsController(IMediator mediator)
     {
     }
 
     public IActionResult Index()
     {
-        return AdminView();
+        return View();
     }
 } 

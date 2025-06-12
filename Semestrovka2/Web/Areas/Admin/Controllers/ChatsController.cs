@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Areas.Admin.Controllers;
 
-public class ChatsController : AdminBaseController
+public class ChatsController : Controller
 {
-    public ChatsController(IMediator mediator) : base(mediator)
+    public ChatsController(IMediator mediator)
     {
     }
 
     public IActionResult Index()
     {
-        return AdminView();
+        return View();
     }
 } 

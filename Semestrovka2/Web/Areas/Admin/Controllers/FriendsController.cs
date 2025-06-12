@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Areas.Admin.Controllers;
 
-public class FriendsController : AdminBaseController
+public class FriendsController : Controller
 {
-    public FriendsController(IMediator mediator) : base(mediator)
+    public FriendsController(IMediator mediator)
     {
     }
 
     public IActionResult Index()
     {
-        return AdminView();
+        return View();
     }
 } 
