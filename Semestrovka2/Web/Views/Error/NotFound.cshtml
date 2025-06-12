@@ -1,0 +1,60 @@
+@{
+    ViewData["Title"] = "404 - Страница не найдена";
+}
+
+<div class="error-container">
+    <div class="error-content">
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">Страница не найдена</h2>
+        <p class="error-message">Извините, запрашиваемая страница не существует.</p>
+        <a href="/" class="btn btn-primary">Вернуться на главную</a>
+    </div>
+</div>
+
+<style>
+    .error-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .error-content {
+        max-width: 600px;
+    }
+
+    .error-code {
+        font-size: 120px;
+        font-weight: bold;
+        color: #dc3545;
+        margin: 0;
+        line-height: 1;
+    }
+
+    .error-title {
+        font-size: 32px;
+        margin: 20px 0;
+        color: #343a40;
+    }
+
+    .error-message {
+        font-size: 18px;
+        color: #6c757d;
+        margin-bottom: 30px;
+    }
+
+    .btn-primary {
+        padding: 12px 30px;
+        font-size: 16px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+</style> 

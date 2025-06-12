@@ -31,6 +31,7 @@ builder.Services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>()
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/signup";
+    options.AccessDeniedPath = "/Error/Forbidden";
 });
 
 var app = builder.Build();
@@ -48,10 +49,20 @@ if (!app.Environment.IsDevelopment())
 // почистить
 app.MapHub<ChatHub>("/chat");
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Обработка 404 ошибок
+app.UseStatusCodePages(async context =>
+{
+    if (context.HttpContext.Response.StatusCode == 404)
+    {
+        context.HttpContext.Response.Redirect("/Error/NotFound");
+    }
+});
 
 app.UseMiddleware<RequestLoggingMiddleware>();
 
