@@ -1,0 +1,46 @@
+@{
+    ViewData["Title"] = "Сообщения";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">@ViewData["Title"]</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/admin">Панель управления</a></li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Список сообщений
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Отправитель</th>
+                        <th>Получатель</th>
+                        <th>Текст</th>
+                        <th>Дата отправки</th>
+                        <th>Статус</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Отправитель</th>
+                        <th>Получатель</th>
+                        <th>Текст</th>
+                        <th>Дата отправки</th>
+                        <th>Статус</th>
+                        <th>Действия</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <!-- Данные будут загружены через JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> 

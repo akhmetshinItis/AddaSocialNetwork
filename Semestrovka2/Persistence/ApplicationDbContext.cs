@@ -38,4 +38,9 @@ public sealed class ApplicationDbContext : IdentityDbContext<IdentityUser<Guid>,
         modelBuilder.ApplyConfiguration(new ProfileDataConfiguration());
         modelBuilder.ApplyConfiguration(new FriendCategoryLinkConfiguration());
     }
+
+    public new DbSet<TEntity> Set<TEntity>() where TEntity : class
+    {
+        return base.Set<TEntity>();
+    }
 }
