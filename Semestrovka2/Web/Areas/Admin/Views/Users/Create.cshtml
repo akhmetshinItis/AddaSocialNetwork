@@ -1,0 +1,59 @@
+@model Contracts.Requests.UserRequests.RegisterUser.RegisterUserRequest
+
+@{
+    ViewData["Title"] = "Создать пользователя";
+}
+
+<div class="container-fluid px-4">
+<h2 class="mb-4">Создание пользователя</h2>
+
+<form asp-action="Create" method="post" class="needs-validation" novalidate>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label asp-for="FirstName" class="form-label">Имя</label>
+            <input asp-for="FirstName" name="@nameof(Model.FirstName)" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="LastName" class="form-label">Фамилия</label>
+            <input asp-for="LastName" name="@nameof(Model.LastName)" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" name="@nameof(Model.Email)" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Password" class="form-label">Пароль</label>
+            <input asp-for="Password" name="@nameof(Model.Password)" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Gender" class="form-label">Пол</label>
+            <select asp-for="Gender" name="@nameof(Model.Gender)" class="form-select">
+                <option value="true">Мужской</option>
+                <option value="false">Женский</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Age" class="form-label">Возраст</label>
+            <input asp-for="Age" name="@nameof(Model.Age)" type="number" min="0" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Country" class="form-label">Страна</label>
+            <input asp-for="Country" name="@nameof(Model.Country)" class="form-control" />
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">Создать</button>
+        </div>
+    </div>
+</form>
+</div>
