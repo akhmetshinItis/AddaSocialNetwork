@@ -60,7 +60,10 @@ app.UseStatusCodePages(async context =>
 {
     if (context.HttpContext.Response.StatusCode == 404)
     {
-        context.HttpContext.Response.Redirect("/Error/NotFound");
+        var path = context.HttpContext.Request.Path.Value?.StartsWith("/admin") == true 
+            ? "/admin/Error/NotFound" 
+            : "/Error/NotFound";
+        context.HttpContext.Response.Redirect(path);
     }
 });
 

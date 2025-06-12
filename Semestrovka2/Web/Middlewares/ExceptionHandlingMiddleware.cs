@@ -81,13 +81,19 @@ public class ExceptionHandlingMiddleware
         // Redirect to custom error pages for 404 and 403
         if (responseCode == HttpStatusCode.NotFound)
         {
-            context.Response.Redirect("/Error/NotFound");
+            var path = context.Request.Path.Value?.StartsWith("/admin") == true 
+                ? "/admin/Error/NotFound" 
+                : "/Error/NotFound";
+            context.Response.Redirect(path);
             return;
         }
         
         if (responseCode == HttpStatusCode.Forbidden)
         {
-            context.Response.Redirect("/Error/Forbidden");
+            var path = context.Request.Path.Value?.StartsWith("/admin") == true 
+                ? "/admin/Error/Forbidden" 
+                : "/Error/Forbidden";
+            context.Response.Redirect(path);
             return;
         }
 
