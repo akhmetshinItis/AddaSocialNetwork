@@ -54,6 +54,59 @@ public class UsersController : Controller
         TempData["SuccessMessage"] = "Пользователь успешно создан!";
         return RedirectToAction("Index", "Users", new { area = "Admin" });
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(Guid id)
+    {
+        var users = await _mediator.Send(new GetAllUsersQuery());
+        var user = users.Users.FirstOrDefault(u => u.Id == id);
+        
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var model = new RegisterUserRequest
+        {
+            Email = user.Email,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Gender = user.Gender == "male",
+            Age = user.Age,
+            Country = user.Country
+        };
+
+        ViewBag.UserId = id;
+        return View("Create", model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(Guid id, [FromForm] RegisterUserRequest request)
+    {
+        try
+        {
+            var command = new UpdateUserCommand
+            {
+                UserId = id,
+                Email = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Gender = request.Gender,
+                Age = request.Age,
+                Country = request.Country
+            };
+
+            await _mediator.Send(command);
+            TempData["SuccessMessage"] = "Пользователь успешно обновлен!";
+            return RedirectToAction("Index", "Users", new { area = "Admin" });
+        }
+        catch (Exception ex)
+        {
+            ModelState.AddModelError("", ex.Message);
+            ViewBag.UserId = id;
+            return View("Create", request);
+        }
+    }
     
     [HttpPost]
     public async Task<IActionResult> Delete(Guid id)

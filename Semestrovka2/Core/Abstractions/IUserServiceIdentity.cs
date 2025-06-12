@@ -95,5 +95,7 @@ namespace Core.Abstractions
         public Task<SignInResult> LoginAsync(string login, string password);
         
         public Task<IdentityResult> DeleteUserAsync(Guid userId);
+
+        public Task<IdentityResult> UpdateUserAsync(IdentityUser<Guid> user);
     }
 }

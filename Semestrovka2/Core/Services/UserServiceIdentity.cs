@@ -63,5 +63,8 @@ namespace Core.Services
              var user = await _userManager.FindByIdAsync(userId.ToString());
              return await _userManager.DeleteAsync(user);
          }
+
+        public Task<IdentityResult> UpdateUserAsync(IdentityUser<Guid> user)
+            => _userManager.UpdateAsync(user);
     }
 }
