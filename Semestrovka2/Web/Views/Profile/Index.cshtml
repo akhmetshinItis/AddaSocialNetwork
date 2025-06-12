@@ -263,7 +263,7 @@
                     <div class="content-box">
                         <h5 class="content-title">photos</h5>
                         <div class="content-body">
-                            @await Component.InvokeAsync("PhotoGallery", Model.UserId)
+                            @await Component.InvokeAsync("PhotoGallery", new { userId = Model.UserId })
                         </div>
                     </div>
                 </div>
@@ -280,7 +280,7 @@
                     <div class="content-box">
                         <h5 class="content-title">friends</h5>
                         <div class="content-body">
-                            @await Component.InvokeAsync("FriendTable", Model.UserId)
+                            @await Component.InvokeAsync("FriendTable", new { userId = Model.UserId })
                         </div>
                     </div>
                 </div>
