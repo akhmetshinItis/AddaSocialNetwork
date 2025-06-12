@@ -18,7 +18,7 @@ namespace Core.Requests.ProfileRequests.GetProfile
             _dbContext = dbContext;
         }
 
-        public Task<GetProfileResponse> Handle(GetProfileQuery request, CancellationToken cancellationToken)
+        public async Task<GetProfileResponse> Handle(GetProfileQuery request, CancellationToken cancellationToken)
         {
             Guid userId = _userContext.GetUserId();
             if (!request.IsCurrentUserProfile && request.UserId.HasValue)
@@ -55,7 +55,7 @@ namespace Core.Requests.ProfileRequests.GetProfile
                     }).ToList(),
             };
             
-            return Task.FromResult(response);
+            return response;
         }
     }
 }

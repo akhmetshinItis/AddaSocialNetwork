@@ -1,42 +1,54 @@
+@model Contracts.Requests.AdminRequests.HobbyRequests.GetAllHobbiesResponse
 @{
     ViewData["Title"] = "Хобби";
 }
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">@ViewData["Title"]</h1>
+    <h1 class="mt-4">Хобби</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/admin">Панель управления</a></li>
-        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+        <li class="breadcrumb-item active">Хобби</li>
     </ol>
+    
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            Список хобби
+            Хобби
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Пользователь</th>
+                        <th>Id</th>
                         <th>Название</th>
-                        <th>Описание</th>
+                        <th>Пользователь</th>
+                        <th>ID Пользователя</th>
                         <th>Количество фото</th>
-                        <th>Действия</th>
+                        <th>Дата создания</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>ID</th>
-                        <th>Пользователь</th>
+                        <th>Id</th>
                         <th>Название</th>
-                        <th>Описание</th>
+                        <th>Пользователь</th>
+                        <th>ID Пользователя</th>
                         <th>Количество фото</th>
-                        <th>Действия</th>
+                        <th>Дата создания</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    <!-- Данные будут загружены через JavaScript -->
+                @foreach (var hobby in @Model.Hobbies)
+                {
+                    <tr>
+                        <td>@hobby.Id</td>
+                        <td>@hobby.Name</td>
+                        <td>@hobby.UserName</td>
+                        <td>@hobby.UserId</td>
+                        <td>@hobby.PhotosCount</td>
+                        <td>@hobby.CreatedDate</td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>
