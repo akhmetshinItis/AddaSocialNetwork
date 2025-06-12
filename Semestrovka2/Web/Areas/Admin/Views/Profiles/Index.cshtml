@@ -9,65 +9,97 @@
         <li class="breadcrumb-item"><a href="/admin">Панель управления</a></li>
         <li class="breadcrumb-item active">@ViewData["Title"]</li>
     </ol>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
             Список профилей
+            <a asp-action="Create" class="btn btn-primary float-end">Создать профиль</a>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>User Id</th>
-                    <th>Background Image</th>
-                    <th>About Me</th>
-                    <th>Working Zone</th>
-                    <th>Education</th>
-                    <th>Contacts</th>
-                    <th>Facebook Link</th>
-                    <th>Twitter Link</th>
-                    <th>Google Link</th>
-                    <th>Pinterest Link</th>
-                    <th>Created Date</th>
-                </tr>
+                    <tr>
+                        <th>Id</th>
+                        <th>User Id</th>
+                        <th>Background Image</th>
+                        <th>About Me</th>
+                        <th>Working Zone</th>
+                        <th>Education</th>
+                        <th>Contacts</th>
+                        <th>Facebook Link</th>
+                        <th>Twitter Link</th>
+                        <th>Google Link</th>
+                        <th>Pinterest Link</th>
+                        <th>Created Date</th>
+                        <th>Действия</th>
+                    </tr>
                 </thead>
                 <tfoot>
-                <tr>
-                    <th>Id</th>
-                    <th>User Id</th>
-                    <th>Background Image</th>
-                    <th>About Me</th>
-                    <th>Working Zone</th>
-                    <th>Education</th>
-                    <th>Contacts</th>
-                    <th>Facebook Link</th>
-                    <th>Twitter Link</th>
-                    <th>Google Link</th>
-                    <th>Pinterest Link</th>
-                    <th>Created Date</th>
-                </tr>
+                    <tr>
+                        <th>Id</th>
+                        <th>User Id</th>
+                        <th>Background Image</th>
+                        <th>About Me</th>
+                        <th>Working Zone</th>
+                        <th>Education</th>
+                        <th>Contacts</th>
+                        <th>Facebook Link</th>
+                        <th>Twitter Link</th>
+                        <th>Google Link</th>
+                        <th>Pinterest Link</th>
+                        <th>Created Date</th>
+                        <th>Действия</th>
+                    </tr>
                 </tfoot>
                 <tbody>
-                @foreach (var profile in @Model.Profiles)
-                {
-                    <tr>
-                        <td>@profile.Id</td>
-                        <td>@profile.UserId</td>
-                        <td>@profile.BackgroundImage</td>
-                        <td>@profile.AboutMe</td>
-                        <td>@profile.WorkingZone</td>
-                        <td>@profile.Education</td>
-                        <td>@profile.Contacts</td>
-                        <td>@profile.FacebookLink</td>
-                        <td>@profile.TwitterLink</td>
-                        <td>@profile.GoogleLink</td>
-                        <td>@profile.PinterestLink</td>
-                        <td>@profile.CreatedDate</td>
-                    </tr>
-                }
+                    @foreach (var profile in @Model.Profiles)
+                    {
+                        <tr>
+                            <td>@profile.Id</td>
+                            <td>@profile.UserId</td>
+                            <td>@profile.BackgroundImage</td>
+                            <td>@profile.AboutMe</td>
+                            <td>@profile.WorkingZone</td>
+                            <td>@profile.Education</td>
+                            <td>@profile.Contacts</td>
+                            <td>@profile.FacebookLink</td>
+                            <td>@profile.TwitterLink</td>
+                            <td>@profile.GoogleLink</td>
+                            <td>@profile.PinterestLink</td>
+                            <td>@profile.CreatedDate</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Edit" asp-route-id="@profile.Id" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@profile.Id" method="post" style="display: inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Вы уверены, что хотите удалить этот профиль?');">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
     </div>
-</div> 
+</div>
