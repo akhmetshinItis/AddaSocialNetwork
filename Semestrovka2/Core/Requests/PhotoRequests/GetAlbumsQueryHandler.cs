@@ -43,6 +43,7 @@ namespace Core.Requests.PhotoRequests
                     }).ToList()
                 }).ToListAsync(cancellationToken: cancellationToken),
                 UserId = userId,
+                IsCurrentUserProfile = userId == _userContext.GetUserId()
             };
         }
     }

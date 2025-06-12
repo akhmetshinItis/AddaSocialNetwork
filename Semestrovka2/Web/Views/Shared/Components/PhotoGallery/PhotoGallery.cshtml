@@ -2,11 +2,10 @@
 
 @{
     Layout = null;
-    var isCurrentUserProfile = ViewBag.IsCurrentUserProfile as bool? ?? false;
 }
 
 <div class="row mt--30 photo-filter">
-@if (isCurrentUserProfile)
+@if (@Model.IsCurrentUserProfile)
 {
     <div class="col-sm-6 col-md-4 timeline upload folder">
         <div class="photo-group active">

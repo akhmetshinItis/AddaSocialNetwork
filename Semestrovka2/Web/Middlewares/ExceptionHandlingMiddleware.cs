@@ -2,6 +2,7 @@ using System.Net;
 using Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Hosting;
 
 namespace Web.Middlewares ;
 
@@ -9,11 +10,16 @@ namespace Web.Middlewares ;
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionHandlingMiddleware> _logger;
+        private readonly IHostEnvironment _environment;
 
-        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
+        public ExceptionHandlingMiddleware(
+            RequestDelegate next, 
+            ILogger<ExceptionHandlingMiddleware> logger,
+            IHostEnvironment environment)
         {
             _next = next;
             _logger = logger;
+            _environment = environment;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -62,7 +68,15 @@ namespace Web.Middlewares ;
             details ??= new Dictionary<string, object>();
             details.Add("errorId", errorId);
 
-            _logger.Log(logLevel, exception, "Error #{errorId}: {errorText}", errorId, errorText);
+            if (_environment.IsDevelopment())
+            {
+                _logger.Log(logLevel, exception, "Error #{errorId}: {errorText}", errorId, errorText);
+            }
+            else
+            {
+                _logger.Log(logLevel, "Error #{errorId}: {errorText}. Message: {message}", 
+                    errorId, errorText, exception.Message);
+            }
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)responseCode;
@@ -88,8 +102,6 @@ namespace Web.Middlewares ;
                 Type = exception.GetType().FullName,
             };
             
-            // await context.Response.WriteAsync(
-            //     JsonSerializer.Serialize(response, jsonOptions.Value.JsonSerializerOptions));
             await context.Response.WriteAsJsonAsync(problemDetails);
         }
         

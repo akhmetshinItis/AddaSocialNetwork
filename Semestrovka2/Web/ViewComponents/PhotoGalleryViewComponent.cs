@@ -1,10 +1,11 @@
+using Core.Abstractions;
 using Core.Requests.PhotoRequests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.ViewComponents
 {
-    public class PhotoGalleryViewComponent(IMediator mediator) : ViewComponent
+    public class PhotoGalleryViewComponent(IMediator mediator, IUserContext userContext) : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync(Guid userId)
         {
