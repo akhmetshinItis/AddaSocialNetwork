@@ -28,6 +28,16 @@ namespace Core.Requests.ProfileRequests.GetProfile
             var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId)
                 ?? throw new EntityNotFoundException<User>("пользователь не найден");
             var profile = _dbContext.ProfileDatas.FirstOrDefault(p => p.UserId == userId);
+            
+            if (profile == null)
+            {
+                profile = new ProfileData
+                {
+                    UserId = user.Id,
+                };
+                _dbContext.ProfileDatas.Add(profile);
+                await _dbContext.SaveChangesAsync(cancellationToken);
+            }
 
             var response = new GetProfileResponse
             {
