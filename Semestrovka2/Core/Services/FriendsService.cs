@@ -37,6 +37,7 @@ namespace Core.Services
                 Id = Guid.NewGuid(),
                 User1Id = friendship.User1,
                 User2Id = friendship.User2,
+                CreatedDate = DateTime.Now,
             };
 
             await _dbContext.Chats.AddAsync(chat);

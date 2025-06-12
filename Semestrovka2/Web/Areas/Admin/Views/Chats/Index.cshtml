@@ -1,44 +1,63 @@
+@model Contracts.Requests.AdminRequests.ChatRequests.GetAllChatsResponse
 @{
     ViewData["Title"] = "Чаты";
 }
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">@ViewData["Title"]</h1>
+    <h1 class="mt-4">Чаты</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/admin">Панель управления</a></li>
-        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+        <li class="breadcrumb-item active">Чаты</li>
     </ol>
+    
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            Список чатов
+            Чаты
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Участник 1</th>
-                        <th>Участник 2</th>
-                        <th>Дата создания</th>
+                        <th>Id</th>
+                        <th>Пользователь 1</th>
+                        <th>ID Пользователя 1</th>
+                        <th>Пользователь 2</th>
+                        <th>ID Пользователя 2</th>
+                        <th>Количество сообщений</th>
                         <th>Последнее сообщение</th>
-                        <th>Статус</th>
-                        <th>Действия</th>
+                        <th>Время последнего сообщения</th>
+                        <th>Дата создания</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>ID</th>
-                        <th>Участник 1</th>
-                        <th>Участник 2</th>
-                        <th>Дата создания</th>
+                        <th>Id</th>
+                        <th>Пользователь 1</th>
+                        <th>ID Пользователя 1</th>
+                        <th>Пользователь 2</th>
+                        <th>ID Пользователя 2</th>
+                        <th>Количество сообщений</th>
                         <th>Последнее сообщение</th>
-                        <th>Статус</th>
-                        <th>Действия</th>
+                        <th>Время последнего сообщения</th>
+                        <th>Дата создания</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    <!-- Данные будут загружены через JavaScript -->
+                @foreach (var chat in @Model.Chats)
+                {
+                    <tr>
+                        <td>@chat.Id</td>
+                        <td>@chat.User1Name</td>
+                        <td>@chat.User1Id</td>
+                        <td>@chat.User2Name</td>
+                        <td>@chat.User2Id</td>
+                        <td>@chat.MessagesCount</td>
+                        <td>@chat.LastMessageContent</td>
+                        <td>@chat.LastMessageTime</td>
+                        <td>@chat.CreatedDate</td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>

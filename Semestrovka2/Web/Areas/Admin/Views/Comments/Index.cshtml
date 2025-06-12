@@ -1,42 +1,57 @@
+@model Contracts.Requests.AdminRequests.CommentRequests.GetAllCommentsResponse
 @{
     ViewData["Title"] = "Комментарии";
 }
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">@ViewData["Title"]</h1>
+    <h1 class="mt-4">Комментарии</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/admin">Панель управления</a></li>
-        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+        <li class="breadcrumb-item active">Комментарии</li>
     </ol>
+    
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            Список комментариев
+            Комментарии
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Автор</th>
-                        <th>Пост</th>
-                        <th>Текст</th>
+                        <th>Id</th>
+                        <th>Контент</th>
+                        <th>Пользователь</th>
+                        <th>ID Пользователя</th>
+                        <th>ID Поста</th>
+                        <th>Контент поста</th>
                         <th>Дата создания</th>
-                        <th>Действия</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>ID</th>
-                        <th>Автор</th>
-                        <th>Пост</th>
-                        <th>Текст</th>
+                        <th>Id</th>
+                        <th>Контент</th>
+                        <th>Пользователь</th>
+                        <th>ID Пользователя</th>
+                        <th>ID Поста</th>
+                        <th>Контент поста</th>
                         <th>Дата создания</th>
-                        <th>Действия</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    <!-- Данные будут загружены через JavaScript -->
+                @foreach (var comment in @Model.Comments)
+                {
+                    <tr>
+                        <td>@comment.Id</td>
+                        <td>@comment.Content</td>
+                        <td>@comment.UserName</td>
+                        <td>@comment.UserId</td>
+                        <td>@comment.PostId</td>
+                        <td>@comment.PostContent</td>
+                        <td>@comment.CreatedDate</td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>

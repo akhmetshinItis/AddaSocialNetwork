@@ -1,42 +1,65 @@
+@model Contracts.Requests.AdminRequests.PostRequests.GetAllPostsResponse
 @{
     ViewData["Title"] = "Посты";
 }
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">@ViewData["Title"]</h1>
+    <h1 class="mt-4">Посты</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/admin">Панель управления</a></li>
-        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+        <li class="breadcrumb-item active">Посты</li>
     </ol>
+    
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            Список постов
+            Посты
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Автор</th>
-                        <th>Заголовок</th>
-                        <th>Содержание</th>
+                        <th>Id</th>
+                        <th>Контент</th>
+                        <th>Фото</th>
+                        <th>Пользователь</th>
+                        <th>ID Пользователя</th>
+                        <th>Лайки</th>
+                        <th>Комментарии</th>
                         <th>Дата создания</th>
-                        <th>Действия</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>ID</th>
-                        <th>Автор</th>
-                        <th>Заголовок</th>
-                        <th>Содержание</th>
+                        <th>Id</th>
+                        <th>Контент</th>
+                        <th>Фото</th>
+                        <th>Пользователь</th>
+                        <th>ID Пользователя</th>
+                        <th>Лайки</th>
+                        <th>Комментарии</th>
                         <th>Дата создания</th>
-                        <th>Действия</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    <!-- Данные будут загружены через JavaScript -->
+                @foreach (var post in @Model.Posts)
+                {
+                    <tr>
+                        <td>@post.Id</td>
+                        <td>@post.Content</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(post.Photo))
+                            {
+                                <img src="@post.Photo" alt="Post photo" style="max-width: 100px; max-height: 100px;" />
+                            }
+                        </td>
+                        <td>@post.UserName</td>
+                        <td>@post.UserId</td>
+                        <td>@post.LikesCount</td>
+                        <td>@post.CommentsCount</td>
+                        <td>@post.CreatedDate</td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>
