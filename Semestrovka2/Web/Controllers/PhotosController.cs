@@ -15,16 +15,20 @@ namespace Web.Controllers
         }
         
         [HttpGet("photos/{userId:guid}")]
-        public IActionResult ByUser([FromRoute] Guid userId)
+        public IActionResult ByUser([FromRoute] Guid userId, bool? sortByDate = null, bool? sortByAmount = null)
         {
+            ViewBag.SortByDate = sortByDate;
+            ViewBag.SortByAmount = sortByAmount;
             return View("Index", userId);
         }
 
         [HttpGet("allAlbums/{userId:guid}")]
-        public async Task<IActionResult> GetAllAlbumsAsync([FromRoute] Guid? userId)
+        public async Task<IActionResult> GetAllAlbumsAsync([FromRoute] Guid? userId, bool? sortByDate = null, bool? sortByAmount = null)
             => Ok(await mediator.Send(new GetAlbumsQuery
             {
                 UserId = userId,
+                SortByDate = sortByDate,
+                SortByAmount = sortByAmount
             }));
 
         [HttpPost("createAlbum")]

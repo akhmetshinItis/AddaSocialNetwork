@@ -1,7 +1,39 @@
 @model Guid
 @{
     ViewData["Title"] = "Profile";
+    var sortByDate = ViewBag.SortByDate as bool?;
+    var sortByAmount = ViewBag.SortByAmount as bool?;
 }
+
+<style>
+    .filter-menu {
+        display: flex;
+        gap: 12px;
+        margin: 18px 0 10px 0;
+        flex-wrap: wrap;
+    }
+    .filter-button {
+        display: inline-block;
+        padding: 8px 22px;
+        border-radius: 22px;
+        border: 1.5px solid #e0e0e0;
+        background: #f8f9fa;
+        color: #333;
+        font-size: 15px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s;
+        box-shadow: none;
+        outline: none;
+        cursor: pointer;
+    }
+    .filter-button.active, .filter-button:hover {
+        background: #007bff;
+        color: #fff;
+        border-color: #007bff;
+        box-shadow: 0 2px 8px rgba(0,123,255,0.08);
+    }
+</style>
 
 <div class="main-wrapper">
             <!-- profile banner area start -->
@@ -53,13 +85,12 @@
                         <div class="col-lg-12">
                             <div class="secondary-menu-wrapper secondary-menu-2 bg-white">
                                 <div class="page-title-inner">
-                                    <h4 class="page-title">photos (120)</h4>
+                                    <h4 class="page-title">photos</h4>
                                 </div>
                                 <div class="filter-menu">
-                                    <button class="active" data-filter="*">all</button>
-                                    <button data-filter=".timeline">timeline</button>
-                                    <button data-filter=".upload">upload</button>
-                                    <button data-filter=".folder">folder</button>
+                                    <a href="/photos/@Model" class="filter-button @(string.IsNullOrEmpty(sortByDate.ToString()) && string.IsNullOrEmpty(sortByAmount.ToString()) ? "active" : "")" data-filter="*">all</a>
+                                    <a href="/photos/@Model?sortByDate=true" class="filter-button @(sortByDate == true ? "active" : "")" data-filter=".timeline">По дате</a>
+                                    <a href="/photos/@Model?sortByAmount=true" class="filter-button @(sortByAmount == true ? "active" : "")" data-filter=".upload">По количеству</a>
                                 </div>
                                 <div class="post-settings-bar">
                                     <span></span>
@@ -87,7 +118,7 @@
                         <div class="col-12">
                             <div class="content-box">
                                 <div class="content-body">
-                                    @await Component.InvokeAsync("PhotoGallery", Model)
+                                    @await Component.InvokeAsync("PhotoGallery", new { userId = Model, sortByDate = sortByDate, sortByAmount = sortByAmount })
                                 </div>
                             </div>
                         </div>
