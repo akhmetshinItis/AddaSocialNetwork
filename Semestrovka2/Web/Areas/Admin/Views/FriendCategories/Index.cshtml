@@ -1,3 +1,4 @@
+@model Contracts.Requests.AdminRequests.FriendCategoriesRequests.GetAllFriendCategoriesResponse
 @{
     ViewData["Title"] = "Категории друзей";
 }
@@ -17,24 +18,33 @@
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Пользователь</th>
-                        <th>Название</th>
-                        <th>Количество друзей</th>
-                        <th>Действия</th>
+                        <th>Id</th>
+                        <th>User Id</th>
+                        <th>Friend Id</th>
+                        <th>Friend Category Id</th>
+                        <th>Name</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>ID</th>
-                        <th>Пользователь</th>
-                        <th>Название</th>
-                        <th>Количество друзей</th>
-                        <th>Действия</th>
+                        <th>Id</th>
+                        <th>User Id</th>
+                        <th>Friend Id</th>
+                        <th>Friend Category Id</th>
+                        <th>Name</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    <!-- Данные будут загружены через JavaScript -->
+                @foreach (var item in @Model.Categories)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.UserId</td>
+                        <td>@item.FriendId</td>
+                        <td>@item.FriendCategoryId</td>
+                        <td>@item.Name</td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>
