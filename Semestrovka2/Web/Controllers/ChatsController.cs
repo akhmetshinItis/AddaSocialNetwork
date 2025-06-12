@@ -1,9 +1,11 @@
 using Core.Requests.ChatRequests.GetChatByFriendId;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class ChatsController(IMediator mediator) : Controller
     {
         [HttpGet("api/chats/getByFriendId/{friendId}")]

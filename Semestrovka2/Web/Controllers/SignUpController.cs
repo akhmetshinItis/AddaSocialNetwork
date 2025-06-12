@@ -1,7 +1,6 @@
 using Core.Requests.UserRequests.LoginUser;
 using Core.Requests.UserRequests.RegisterUser;
 using MediatR;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.SignUp;
 

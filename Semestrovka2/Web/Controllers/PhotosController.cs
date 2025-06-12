@@ -1,10 +1,12 @@
 using Core.Abstractions;
 using Core.Requests.PhotoRequests;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class PhotosController(IMediator mediator, IUserContext userContext) : Controller
     {
         public IActionResult Index()

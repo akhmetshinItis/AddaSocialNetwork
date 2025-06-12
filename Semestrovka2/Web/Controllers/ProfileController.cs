@@ -3,10 +3,12 @@ using Core.Requests.ProfileRequests.GetProfile;
 using Core.Requests.ProfileRequests.UpdateProfile;
 using Core.Requests.ProfileRequests.UpdateProfileImage;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class ProfileController(IMediator mediator, IUserContext userContext) : Controller
     {
         [HttpGet]

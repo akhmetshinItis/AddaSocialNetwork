@@ -5,11 +5,13 @@ using Core.Requests.FooterFriendsSectionRequests.AddFriend;
 using Core.Requests.FooterFriendsSectionRequests.SearchFriends;
 using Core.Requests.FriendsRequests;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class FriendsController(IMediator mediator, IUserContext userContext) : Controller
     {
         public IActionResult Index()

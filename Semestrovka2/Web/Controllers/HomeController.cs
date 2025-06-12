@@ -10,9 +10,9 @@ using Web.Models;
 
 namespace Web.Controllers ;
 
+    [Authorize]
     public class HomeController(IMediator mediator) : Controller
     {
-        [Authorize]
         public async Task<IActionResult> Index()
             => View(await mediator.Send(new GetHomePageQuery()));
 

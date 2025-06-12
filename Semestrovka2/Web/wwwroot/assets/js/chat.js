@@ -130,7 +130,7 @@ function SetChatTitle(response) {
     const friend = response.friendName;
     const liveChatTitleHtml = `
         <div class="profile-thumb">
-            <a href="profile/${response.friendId}">
+            <a href="/profile/${response.friendId}">
                 <figure class="profile-thumb-small profile-active">
                     <img src="${response.photoUrl}" alt="profile picture">
                 </figure>
