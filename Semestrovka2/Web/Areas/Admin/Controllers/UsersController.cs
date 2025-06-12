@@ -32,7 +32,7 @@ public class UsersController : Controller
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] RegisterUserRequest request)
     {
-        var command = new RegisterUserCommand
+        var command = new RegisterUserCommandAdmin
         {
             Email = request.Email,
             Password = request.Password,
@@ -53,6 +53,6 @@ public class UsersController : Controller
         }
 
         TempData["SuccessMessage"] = "Пользователь успешно создан!";
-        return RedirectToAction("CreateUser");
+        return RedirectToAction("Index");
     }
 } 

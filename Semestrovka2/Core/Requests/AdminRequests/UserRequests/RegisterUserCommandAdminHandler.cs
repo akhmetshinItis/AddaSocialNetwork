@@ -7,26 +7,22 @@ using Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace Core.Requests.UserRequests.RegisterUser ;
-
-    /// <summary>
-    /// Обработчик запроса <see cref="RegisterUserCommand"/>
-    /// </summary>
-    public class RegisterUserCommandHandler
-    : IRequestHandler<RegisterUserCommand, RegisterUserResponse>
+namespace Core.Requests.AdminRequests.UserRequests
+{
+    public class RegisterUserCommandAdminHandler : IRequestHandler<RegisterUserCommandAdmin, RegisterUserResponse>
     {
         private readonly IUserServiceIdentity _userServiceIdentity;
         private readonly IEmailService _emailService;
         private readonly IDbContext _dbContext;
         
-        public RegisterUserCommandHandler(IUserServiceIdentity userServiceIdentity, IEmailService emailService, IDbContext dbContext, IUserContext userContext)
+        public RegisterUserCommandAdminHandler(IUserServiceIdentity userServiceIdentity, IEmailService emailService, IDbContext dbContext, IUserContext userContext)
         {
             _userServiceIdentity = userServiceIdentity;
             _emailService = emailService;
             _dbContext = dbContext;
         }
         
-        public async Task<RegisterUserResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+        public async Task<RegisterUserResponse> Handle(RegisterUserCommandAdmin request, CancellationToken cancellationToken)
         {
             var isUserExists = await _userServiceIdentity.FindUserByEmailAsync(request.Email);
 
@@ -75,7 +71,6 @@ namespace Core.Requests.UserRequests.RegisterUser ;
                 };
 
                 await _userServiceIdentity.AddClaimsAsync(user, claims);
-                await _userServiceIdentity.LoginAsync(request.Email, request.Password);
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
                 await transaction.CommitAsync(cancellationToken);
@@ -94,3 +89,4 @@ namespace Core.Requests.UserRequests.RegisterUser ;
             }
         }
     }
+}
