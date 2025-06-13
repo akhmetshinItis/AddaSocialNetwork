@@ -1,0 +1,31 @@
+@model Contracts.Requests.AdminRequests.HobbyRequests.CreateHobbyRequest
+
+@{
+    ViewData["Title"] = ViewBag.HobbyId != null ? "Редактировать хобби" : "Создать хобби";
+}
+
+<div class="container-fluid px-4">
+<h2 class="mb-4">@(ViewBag.HobbyId != null ? "Редактирование хобби" : "Создание хобби")</h2>
+
+    <form asp-action="@(ViewBag.HobbyId != null ? "Edit" : "Create")"
+          asp-route-id="@ViewBag.HobbyId"
+          method="post"
+          class="needs-validation" novalidate>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label asp-for="Name" class="form-label">Название</label>
+            <input asp-for="Name" name="@nameof(Model.Name)" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="UserId" class="form-label">ID пользователя</label>
+            <input asp-for="UserId" name="@nameof(Model.UserId)" class="form-control" />
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">@(ViewBag.HobbyId != null ? "Сохранить" : "Создать")</button>
+            <a asp-action="Index" class="btn btn-secondary">Назад</a>
+        </div>
+    </div>
+</form>
+</div> 

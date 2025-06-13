@@ -1,0 +1,29 @@
+@model Contracts.Requests.AdminRequests.HobbyRequests.UpdateHobbyRequest
+
+@{
+    ViewData["Title"] = "Редактировать хобби";
+    ViewBag.HobbyId = Model.Id;
+}
+
+<div class="container-fluid px-4">
+    <h2 class="mb-4">Редактирование хобби</h2>
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="needs-validation" novalidate>
+        <input type="hidden" asp-for="Id" />
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="Name" class="form-label">Название</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="UserId" class="form-label">ID пользователя</label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-success">Сохранить</button>
+                <a asp-action="Index" class="btn btn-secondary">Назад</a>
+            </div>
+        </div>
+    </form>
+</div> 

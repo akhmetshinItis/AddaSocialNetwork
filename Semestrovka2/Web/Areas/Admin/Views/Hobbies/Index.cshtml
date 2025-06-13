@@ -9,44 +9,45 @@
         <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
         <li class="breadcrumb-item active">Хобби</li>
     </ol>
-    
+
+    <a asp-area="Admin" asp-controller="Hobbies" asp-action="Create" class="btn btn-primary mb-3">
+        <i class="fas fa-plus"></i> Добавить хобби
+    </a>
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            Хобби
+            Список хобби
         </div>
         <div class="card-body">
-            <table id="datatablesSimple">
+            <table class="table table-bordered table-striped">
                 <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Название</th>
-                        <th>Пользователь</th>
-                        <th>ID Пользователя</th>
-                        <th>Количество фото</th>
-                        <th>Дата создания</th>
-                    </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Название</th>
+                    <th>Пользователь</th>
+                    <th>Дата создания</th>
+                    <th>Действия</th>
+                </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                        <th>Id</th>
-                        <th>Название</th>
-                        <th>Пользователь</th>
-                        <th>ID Пользователя</th>
-                        <th>Количество фото</th>
-                        <th>Дата создания</th>
-                    </tr>
-                </tfoot>
                 <tbody>
-                @foreach (var hobby in @Model.Hobbies)
+                @foreach (var hobby in Model.Hobbies)
                 {
                     <tr>
                         <td>@hobby.Id</td>
                         <td>@hobby.Name</td>
-                        <td>@hobby.UserName</td>
-                        <td>@hobby.UserId</td>
-                        <td>@hobby.PhotosCount</td>
-                        <td>@hobby.CreatedDate</td>
+                        <td>@hobby.UserName (@hobby.UserId)</td>
+                        <td>@hobby.CreatedDate?.ToString("dd.MM.yyyy HH:mm")</td>
+                        <td>
+                            <a asp-area="Admin" asp-controller="Hobbies" asp-action="Edit" asp-route-id="@hobby.Id" class="btn btn-warning btn-sm me-1">
+                                <i class="fas fa-edit"></i> Редактировать
+                            </a>
+                            <form asp-area="Admin" asp-controller="Hobbies" asp-action="Delete" method="post" style="display:inline;" onsubmit="return confirm('Вы уверены?')">
+                                <input type="hidden" name="id" value="@hobby.Id" />
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Удалить
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 }
                 </tbody>
