@@ -26,6 +26,6 @@ namespace Web.Authentication ;
                 .User?
                 .Claims?
                 .FirstOrDefault(x => x.Type == ClaimTypes.Authentication)?.Value;
-            return Guid.Parse(id ?? throw new NullReferenceException("User is not authenticated."));
+            return Guid.Parse(id ?? throw new UnauthorizedAccessException("User is not authenticated."));
         }
     }
