@@ -22,10 +22,9 @@ namespace Core.Requests.AdminRequests.CommentRequests
                     {
                         Id = x.Id,
                         Content = x.Content,
+                        PostId = x.PostId,
                         UserId = x.UserId,
                         UserName = x.User.FirstName + " " + x.User.LastName,
-                        PostId = x.PostId,
-                        PostContent = x.Post.Content ?? "Нет контента",
                         CreatedDate = x.CreatedDate
                     })
                     .ToListAsync(cancellationToken)

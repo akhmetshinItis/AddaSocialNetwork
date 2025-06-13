@@ -1,0 +1,59 @@
+@model Core.Requests.CommentRequests.CreateCommentRequest
+@{
+    ViewData["Title"] = ViewBag.CommentId != null ? "Редактировать комментарий" : "Создать комментарий";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">@ViewData["Title"]</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/admin">Панель управления</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index">Комментарии</a></li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-edit me-1"></i>
+            @(ViewBag.CommentId != null ? "Редактирование комментария" : "Создание комментария")
+        </div>
+        <div class="card-body">
+            <form asp-action="@(ViewBag.CommentId != null ? "Edit" : "Create")"
+                  asp-route-id="@ViewBag.CommentId"
+                  method="post"
+                  class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="UserId" class="form-label">ID пользователя</label>
+                        <input asp-for="UserId" class="form-control" />
+                        <span asp-validation-for="UserId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="PostId" class="form-label">ID поста</label>
+                        <input asp-for="PostId" class="form-control" />
+                        <span asp-validation-for="PostId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="Content" class="form-label">Содержание</label>
+                        <textarea asp-for="Content" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save me-1"></i>
+                            @(ViewBag.CommentId != null ? "Сохранить" : "Создать")
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-1"></i>
+                            Назад
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 

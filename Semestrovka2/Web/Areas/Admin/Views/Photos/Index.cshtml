@@ -9,45 +9,79 @@
         <li class="breadcrumb-item"><a href="/admin">Панель управления</a></li>
         <li class="breadcrumb-item active">@ViewData["Title"]</li>
     </ol>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
             Список фотографий
+            <a asp-action="Create" class="btn btn-primary float-end">Добавить фото</a>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
-                    <<tr>
+                    <tr>
                         <th>Id</th>
                         <th>User Id</th>
                         <th>Album Id</th>
-                        <th>Album Name</th>
-                        <th>Path</th>
+                        <th>Фото</th>
                         <th>Created Date</th>
+                        <th>Действия</th>
                     </tr>
                 </thead>
                 <tfoot>
-                <tr>
-                    <th>Id</th>
-                    <th>User Id</th>
-                    <th>Album Id</th>
-                    <th>Album Name</th>
-                    <th>Path</th>
-                    <th>Created Date</th>
-                </tr>
+                    <tr>
+                        <th>Id</th>
+                        <th>User Id</th>
+                        <th>Album Id</th>
+                        <th>Фото</th>
+                        <th>Created Date</th>
+                        <th>Действия</th>
+                    </tr>
                 </tfoot>
                 <tbody>
-                @foreach (var photo in @Model.Photos)
-                {
-                    <tr>
-                        <td>@photo.Id</td>
-                        <td>@photo.UserId</td>
-                        <td>@photo.AlbumId</td>
-                        <td>@photo.AlbumName</td>
-                        <td>@photo.Path</td>
-                        <td>@photo.CreatedDate</td>
-                    </tr>
-                }
+                    @foreach (var photo in @Model.Photos)
+                    {
+                        <tr>
+                            <td>@photo.Id</td>
+                            <td>@photo.UserId</td>
+                            <td>@photo.AlbumId</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(photo.Url))
+                                {
+                                    <img src="@photo.Url" alt="Photo" style="max-width: 100px; max-height: 100px;" />
+                                }
+                            </td>
+                            <td>@photo.CreatedDate</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Edit" asp-route-id="@photo.Id" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@photo.Id" method="post" style="display: inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Вы уверены, что хотите удалить это фото?');">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>

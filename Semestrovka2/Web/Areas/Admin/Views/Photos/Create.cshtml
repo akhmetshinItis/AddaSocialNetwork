@@ -1,0 +1,60 @@
+@model Core.Requests.PhotoRequests.CreatePhotoRequest
+@{
+    ViewData["Title"] = ViewBag.PhotoId != null ? "Редактировать фото" : "Добавить фото";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">@ViewData["Title"]</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/admin">Панель управления</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index">Фотографии</a></li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-edit me-1"></i>
+            @(ViewBag.PhotoId != null ? "Редактирование фото" : "Добавление фото")
+        </div>
+        <div class="card-body">
+            <form asp-action="@(ViewBag.PhotoId != null ? "Edit" : "Create")"
+                  asp-route-id="@ViewBag.PhotoId"
+                  method="post"
+                  enctype="multipart/form-data"
+                  class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="UserId" class="form-label">ID пользователя</label>
+                        <input asp-for="UserId" class="form-control" />
+                        <span asp-validation-for="UserId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="AlbumId" class="form-label">ID альбома</label>
+                        <input asp-for="AlbumId" class="form-control" />
+                        <span asp-validation-for="AlbumId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="Photo" class="form-label">Фото</label>
+                        <input asp-for="Photo" type="file" class="form-control" accept="image/*" />
+                        <span asp-validation-for="Photo" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save me-1"></i>
+                            @(ViewBag.PhotoId != null ? "Сохранить" : "Добавить")
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-1"></i>
+                            Назад
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 

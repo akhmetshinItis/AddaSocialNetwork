@@ -4,54 +4,79 @@
 }
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Комментарии</h1>
+    <h1 class="mt-4">@ViewData["Title"]</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-        <li class="breadcrumb-item active">Комментарии</li>
+        <li class="breadcrumb-item"><a href="/admin">Панель управления</a></li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
     </ol>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
     
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            Комментарии
+            Список комментариев
+            <a asp-action="Create" class="btn btn-primary float-end">Создать комментарий</a>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Контент</th>
-                        <th>Пользователь</th>
-                        <th>ID Пользователя</th>
-                        <th>ID Поста</th>
-                        <th>Контент поста</th>
-                        <th>Дата создания</th>
+                        <th>User Id</th>
+                        <th>Post Id</th>
+                        <th>Content</th>
+                        <th>Created Date</th>
+                        <th>Действия</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>Id</th>
-                        <th>Контент</th>
-                        <th>Пользователь</th>
-                        <th>ID Пользователя</th>
-                        <th>ID Поста</th>
-                        <th>Контент поста</th>
-                        <th>Дата создания</th>
+                        <th>User Id</th>
+                        <th>Post Id</th>
+                        <th>Content</th>
+                        <th>Created Date</th>
+                        <th>Действия</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                @foreach (var comment in @Model.Comments)
-                {
-                    <tr>
-                        <td>@comment.Id</td>
-                        <td>@comment.Content</td>
-                        <td>@comment.UserName</td>
-                        <td>@comment.UserId</td>
-                        <td>@comment.PostId</td>
-                        <td>@comment.PostContent</td>
-                        <td>@comment.CreatedDate</td>
-                    </tr>
-                }
+                    @foreach (var comment in @Model.Comments)
+                    {
+                        <tr>
+                            <td>@comment.Id</td>
+                            <td>@comment.UserId</td>
+                            <td>@comment.PostId</td>
+                            <td>@(comment.Content?.Length > 50 ? comment.Content.Substring(0, 50) + "..." : comment.Content)</td>
+                            <td>@comment.CreatedDate</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Edit" asp-route-id="@comment.Id" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@comment.Id" method="post" style="display: inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Вы уверены, что хотите удалить этот комментарий?');">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>

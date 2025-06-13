@@ -21,10 +21,10 @@ namespace Core.Requests.AdminRequests.PhotoRequests
                     .Select(x => new GetAllPhotosResponsePhotoItem
                     {
                         Id = x.Id,
+                        Url = x.Path,
                         UserId = x.Album.UserId,
                         AlbumId = x.AlbumId,
                         AlbumName = x.Album.Name,
-                        Path = x.Path,
                         CreatedDate = x.CreatedDate
                     })
                     .ToListAsync(cancellationToken)
