@@ -10,6 +10,9 @@
         <li class="breadcrumb-item active">Чаты</li>
     </ol>
     
+    <a asp-area="Admin" asp-controller="Chats" asp-action="Create" class="btn btn-primary mb-3">
+        <i class="fas fa-plus"></i> Добавить чат
+    </a>
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
@@ -28,6 +31,7 @@
                         <th>Последнее сообщение</th>
                         <th>Время последнего сообщения</th>
                         <th>Дата создания</th>
+                        <th>Действия</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -41,6 +45,7 @@
                         <th>Последнее сообщение</th>
                         <th>Время последнего сообщения</th>
                         <th>Дата создания</th>
+                        <th>Действия</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -56,6 +61,17 @@
                         <td>@chat.LastMessageContent</td>
                         <td>@chat.LastMessageTime</td>
                         <td>@chat.CreatedDate</td>
+                        <td>
+                            <a asp-area="Admin" asp-controller="Chats" asp-action="Edit" asp-route-id="@chat.Id" class="btn btn-warning btn-sm me-1">
+                                <i class="fas fa-edit"></i> Редактировать
+                            </a>
+                            <form asp-area="Admin" asp-controller="Chats" asp-action="Delete" method="post" style="display:inline;" onsubmit="return confirm('Вы уверены?')">
+                                <input type="hidden" name="id" value="@chat.Id" />
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Удалить
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 }
                 </tbody>

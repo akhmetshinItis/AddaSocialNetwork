@@ -1,0 +1,25 @@
+@model Contracts.Requests.AdminRequests.ChatRequests.CreateChatRequest
+@{
+    ViewData["Title"] = "Создать чат";
+}
+<div class="container-fluid px-4">
+    <h2 class="mb-4">Создание чата</h2>
+    <form asp-action="Create" method="post" class="needs-validation" novalidate>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="User1Id" class="form-label">ID пользователя 1</label>
+                <input asp-for="User1Id" class="form-control" />
+                <span asp-validation-for="User1Id" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="User2Id" class="form-label">ID пользователя 2</label>
+                <input asp-for="User2Id" class="form-control" />
+                <span asp-validation-for="User2Id" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-success">Создать</button>
+                <a asp-action="Index" class="btn btn-secondary">Назад</a>
+            </div>
+        </div>
+    </form>
+</div> 

@@ -1,0 +1,26 @@
+@model Contracts.Requests.AdminRequests.ChatRequests.UpdateChatRequest
+@{
+    ViewData["Title"] = "Редактировать чат";
+}
+<div class="container-fluid px-4">
+    <h2 class="mb-4">Редактирование чата</h2>
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="needs-validation" novalidate>
+        <input type="hidden" asp-for="Id" />
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="User1Id" class="form-label">ID пользователя 1</label>
+                <input asp-for="User1Id" class="form-control" />
+                <span asp-validation-for="User1Id" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="User2Id" class="form-label">ID пользователя 2</label>
+                <input asp-for="User2Id" class="form-control" />
+                <span asp-validation-for="User2Id" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-success">Сохранить</button>
+                <a asp-action="Index" class="btn btn-secondary">Назад</a>
+            </div>
+        </div>
+    </form>
+</div> 
