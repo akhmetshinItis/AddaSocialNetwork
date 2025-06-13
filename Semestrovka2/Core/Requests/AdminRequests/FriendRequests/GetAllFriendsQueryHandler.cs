@@ -17,15 +17,12 @@ namespace Core.Requests.AdminRequests.FriendRequests
         public async Task<GetAllFriendsResponse> Handle(GetAllFriendsQuery request, CancellationToken cancellationToken)
             => new GetAllFriendsResponse
             {
-                Friends = await _context.FriendCategoryLinks
+                Friends = await _context.Friends
                     .Select(x => new GetAllFriendsResponseFriendItem
                     {
                         Id = x.Id,
-                        UserId = x.UserId,
-                        UserName = x.User.FirstName + " " + x.User.LastName,
-                        FriendId = x.FriendId,
-                        FriendName = x.Friend.FirstName + " " + x.Friend.LastName,
-                        CategoryName = x.FriendCategory.CategoryName,
+                        UserId = x.User1,
+                        FriendId = x.User2,
                         CreatedDate = x.CreatedDate
                     })
                     .ToListAsync(cancellationToken)

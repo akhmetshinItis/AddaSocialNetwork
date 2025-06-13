@@ -4,51 +4,63 @@
 }
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">@ViewData["Title"]</h1>
+    <h1 class="mt-4">Tables</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/admin">Панель управления</a></li>
-        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+        <li class="breadcrumb-item active">Tables</li>
     </ol>
+
+    <a asp-area="Admin" asp-controller="Friends" asp-action="Create" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Create Friend
+    </a>
+    
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            Список друзей
+            Friends
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>ID Пользователя</th>
-                        <th>Пользователь</th>
-                        <th>ID Друга</th>
-                        <th>Друг</th>
-                        <th>Категория</th>
-                        <th>Дата создания</th>
-                    </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>User ID</th>
+                    <th>Friend ID</th>
+                    <th>Created Date</th>
+                    <th>Actions</th>
+                </tr>
                 </thead>
                 <tfoot>
-                    <tr>
-                        <th>ID</th>
-                        <th>ID Пользователя</th>
-                        <th>Пользователь</th>
-                        <th>ID Друга</th>
-                        <th>Друг</th>
-                        <th>Категория</th>
-                        <th>Дата создания</th>
-                    </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>User ID</th>
+                    <th>Friend ID</th>
+                    <th>Created Date</th>
+                    <th>Actions</th>
+                </tr>
                 </tfoot>
                 <tbody>
-                @foreach (var friend in @Model.Friends)
+                @foreach (var friend in Model.Friends)
                 {
                     <tr>
                         <td>@friend.Id</td>
                         <td>@friend.UserId</td>
-                        <td>@friend.UserName</td>
                         <td>@friend.FriendId</td>
-                        <td>@friend.FriendName</td>
-                        <td>@friend.CategoryName</td>
                         <td>@friend.CreatedDate</td>
+                        <td>
+                            <a asp-area="Admin" asp-controller="Friends" asp-action="Edit" asp-route-id="@friend.Id"
+                               class="btn btn-warning btn-sm me-1">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+
+                            <form asp-area="Admin" asp-controller="Friends" asp-action="Delete" method="post"
+                                  style="display:inline;" onsubmit="return confirm('Are you sure?')">
+                                <input type="hidden" name="id" value="@friend.Id" />
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 }
                 </tbody>

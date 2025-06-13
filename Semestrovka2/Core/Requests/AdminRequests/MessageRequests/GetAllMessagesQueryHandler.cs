@@ -18,10 +18,11 @@ namespace Core.Requests.AdminRequests.MessageRequests
             => new GetAllMessagesResponse
             {
                 Messages = await _context.Messages
+                    .Include(x => x.Chat)
                     .Select(x => new GetAllMessagesResponseMessageItem
                     {
                         Id = x.Id,
-                        ChatId = x.ChatId ?? Guid.Empty,
+                        ChatId = x.ChatId,
                         SenderId = x.SenderId,
                         SenderName = x.Sender != null ? x.Sender.FirstName + " " + x.Sender.LastName : "Unknown",
                         Content = x.Content,

@@ -1,0 +1,34 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Contracts.Requests.AdminRequests.FriendRequests.UpdateFriendRequest
+
+@{
+    ViewData["Title"] = "Редактировать дружбу";
+    ViewBag.FriendId = Model.Id;
+}
+
+<div class="container-fluid px-4">
+    <h2 class="mb-4">Редактирование дружбы</h2>
+
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="needs-validation" novalidate>
+        <input type="hidden" asp-for="Id" />
+        
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="User1" class="form-label">ID Пользователя</label>
+                <input asp-for="User1" class="form-control" />
+                <span asp-validation-for="User1" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="User2" class="form-label">ID Друга</label>
+                <input asp-for="User2" class="form-control" />
+                <span asp-validation-for="User2" class="text-danger"></span>
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-success">Сохранить</button>
+                <a asp-action="Index" class="btn btn-secondary">Назад</a>
+            </div>
+        </div>
+    </form>
+</div> 

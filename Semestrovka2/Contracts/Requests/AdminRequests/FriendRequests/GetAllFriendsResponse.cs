@@ -1,7 +1,6 @@
-namespace Contracts.Requests.AdminRequests.FriendRequests
+namespace Contracts.Requests.AdminRequests.FriendRequests;
+
+public class GetAllFriendsResponse
 {
-    public class GetAllFriendsResponse
-    {
-        public List<GetAllFriendsResponseFriendItem> Friends { get; set; } = new();
-    }
-} 
+    public List<GetAllFriendsResponseFriendItem> Friends { get; set; } = new();
+}

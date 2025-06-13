@@ -1,0 +1,33 @@
+@model Contracts.Requests.AdminRequests.FriendRequests.CreateFriendRequest
+
+@{
+    ViewData["Title"] = ViewBag.FriendId != null ? "Редактировать дружбу" : "Создать дружбу";
+}
+
+<div class="container-fluid px-4">
+<h2 class="mb-4">@(ViewBag.FriendId != null ? "Редактирование дружбы" : "Создание дружбы")</h2>
+
+    <form asp-action="@(ViewBag.FriendId != null ? "Edit" : "Create")"
+          asp-route-id="@ViewBag.FriendId"
+          method="post"
+          class="needs-validation" novalidate>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label asp-for="User1" class="form-label">ID Пользователя</label>
+            <input asp-for="User1" name="@nameof(Model.User1)" class="form-control" />
+            <span asp-validation-for="User1" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="User2" class="form-label">ID Друга</label>
+            <input asp-for="User2" name="@nameof(Model.User2)" class="form-control" />
+            <span asp-validation-for="User2" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">@(ViewBag.FriendId != null ? "Сохранить" : "Создать")</button>
+            <a asp-action="Index" class="btn btn-secondary">Назад</a>
+        </div>
+    </div>
+</form>
+</div> 
