@@ -37,10 +37,12 @@ namespace Core.Hubs
             {
                 var msg = new Message
                 {
+                    Id = Guid.NewGuid(),
                     ChatId = chatId,
                     SenderId = senderId,
                     Content = message,
                     Timestamp = DateTime.UtcNow,
+                    CreatedDate = DateTime.UtcNow,
                 };
 
                 await Clients.Group(chatId.ToString())

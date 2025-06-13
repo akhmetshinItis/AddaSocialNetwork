@@ -24,9 +24,7 @@ namespace Core.Requests.AdminRequests.MessageRequests
                         Id = x.Id,
                         ChatId = x.ChatId,
                         SenderId = x.SenderId,
-                        SenderName = x.Sender != null ? x.Sender.FirstName + " " + x.Sender.LastName : "Unknown",
                         Content = x.Content,
-                        Timestamp = x.Timestamp,
                         IsRead = x.IsRead,
                         CreatedDate = x.CreatedDate
                     })

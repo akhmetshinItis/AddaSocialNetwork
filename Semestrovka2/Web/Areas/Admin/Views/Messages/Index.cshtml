@@ -9,6 +9,9 @@
         <li class="breadcrumb-item"><a href="/admin">Панель управления</a></li>
         <li class="breadcrumb-item active">@ViewData["Title"]</li>
     </ol>
+    <a asp-area="Admin" asp-controller="Messages" asp-action="Create" class="btn btn-primary mb-3">
+        <i class="fas fa-plus"></i> Добавить сообщение
+    </a>
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
@@ -21,11 +24,10 @@
                     <th>Id</th>
                     <th>Chat Id</th>
                     <th>Sender Id</th>
-                    <th>Sender Name</th>
                     <th>Content</th>
-                    <th>Timestamp</th>
                     <th>Is Read</th>
                     <th>Created Date</th>
+                    <th>Действия</th>
                 </tr>
                 </thead>
                 <tfoot>
@@ -33,11 +35,10 @@
                     <th>Id</th>
                     <th>Chat Id</th>
                     <th>Sender Id</th>
-                    <th>Sender Name</th>
                     <th>Content</th>
-                    <th>Timestamp</th>
                     <th>Is Read</th>
                     <th>Created Date</th>
+                    <th>Действия</th>
                 </tr>
                 </tfoot>
                 <tbody>
@@ -47,11 +48,20 @@
                         <td>@message.Id</td>
                         <td>@message.ChatId</td>
                         <td>@message.SenderId</td>
-                        <td>@message.SenderName</td>
                         <td>@message.Content</td>
-                        <td>@message.Timestamp</td>
                         <td>@message.IsRead</td>
                         <td>@message.CreatedDate</td>
+                        <td>
+                            <a asp-area="Admin" asp-controller="Messages" asp-action="Edit" asp-route-id="@message.Id" class="btn btn-warning btn-sm me-1">
+                                <i class="fas fa-edit"></i> Редактировать
+                            </a>
+                            <form asp-area="Admin" asp-controller="Messages" asp-action="Delete" method="post" style="display:inline;" onsubmit="return confirm('Вы уверены?')">
+                                <input type="hidden" name="id" value="@message.Id" />
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Удалить
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 }
                 </tbody>
