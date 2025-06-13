@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace Contracts.Requests.AdminRequests.HobbyRequests;
 
@@ -10,4 +12,6 @@ public class UpdateHobbyRequest
     public Guid UserId { get; set; }
     [Required]
     public string Name { get; set; } = string.Empty;
+    [Display(Name = "Фото хобби")]
+    public List<IFormFile>? Photos { get; set; }
 } 

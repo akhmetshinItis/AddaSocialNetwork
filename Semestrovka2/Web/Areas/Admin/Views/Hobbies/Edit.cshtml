@@ -7,7 +7,7 @@
 
 <div class="container-fluid px-4">
     <h2 class="mb-4">Редактирование хобби</h2>
-    <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="needs-validation" novalidate>
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
         <input type="hidden" asp-for="Id" />
         <div class="row g-3">
             <div class="col-md-6">
@@ -19,6 +19,10 @@
                 <label asp-for="UserId" class="form-label">ID пользователя</label>
                 <input asp-for="UserId" class="form-control" />
                 <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                <label class="form-label">Фото хобби</label>
+                <input type="file" name="Photos" class="form-control" multiple accept="image/*" />
             </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-success">Сохранить</button>

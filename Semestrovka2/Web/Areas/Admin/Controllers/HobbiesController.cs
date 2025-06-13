@@ -3,6 +3,7 @@ using Core.Requests.AdminRequests.HobbyRequests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace Web.Areas.Admin.Controllers;
 
@@ -34,7 +35,8 @@ public class HobbiesController : Controller
         var command = new CreateHobbyCommand
         {
             UserId = request.UserId,
-            Name = request.Name
+            Name = request.Name,
+            Photos = request.Photos,
         };
         var result = await _mediator.Send(command);
         if (!result.Succeeded)
@@ -72,7 +74,8 @@ public class HobbiesController : Controller
             {
                 HobbyId = id,
                 UserId = request.UserId,
-                Name = request.Name
+                Name = request.Name,
+                Photos = request.Photos
             };
             await _mediator.Send(command);
             TempData["SuccessMessage"] = "Хобби успешно обновлено!";

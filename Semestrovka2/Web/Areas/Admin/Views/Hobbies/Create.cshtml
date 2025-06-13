@@ -10,6 +10,7 @@
     <form asp-action="@(ViewBag.HobbyId != null ? "Edit" : "Create")"
           asp-route-id="@ViewBag.HobbyId"
           method="post"
+          enctype="multipart/form-data"
           class="needs-validation" novalidate>
     <div class="row g-3">
         <div class="col-md-6">
@@ -21,6 +22,10 @@
             <label asp-for="UserId" class="form-label">ID пользователя</label>
             <input asp-for="UserId" name="@nameof(Model.UserId)" class="form-control" />
             <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+        <div class="col-12">
+            <label class="form-label">Фото хобби</label>
+            <input type="file" name="Photos" class="form-control" multiple accept="image/*" />
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-success">@(ViewBag.HobbyId != null ? "Сохранить" : "Создать")</button>
