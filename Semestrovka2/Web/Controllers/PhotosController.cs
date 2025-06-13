@@ -19,8 +19,7 @@ namespace Web.Controllers
         {
             ViewBag.SortByDate = sortByDate;
             ViewBag.SortByAmount = sortByAmount;
-            return View("Index", userId);
-        }
+            return View("~/Views/Photos/Index.cshtml", userId);        }
 
         [HttpGet("allAlbums/{userId:guid}")]
         public async Task<IActionResult> GetAllAlbumsAsync([FromRoute] Guid? userId, bool? sortByDate = null, bool? sortByAmount = null)

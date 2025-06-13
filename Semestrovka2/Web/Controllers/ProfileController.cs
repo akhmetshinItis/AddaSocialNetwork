@@ -5,6 +5,8 @@ using Core.Requests.ProfileRequests.UpdateProfileImage;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Contracts.Requests.ProfileRequests;
+using Core.Requests.ProfileRequests;
 
 namespace Web.Controllers
 {
@@ -53,6 +55,20 @@ namespace Web.Controllers
         {
             await mediator.Send(request);
             return Ok();
+        }
+
+        [HttpPost("api/hobbies/add")]
+        public async Task<IActionResult> AddHobby([FromForm] AddHobbyRequest request)
+        {
+            var command = new AddHobbyCommand
+            {
+                Name = request.Name,
+                Photos = request.Photos
+            };
+            var result = await mediator.Send(command);
+            if (!result.Succeeded)
+                return BadRequest(result.Message);
+            return Ok(result);
         }
     }
 }

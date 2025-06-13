@@ -41,6 +41,7 @@
                     <div class="col-lg-2 col-md-3 d-none d-md-block">
                         <div class="profile-edit-panel">
                             <button class="edit-btn" data-toggle="modal" data-target="#editProfileModal">edit profile</button>
+                            <button class="btn btn-success mt-2" data-toggle="modal" data-target="#addHobbyModal">Добавить хобби</button>
                         </div>
                     </div>
                 }
@@ -113,6 +114,36 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="saveProfile">Save changes</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Hobby Modal -->
+    <div class="modal fade" id="addHobbyModal" tabindex="-1" role="dialog" aria-labelledby="addHobbyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addHobbyModalLabel">Добавить хобби</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="addHobbyForm" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="hobbyName">Название хобби</label>
+                            <input type="text" class="form-control" id="hobbyName" name="Name" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="hobbyPhotos">Фото</label>
+                            <input type="file" class="form-control" id="hobbyPhotos" name="Photos" multiple accept="image/*" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-primary">Добавить</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -378,6 +409,24 @@
                     },
                     error: function() {
                         alert('Error updating profile data');
+                    }
+                });
+            });
+
+            $('#addHobbyForm').submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: '/api/hobbies/add', // предполагаемый endpoint
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function() {
+                        location.reload();
+                    },
+                    error: function() {
+                        alert('Ошибка при добавлении хобби');
                     }
                 });
             });

@@ -22,8 +22,7 @@ namespace Web.Controllers
         [HttpGet("friends/{userId:guid}")]
         public IActionResult ByUser([FromRoute] Guid userId)
         {
-            return View("Index", userId);
-        }
+            return View("~/Views/Friends/Index.cshtml", userId);        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
