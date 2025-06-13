@@ -3,6 +3,9 @@ using Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Hosting;
+using Core.Abstractions;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Web.Middlewares;
 
@@ -11,15 +14,18 @@ public class ExceptionHandlingMiddleware
     private readonly RequestDelegate _next;
     private readonly ILogger<ExceptionHandlingMiddleware> _logger;
     private readonly IHostEnvironment _environment;
+    private readonly IServiceProvider _serviceProvider;
 
     public ExceptionHandlingMiddleware(
         RequestDelegate next, 
         ILogger<ExceptionHandlingMiddleware> logger,
-        IHostEnvironment environment)
+        IHostEnvironment environment,
+        IServiceProvider serviceProvider)
     {
         _next = next;
         _logger = logger;
         _environment = environment;
+        _serviceProvider = serviceProvider;
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -134,8 +140,37 @@ public class ExceptionHandlingMiddleware
     {
         var errorText = exception.Message;
         var logLevel = LogLevel.Error;
-        var responseCode = HttpStatusCode.InternalServerError;
-        await LogAndReturnAsync(context, exception, errorText, responseCode, logLevel);
+        var responseCode = System.Net.HttpStatusCode.InternalServerError;
+
+        var errorPath = context.Request.Path.Value;
+        var isServerErrorPage = errorPath != null && 
+            (errorPath.Contains("/Error/ServerError") || errorPath.Contains("/admin/Error/ServerError"));
+
+        if (isServerErrorPage)
+        {
+            context.Response.StatusCode = 500;
+            context.Response.ContentType = "text/plain";
+            await context.Response.WriteAsync("Internal Server Error");
+            return;
+        }
+
+        using (var scope = _serviceProvider.CreateScope())
+        {
+            var emailService = scope.ServiceProvider.GetRequiredService<Core.Abstractions.IEmailService>();
+            var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+            var adminEmail = configuration["EmailSettings:Email"];
+            if (!string.IsNullOrEmpty(adminEmail))
+            {
+                var subject = "Ошибка 500 на сервере";
+                var content = $"Ошибка: {exception.Message}\n\nStackTrace:\n{exception.StackTrace}";
+                try { await emailService.SendEmailAsync(adminEmail, subject, content); } catch { /* ignore */ }
+            }
+        }
+
+        var path = errorPath?.StartsWith("/admin") == true 
+            ? "/admin/Error/ServerError" 
+            : "/Error/ServerError";
+        context.Response.Redirect(path);
     }
     
     /// <summary>

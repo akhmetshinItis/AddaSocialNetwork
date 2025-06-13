@@ -15,4 +15,10 @@ public class ErrorController : Controller
     {
         return View();
     }
+
+    [Route("Error/ServerError")]
+    public IActionResult ServerError()
+    {
+        return View();
+    }
 } 
