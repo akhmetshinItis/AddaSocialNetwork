@@ -1,25 +1,21 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
-USER $APP_UID
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Web/Web.csproj", "Web/"]
+COPY ["Core/Core.csproj", "Core/"]
 COPY ["Persistence/Persistence.csproj", "Persistence/"]
 COPY ["Contracts/Contracts.csproj", "Contracts/"]
-COPY ["Core/Core.csproj", "Core/"]
 COPY ["S3/S3.csproj", "S3/"]
+
 RUN dotnet restore "Web/Web.csproj"
 COPY . .
 WORKDIR "/src/Web"
-RUN dotnet build "Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "Web.csproj" -c Debug -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Web.csproj" -c Debug -o /app/publish
 
 FROM base AS final
 WORKDIR /app

@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Contracts.Requests.HomePageRequests;
+using Core.Abstractions;
 using Core.Requests.GetHomePageRequests;
 using Core.Requests.HomePageRequests;
 using Core.Requests.PostRequests;
@@ -11,7 +12,7 @@ using Web.Models;
 namespace Web.Controllers ;
 
     [Authorize]
-    public class HomeController(IMediator mediator) : Controller
+    public class HomeController(IMediator mediator, IUserContext userContext) : Controller
     {
         public async Task<IActionResult> Index()
             => View(await mediator.Send(new GetHomePageQuery()));
@@ -21,6 +22,7 @@ namespace Web.Controllers ;
         {
             await mediator.Send(new CreatePostCommand
             {
+                UserId = userContext.GetUserId(),
                 Content = content,
                 File = file,
             });
