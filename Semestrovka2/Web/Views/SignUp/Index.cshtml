@@ -68,11 +68,11 @@
                                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                         <div class="row align-items-center">
                                             <div class="col-12 col-sm">
-                                                <input type="email" name="@nameof(Model.LoginUserViewModel.Email)" placeholder="Email" class="single-field">
+                                                <input asp-for="LoginUserViewModel.Email" type="email"  placeholder="Email" class="single-field">
                                                 <span asp-validation-for="LoginUserViewModel.Email" class="text-danger"></span>
                                             </div>
                                             <div class="col-12 col-sm">
-                                                <input type="password" name="@nameof(Model.LoginUserViewModel.Password)" placeholder="Password" class="single-field">
+                                                <input asp-for="LoginUserViewModel.Password" type="password" placeholder="Password" class="single-field">
                                                 <span asp-validation-for="LoginUserViewModel.Password" class="text-danger"></span>
                                             </div>
                                             <div class="col-12 col-sm-auto">

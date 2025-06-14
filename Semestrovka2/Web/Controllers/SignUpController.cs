@@ -15,17 +15,9 @@ namespace Web.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> RegisterUser(RegisterUserViewModel request)
+        public async Task<IActionResult> RegisterUser(SignUpViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                // Если модель невалидна — вернуть представление с ошибками
-                return View("Index", new SignUpViewModel
-                {
-                    RegisterUserViewModel = request,
-                });
-            }
-
+            var request = model.RegisterUserViewModel;
             try
             {
                 var command = new RegisterUserCommand()
@@ -73,27 +65,32 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LoginUser(LoginUserViewModel request)
+        public async Task<IActionResult> LoginUser(SignUpViewModel model)
         {
-            if (!ModelState.IsValid)
+            var request = model.LoginUserViewModel;
+            try
             {
-                return View("Index", new SignUpViewModel
+                var result = await mediator.Send(new LoginUserQuery()
                 {
-                    LoginUserViewModel = request
+                    Email = request.Email,
+                    Password = request.Password,
                 });
-            }
-            var result = await mediator.Send(new LoginUserQuery()
-            {
-                Email =  request.Email,
-                Password = request.Password,
-            });
 
-            if (!result.Result.Succeeded)
+                if (!result.Result.Succeeded)
+                {
+                    ModelState.AddModelError(string.Empty, "Неверный логин или пароль");
+                    return View("Index", new SignUpViewModel
+                    {
+                        LoginUserViewModel = request
+                    });
+                }
+            }
+            catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, "Неверный логин или пароль");
+                ModelState.AddModelError(string.Empty, "Произошла ошибка при авторизации");
                 return View("Index", new SignUpViewModel
                 {
-                    LoginUserViewModel = request
+                    LoginUserViewModel = request,
                 });
             }
 
