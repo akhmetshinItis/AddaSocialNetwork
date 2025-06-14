@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Core.Requests.UserRequests.LoginUser;
 using Core.Requests.UserRequests.RegisterUser;
 using MediatR;
@@ -14,21 +15,61 @@ namespace Web.Controllers
         }
         
         [HttpPost]
-        public async Task<RedirectToActionResult> RegisterUser(RegisterUserViewModel request)
+        public async Task<IActionResult> RegisterUser(RegisterUserViewModel request)
         {
-            var result = await mediator.Send(new RegisterUserCommand()
+            if (!ModelState.IsValid)
             {
-                Password = request.Password ?? throw new Exception("Invalid password"),
-                Email = request.Email ?? throw new Exception("Invalid email"),
-                FirstName = request.FirstName ?? throw new Exception("Invalid first name"),
-                LastName = request.LastName ?? throw new Exception("Invalid last name"),
-                Age = request.Age,
-                Country = request.Country,
-            });
-            
-            if(result.Result.Succeeded)
-                return RedirectToAction("Index", "Home");
-            return RedirectToAction("Index", "SignUp");
+                // Если модель невалидна — вернуть представление с ошибками
+                return View("Index", new SignUpViewModel
+                {
+                    RegisterUserViewModel = request,
+                });
+            }
+
+            try
+            {
+                var command = new RegisterUserCommand()
+                {
+                    Email = request.Email!,
+                    Password = request.Password!,
+                    FirstName = request.FirstName!,
+                    LastName = request.LastName!,
+                    Age = request.Age,
+                    Country = request.Country
+                };
+
+                var result = await mediator.Send(command);
+
+                if (result.Result.Succeeded)
+                    return RedirectToAction("Index", "Home");
+
+                // Если регистрация провалилась, но ModelState валиден, можно добавить ошибки из результата
+                foreach (var error in result.Result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return View("Index", new SignUpViewModel
+                {
+                    RegisterUserViewModel = request,
+                });
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View("Index", new SignUpViewModel
+                {
+                    RegisterUserViewModel = request,
+                });
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Произошла ошибка при регистрации");
+                return View("Index", new SignUpViewModel
+                {
+                    RegisterUserViewModel = request,
+                });
+            }
         }
 
         [HttpPost]
