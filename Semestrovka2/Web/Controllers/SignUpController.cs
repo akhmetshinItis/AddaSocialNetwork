@@ -73,15 +73,31 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<RedirectToActionResult> LoginUser(LoginUserViewModel request)
+        public async Task<IActionResult> LoginUser(LoginUserViewModel request)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Index", new SignUpViewModel
+                {
+                    LoginUserViewModel = request
+                });
+            }
             var result = await mediator.Send(new LoginUserQuery()
             {
-                Email =  request.Email ?? throw new Exception("Invalid email"),
-                Password = request.Password ?? throw new Exception("Invalid password"),
+                Email =  request.Email,
+                Password = request.Password,
             });
 
-            return RedirectToAction("Index", result.Result.Succeeded ? "Home" : "SignUp");
+            if (!result.Result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, "Неверный логин или пароль");
+                return View("Index", new SignUpViewModel
+                {
+                    LoginUserViewModel = request
+                });
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
