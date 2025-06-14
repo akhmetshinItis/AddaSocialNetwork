@@ -49,7 +49,7 @@ namespace S3
 
             // Формируем публичную ссылку (если хранилище публичное)
             var endpoint = _s3Options.Value.ServiceUrl.TrimEnd('/');
-            var url = $"http://{endpoint}/{bucketName}/{fileName}";
+            var url = $"{_s3Options.Value.Prefix}://{endpoint}/{bucketName}/{fileName}";
 
             return url;
         }

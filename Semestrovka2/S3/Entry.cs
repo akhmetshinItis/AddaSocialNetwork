@@ -33,6 +33,7 @@ namespace S3
                 _.SecretKey = options.SecretKey;
                 _.ServiceUrl = options.ServiceUrl;
                 _.BucketName = options.BucketName;
+                _.Prefix = options.Prefix;
             });
             
             services.AddSingleton<IS3Service, S3Service>();

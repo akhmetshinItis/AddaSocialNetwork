@@ -21,5 +21,7 @@ namespace S3
         /// Название бакета
         /// </summary>
         public string BucketName { get; set; } = default!;
+        
+        public string Prefix { get; set; } = "https";
     }
 }
