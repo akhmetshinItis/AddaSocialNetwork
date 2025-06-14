@@ -1,0 +1,27 @@
+@model Contracts.Requests.FriendsRequests.GetFriendsList.GetFriendsListResponse
+
+@{
+    Layout = null;
+}
+
+<div class="card card-small mb-0 active-profile-mob-wrapper">
+    <div class="active-profiles-mob-wrapper slick-row-10">
+        <div class="active-profile-mobile">
+           
+             @{
+                 foreach (var friend in Model.FriendsList)
+                 {
+                     <div class="single-slide">
+                         <div class="profile-thumb active profile-active">
+                             <a href="javascript:void(0)" class="friend-photo" data-friend-id="@friend.Id">
+                                 <figure class="profile-thumb-small">
+                                     <img src="@friend.ImageUrl" alt="profile picture">
+                                 </figure>
+                             </a>
+                         </div>
+                     </div>
+                 }
+             }
+        </div>
+    </div>
+</div>
