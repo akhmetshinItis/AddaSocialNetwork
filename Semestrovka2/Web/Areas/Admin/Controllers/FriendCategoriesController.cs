@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin, Owner")]
 public class FriendCategoriesController : Controller
 {
     private readonly IMediator _mediator;

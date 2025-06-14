@@ -15,4 +15,6 @@ namespace Core.Constants ;
         /// Админ
         /// </summary>
         public const string Admin = "Admin";
+        
+        public const string Owner = "Owner";
     }

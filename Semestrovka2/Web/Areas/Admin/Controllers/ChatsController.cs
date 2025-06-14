@@ -7,7 +7,7 @@ using Contracts.Requests.AdminRequests.ChatRequests;
 namespace Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin, Owner")]
 public class ChatsController : Controller
 {
     private readonly IMediator _mediator;
@@ -82,6 +82,7 @@ public class ChatsController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = "Owner")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var command = new DeleteChatCommand { Id = id };

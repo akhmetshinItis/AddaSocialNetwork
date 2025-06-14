@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 namespace Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin,Owner")]
 public class HobbiesController : Controller
 {
     private readonly IMediator _mediator;
@@ -90,6 +90,7 @@ public class HobbiesController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = "Owner")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var command = new DeleteHobbyCommand { HobbyId = id };

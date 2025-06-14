@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin,Owner")]
 public class AlbumsController : Controller
 {
     private readonly IMediator _mediator;
@@ -95,6 +95,7 @@ public class AlbumsController : Controller
     }
     
     [HttpPost]
+    [Authorize(Roles = "Owner")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var command = new DeleteAlbumCommand { AlbumId = id };

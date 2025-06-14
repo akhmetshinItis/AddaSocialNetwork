@@ -7,7 +7,7 @@ using Contracts.Requests.AdminRequests.MessageRequests;
 namespace Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Owner, Admin")]
 public class MessagesController : Controller
 {
     private readonly IMediator _mediator;
@@ -91,6 +91,7 @@ public class MessagesController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = "Owner")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var command = new DeleteMessageCommand { Id = id };

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Owner")]
     public class FriendsController : Controller
     {
         private readonly IMediator _mediator;
@@ -92,6 +92,7 @@ namespace Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Owner")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var command = new DeleteFriendCommand { FriendId = id };
