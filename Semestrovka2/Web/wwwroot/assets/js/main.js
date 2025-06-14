@@ -296,7 +296,7 @@ $(document).ready(function () {
 	});
 
 	// --- Обработчик клика по другу ---
-	$('.friend-photo').on('click', function (e) {
+	$(document).on('click', '.friend-photo', function (e) {
 		e.preventDefault();
 		const friendId = $(this).data('friend-id');
 		gfriendId = friendId;
