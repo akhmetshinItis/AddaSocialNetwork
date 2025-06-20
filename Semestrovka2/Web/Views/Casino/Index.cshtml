@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "Casino";
+    Layout = null; // Если Layout ограничивает размер — см. ниже
+}
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+<!-- rateYo! CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+
+<!-- Стили для полноэкранного режима -->
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden; /* чтобы убрать полосы прокрутки */
+    }
+
+    .game-frame, .desktop_game {
+        height: 100%;
+        width: 100%;
+    }
+
+    iframe#op4u_game {
+        border: none;
+        height: 100%;
+        width: 100%;
+        display: block;
+    }
+</style>
+
+<!-- Обёртка без <a>, чтобы не ломать верстку -->
+<div class="game-frame">
+
+    <!-- Игровой iframe -->
+    <div id="desktop_game_container" class="desktop_game">
+        <iframe id="op4u_game"
+                onload="gameLoaded()"
+                src="https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?lang=en&amp;cur=EUR&amp;gameSymbol=vs20doghouse"
+                title="Dog House"></iframe>
+    </div>
+
+</div>
+
+<!-- JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
